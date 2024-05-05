@@ -1,5 +1,10 @@
-function App() {
-  return <>Hello world</>;
-}
+import { RecoilRoot } from "recoil";
+import Pages from "./pages/Pages";
 
-export default App;
+export default function App() {
+  return (
+    <RecoilRoot>
+      <Pages />
+    </RecoilRoot>
+  );
+}
