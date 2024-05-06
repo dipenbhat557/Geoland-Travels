@@ -8,6 +8,7 @@ const Pages = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/details" element={<Details />} />
+        <Route path="/dest" element={<Destinations />} />
       </Routes>
     </BrowserRouter>
   );
