@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { blogItems } from "../constants";
 import { styles } from "../styles";
 
 const Blogs = () => {
+  const navigate = useNavigate();
   return (
     <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
       <p className={`${styles.sectionHeadText} h-[10%]`}>Blogs</p>
@@ -10,7 +12,8 @@ const Blogs = () => {
           return (
             <div
               key={index}
-              className="w-[31%]  h-[90%] p-2 rounded-3xl justify-between flex flex-col"
+              onClick={() => navigate("/blog", { state: { blog: item } })}
+              className="w-[31%] cursor-pointer h-[90%] p-2 rounded-3xl justify-between flex flex-col"
             >
               <div className="w-full relative h-[75%] rounded-3xl">
                 <img
@@ -23,10 +26,10 @@ const Blogs = () => {
                 </p>
               </div>
               <div className="flex gap-4 ">
-                <p className=" text-slate-400 flex items-center font-light text-[13px] ml-3">
+                <p className="  flex items-center font-light text-[13px] ml-3">
                   {item?.date}
                 </p>
-                <p className=" text-slate-400 flex items-center font-light text-[13px] ml-3">
+                <p className=" flex items-center font-light text-[13px] ml-3">
                   By &nbsp; {item?.author}
                 </p>
               </div>

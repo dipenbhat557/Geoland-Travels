@@ -127,20 +127,29 @@ export const trendingDest = [
 export const blogItems = [
   {
     img: heroBg,
+    post: "Art Director",
     date: "April 06, 2024",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    content:
+      "Write the blog description right here, Write the blog description right here, Write the blog description right here.Write the blog description right here, Write the blog description right here, Write the blog description right here. Write the blog description right here, Write the blog description right here, Write the blog description right here.",
     author: "Ali Tufan",
   },
   {
     img: heroBg,
+    post: "Art Director",
     date: "April 06, 2024",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    content:
+      "Write the blog description right here, Write the blog description right here, Write the blog description right here.Write the blog description right here, Write the blog description right here, Write the blog description right here. Write the blog description right here, Write the blog description right here, Write the blog description right here.",
     author: "Ali Tufan",
   },
   {
     img: heroBg,
+    post: "Art Director",
     date: "April 06, 2024",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    content:
+      "Write the blog description right here, Write the blog description right here, Write the blog description right here.Write the blog description right here, Write the blog description right here, Write the blog description right here. Write the blog description right here, Write the blog description right here, Write the blog description right here.",
     author: "Ali Tufan",
   },
 ];
