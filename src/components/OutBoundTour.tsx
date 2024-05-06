@@ -1,10 +1,10 @@
 import { trendingItems } from "../constants";
 import { styles } from "../styles";
 
-const Trending = () => {
+const OutboundTour = () => {
   return (
     <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
-      <p className={`${styles.sectionHeadText} h-[10%]`}>Top Trending</p>
+      <p className={`${styles.sectionHeadText} h-[10%]`}>Outbound Tour</p>
       <div className="w-full h-[90%] flex justify-between items-center">
         {trendingItems?.map((item, index) => {
           return (
@@ -40,4 +40,4 @@ const Trending = () => {
     </div>
   );
 };
-export default Trending;
+export default OutboundTour;

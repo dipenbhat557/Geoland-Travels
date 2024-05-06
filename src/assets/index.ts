@@ -9,5 +9,20 @@ import s3 from "./specImg/s3.svg";
 import s4 from "./specImg/s4.svg";
 import founder from "./founderImg.svg";
 import logo from "./logo.png";
-
-export { heroBg, e1, e2, e3, r1, s1, s2, s3, s4, founder, logo };
+import exploreBg from "./exploreBg.svg";
+import scene from "./planet/scene.gltf";
+export {
+  heroBg,
+  e1,
+  e2,
+  e3,
+  r1,
+  s1,
+  s2,
+  s3,
+  s4,
+  founder,
+  logo,
+  exploreBg,
+  scene,
+};

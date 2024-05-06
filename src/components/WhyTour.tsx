@@ -3,16 +3,16 @@ import { styles } from "../styles";
 
 const WhyTour = () => {
   return (
-    <div className={`${styles.padding} w-full h-[500px] flex flex-col`}>
-      <p className={`${styles.sectionHeadText} h-[10%] text-center`}>
+    <div className={`${styles.padding} w-full h-[450px] flex flex-col`}>
+      <p className={`${styles.sectionHeadText} h-[12%] text-center`}>
         Why Choose Tour?
       </p>
-      <div className="w-full h-[80%] flex justify-between items-center">
+      <div className="w-full h-[87%] flex justify-between items-center">
         {whyTourItems?.map((item, index) => {
           return (
             <div
               key={index}
-              className="w-[23%] h-[90%] p-2 rounded-3xl gap-2 flex flex-col"
+              className="w-[23%] h-full p-2 rounded-3xl gap-2 flex flex-col"
             >
               <div className="w-full h-[45%] flex items-end justify-center">
                 <img

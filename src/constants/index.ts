@@ -114,3 +114,33 @@ export const whyTourItems = [
       "You're in control, with free cancellation and payment options to satisfy any plan or budget.",
   },
 ];
+
+export const trendingDest = [
+  { img: heroBg, title: "Maldives" },
+  { img: heroBg, title: "Maldives" },
+  { img: heroBg, title: "Maldives" },
+  { img: heroBg, title: "Maldives" },
+  { img: heroBg, title: "Maldives" },
+  { img: heroBg, title: "Maldives" },
+];
+
+export const blogItems = [
+  {
+    img: heroBg,
+    date: "April 06, 2024",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    author: "Ali Tufan",
+  },
+  {
+    img: heroBg,
+    date: "April 06, 2024",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    author: "Ali Tufan",
+  },
+  {
+    img: heroBg,
+    date: "April 06, 2024",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    author: "Ali Tufan",
+  },
+];
