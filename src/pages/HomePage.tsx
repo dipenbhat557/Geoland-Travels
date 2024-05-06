@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import Navbar from "../components/Navbar";
 import OutboundTour from "../components/OutBoundTour";
 import ReachOut from "../components/ReachOut";
+import Reviews from "../components/Reviews";
 import Trending from "../components/TopTrending";
 import TrendingDest from "../components/TrendingDest";
 import WhyTour from "../components/WhyTour";
@@ -22,6 +23,7 @@ const HomePage = () => {
       <TrendingDest />
       <Explore />
       <InboundTour />
+      <Reviews />
       <OutboundTour />
       <Blogs />
       <Message />

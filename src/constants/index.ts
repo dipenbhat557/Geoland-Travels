@@ -181,3 +181,55 @@ export const locationItems = [
     phone: "sales@geolandtravels.com",
   },
 ];
+
+export const reviewItems = [
+  {
+    name: "John Smith",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith1",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith2",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith3",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith4",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith5",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+  {
+    name: "John Smith6",
+    img: heroBg,
+    title: "Excellent Service !!",
+    content:
+      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+  },
+];

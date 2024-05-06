@@ -20,7 +20,7 @@ const Hero = () => {
             <IoLocationOutline className="text-3xl" />
             <input
               type="text"
-              className="w-[70%] px-2 py-2 rounded-md placeholder:text-[13px]"
+              className="w-[70%] px-2 py-2  focus:outline-none rounded-md placeholder:text-[13px]"
               placeholder="Search destination"
             />
             <div

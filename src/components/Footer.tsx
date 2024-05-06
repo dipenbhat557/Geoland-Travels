@@ -20,7 +20,7 @@ const Footer = () => {
             <input
               type="text "
               placeholder="Search your destination"
-              className="placeholder:text-slate-300 border- rounded-lg placeholder:text-[10px] px-3 w-[80%] py-1"
+              className="placeholder:text-slate-300   focus:outline-none rounded-lg placeholder:text-[10px] px-3 w-[80%] py-1"
             />
             <button
               className={`${styles.primaryBgColor} text-white w-[15%] rounded-lg flex items-center justify-center h-[80%]`}

@@ -32,6 +32,9 @@ const Message = () => {
             to last a lifetime. Contact us today to start planning your next
             unforgettable adventure with GeoLand Travels!”
           </p>
+          <p className="w-full text-right text-slate-600">
+            -Sharad Kumar Sharma
+          </p>
           <div className="w-[60%] h-[15%] flex items-center justify-around">
             <FaFacebook className="text-3xl text-blue-600" />
             <FaLinkedin className="text-3xl text-blue-600" />
