@@ -12,12 +12,13 @@ const Trending = () => {
               key={index}
               className="w-[23%] border border-slate-200 h-[90%] p-2 rounded-3xl flex flex-col"
             >
-              <div className="w-full h-[60%] rounded-3xl">
+              <div className="w-full h-[60%] rounded-3xl relative">
                 <img
                   src={item?.img}
                   alt="trending"
                   className="w-full h-full object-cover rounded-3xl"
                 />
+                <div className="bg-white h-[40px] w-[40px] rounded-full absolute z-10 -bottom-6 right-5" />
               </div>
               <p className="h-[8%] text-slate-400 flex items-center font-light text-[13px] ml-3">
                 {item?.location}

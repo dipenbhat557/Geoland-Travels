@@ -1,6 +1,7 @@
 import Blogs from "../components/Blogs";
 import Explore from "../components/Explore";
 import Footer from "../components/Footer";
+import Gallery from "../components/Gallery";
 import Hero from "../components/Hero";
 import InboundTour from "../components/InboundTour";
 import Message from "../components/Message";
@@ -24,6 +25,7 @@ const HomePage = () => {
       <OutboundTour />
       <Blogs />
       <Message />
+      <Gallery />
       <ReachOut />
       <Footer />
     </div>

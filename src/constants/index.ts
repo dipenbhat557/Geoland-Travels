@@ -145,6 +145,8 @@ export const blogItems = [
   },
 ];
 
+export const galleryItems = [heroBg, heroBg, heroBg, heroBg, heroBg, heroBg];
+
 export const locationItems = [
   {
     flag: uae,
