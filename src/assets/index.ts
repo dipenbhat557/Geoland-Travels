@@ -10,7 +10,7 @@ import s4 from "./specImg/s4.svg";
 import founder from "./founderImg.svg";
 import logo from "./logo.png";
 import exploreBg from "./exploreBg.svg";
-import scene from "./planet/scene.gltf";
+// import scene from "./planet/scene.gltf";
 export {
   heroBg,
   e1,
@@ -24,5 +24,5 @@ export {
   founder,
   logo,
   exploreBg,
-  scene,
+  // scene,
 };
