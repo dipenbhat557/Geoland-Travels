@@ -6,6 +6,7 @@ import InboundTour from "../components/InboundTour";
 import Message from "../components/Message";
 import Navbar from "../components/Navbar";
 import OutboundTour from "../components/OutBoundTour";
+import ReachOut from "../components/ReachOut";
 import Trending from "../components/TopTrending";
 import TrendingDest from "../components/TrendingDest";
 import WhyTour from "../components/WhyTour";
@@ -23,6 +24,7 @@ const HomePage = () => {
       <OutboundTour />
       <Blogs />
       <Message />
+      <ReachOut />
       <Footer />
     </div>
   );

@@ -10,7 +10,11 @@ import s4 from "./specImg/s4.svg";
 import founder from "./founderImg.svg";
 import logo from "./logo.png";
 import exploreBg from "./exploreBg.svg";
-// import scene from "./planet/scene.gltf";
+import canada from "./flagImg/canada.png";
+import nepal from "./flagImg/nepal.png";
+import uae from "./flagImg/uae.png";
+import usa from "./flagImg/usa.png";
+
 export {
   heroBg,
   e1,
@@ -24,5 +28,8 @@ export {
   founder,
   logo,
   exploreBg,
-  // scene,
+  uae,
+  nepal,
+  canada,
+  usa,
 };
