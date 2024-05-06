@@ -16,7 +16,7 @@ import WhyTour from "../components/WhyTour";
 const HomePage = () => {
   return (
     <div className="flex flex-col">
-      <Navbar />
+      <Navbar isHome={true} />
       <Hero />
       <Trending />
       <WhyTour />

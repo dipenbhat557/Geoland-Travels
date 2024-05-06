@@ -1,7 +1,9 @@
-import { trendingItems } from "../constants";
+import { useNavigate } from "react-router-dom";
+import { destItems, trendingItems } from "../constants";
 import { styles } from "../styles";
 
 const Trending = () => {
+  const navigate = useNavigate();
   return (
     <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
       <p className={`${styles.sectionHeadText} h-[10%]`}>Top Trending</p>
@@ -10,7 +12,10 @@ const Trending = () => {
           return (
             <div
               key={index}
-              className="w-[23%] border border-slate-200 h-[90%] p-2 rounded-3xl flex flex-col"
+              onClick={() =>
+                navigate("/details", { state: { tour: destItems?.[0] } })
+              }
+              className="w-[23%] cursor-pointer border border-slate-200 h-[90%] p-2 rounded-3xl flex flex-col"
             >
               <div className="w-full h-[60%] rounded-3xl relative">
                 <img

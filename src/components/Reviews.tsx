@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { reviewItems } from "../constants";
 import { styles } from "../styles";
 
 const Review: React.FC = () => {
   const [currentReview, setCurrentReview] = useState(reviewItems[0]);
-
-  const handleProfileClick = (review: any) => {
-    setCurrentReview(review);
-  };
 
   return (
     <div className="h-[400px] flex justify-around items-center flex-col">

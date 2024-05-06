@@ -6,7 +6,7 @@ import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { logo } from "../assets";
 import { styles } from "../styles";
-const Navbar = () => {
+const Navbar = ({ isHome }: { isHome: boolean }) => {
   const navigate = useNavigate();
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
@@ -51,6 +51,13 @@ const Navbar = () => {
         >
           <img src={logo} alt="logo" className="w-full h-full object-contain" />
         </div>
+        {!isHome && (
+          <input
+            type="text"
+            className="w-[20%] p-1 px-3 text-[14px]  placeholder:text-slate-400 placeholder:text-[13px] placeholder:text-center rounded-lg border border-slate-200 focus:outline-none"
+            placeholder="Search destination or activity"
+          />
+        )}
         <div className=" w-[55%] h-full items-center justify-end gap-2 flex">
           <div className="flex items-center  justify-around w-[80%]">
             {navLinks?.map((nav, index) => (
@@ -81,7 +88,7 @@ const Navbar = () => {
                     <IoMdArrowDropdown className={`inline  `} />
                   </>
                 ) : (
-                  <a className="hover:text-slate-400" href={nav?.link}>
+                  <a className={`hover:text-[#06905E]`} href={nav?.link}>
                     {nav?.title}
                   </a>
                 )}
