@@ -96,6 +96,7 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
             ))}
           </div>
           <button
+            onClick={() => navigate("/contactus")}
             className={`${styles.primaryBgColor} text-white w-[15%] py-2 rounded-3xl `}
           >
             Contact Us
