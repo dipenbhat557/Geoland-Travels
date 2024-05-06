@@ -14,6 +14,7 @@ import canada from "./flagImg/canada.png";
 import nepal from "./flagImg/nepal.png";
 import uae from "./flagImg/uae.png";
 import usa from "./flagImg/usa.png";
+import d1 from "./destImg/d1.png";
 
 export {
   heroBg,
@@ -32,4 +33,5 @@ export {
   nepal,
   canada,
   usa,
+  d1,
 };

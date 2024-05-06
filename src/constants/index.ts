@@ -1,4 +1,4 @@
-import { canada, heroBg, nepal, s1, s2, s3, s4, uae, usa } from "../assets";
+import { canada, d1, heroBg, nepal, s1, s2, s3, s4, uae, usa } from "../assets";
 
 export const navLinks = [
   {
@@ -236,6 +236,7 @@ export const reviewItems = [
 
 export const destItems = [
   {
+    img: d1,
     title:
       "Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine Tour",
     rating: 4.8,
