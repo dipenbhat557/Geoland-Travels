@@ -136,7 +136,9 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     key={index}
                     className="hover:bg-[#80b38930]  px-2 py-1 rounded-sm text-[14px] cursor-pointer "
                   >
-                    <p onClick={() => navigate("#")}>{service?.title}</p>
+                    <p onClick={() => navigate(service?.link)}>
+                      {service?.title}
+                    </p>
                   </li>
                 );
               })}

@@ -141,8 +141,8 @@ const ContactUs = () => {
         </div>
       </div>
 
-      <WhyTour />
       <ReachOut />
+      <WhyTour />
       <Footer isContact={true} />
     </div>
   );
