@@ -18,13 +18,14 @@ const HomePage = () => {
     <div className="flex flex-col">
       <Navbar isHome={true} />
       <Hero />
-      <Trending />
-      <WhyTour />
+
       <TrendingDest />
-      <Explore />
+      <WhyTour />
       <InboundTour />
-      <Reviews />
+      <Explore />
       <OutboundTour />
+      <Reviews />
+
       <Blogs />
       <Message />
       <Gallery />

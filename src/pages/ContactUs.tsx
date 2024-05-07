@@ -84,7 +84,7 @@ const ContactUs = () => {
           {/* Contact form section */}
           <motion.div
             variants={slideIn("left", "tween", 0.2, 1)}
-            className="flex-[0.75]  p-8 rounded-2xl"
+            className="  p-8 rounded-2xl"
           >
             <p className={styles.sectionSubText}>Get in touch</p>
             <h3 className={styles.sectionHeadText}>Contact</h3>
@@ -168,7 +168,7 @@ const ContactUs = () => {
 
           {/* EarthCanvas section */}
           <motion.div
-            variants={slideIn("right", "tween", 0.2, 1)}
+            variants={slideIn("right", "spring", 0.2, 1)}
             className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]"
           >
             <EarthCanvas />
