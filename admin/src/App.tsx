@@ -1,28 +1,33 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 
-
 import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
-import ECommerce from './pages/Dashboard/ECommerce';
-import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
+
+import Hero from './pages/Dashboard/Hero';
+
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
+
 import BusinessForm from './pages/Form/BusinessForm';
 import CoustomerReviewForm from './pages/Form/CoustomerReviewForm';
 import MessageMd from './pages/Form/MessageMd';
 import FaqForm from './pages/Form/FaqForm';
+import Business from './components/Tables/Business';
+import CoustomerReview from './components/Tables/CustomerReview';
+import Message from './components/Tables/Message';
+import Faq from './components/Tables/Faq';
+import SignIn from './pages/Auth/Signin';
+import { useRecoilValue } from 'recoil';
+import { isLoggedIn } from './store';
 
 function App() {
+  const isLogIn = useRecoilValue(isLoggedIn);
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,6 +37,11 @@ function App() {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  useEffect(() => {
+    if (!isLogIn) {
+      navigate('/signin');
+    }
+  }, []);
 
   return loading ? (
     <Loader />
@@ -43,10 +53,20 @@ function App() {
           element={
             <>
               <PageTitle title="eCommerce Dashboard" />
-              <ECommerce />
+              <Hero />
             </>
           }
         />
+        <Route
+          path="/signin"
+          element={
+            <>
+              <PageTitle title="Signin" />
+              <SignIn />
+            </>
+          }
+        />
+
         <Route
           path="/calendar"
           element={
@@ -65,15 +85,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/forms/form-elements"
-          element={
-            <>
-              <PageTitle title="Form Elements" />
-              <FormElements />
-            </>
-          }
-        />
+
         <Route
           path="/forms/business-form"
           element={
@@ -112,20 +124,38 @@ function App() {
           }
         />
         <Route
-          path="/forms/form-layout"
+          path="/business"
           element={
             <>
-              <PageTitle title="Form Layout" />
-              <FormLayout />
+              <PageTitle title="Business" />
+              <Business />
             </>
           }
         />
         <Route
-          path="/tables"
+          path="/customer-review"
           element={
             <>
-              <PageTitle title="Tables" />
-              <Tables />
+              <PageTitle title="Customer Review" />
+              <CoustomerReview />
+            </>
+          }
+        />
+        <Route
+          path="/message-from-md"
+          element={
+            <>
+              <PageTitle title="Message From Md" />
+              <Message />
+            </>
+          }
+        />
+        <Route
+          path="/faq"
+          element={
+            <>
+              <PageTitle title="FAQ" />
+              <Faq />
             </>
           }
         />
@@ -138,35 +168,6 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons" />
-              <Buttons />
-            </>
-          }
-        />
-
-
       </Routes>
     </>
   );
