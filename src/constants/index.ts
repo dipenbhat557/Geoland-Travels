@@ -300,3 +300,58 @@ export const destItems = [
     },
   },
 ];
+
+
+
+
+export const destinations_details=[
+  {
+    img: heroBg,
+    location: "Paris,France",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    rating: 4.8,
+    noOfResponse: 243,
+    description:"This is best availavle tourist spot in sout east asia",
+    note:"best Price",
+    time: "2 D 1 N",
+    old_price:"2000",
+    price: "1400",
+    
+  },
+  {
+    img: heroBg,
+    location: "Paris,France",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    rating: 4.8,
+    noOfResponse: 243,
+    description:"This is best availavle tourist spot in sout east asia",
+    note:"best Price",
+    time: "2 D 1 N",
+    old_price:"2000",
+    price: "1400",
+    
+  },
+  {
+    img: heroBg,
+    location: "Paris,France",
+    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    rating: 4.8,
+    noOfResponse: 243,
+    description:"This is best availavle tourist spot in sout east asia",
+    note:"Best Price",
+    time: "2 D 1 N",
+    old_price:"2000",
+    price: "1400",
+    
+  }
+];
+
+export const tour_types=[
+"  Nature Tours",
+"Adventure Tours",
+"Cultural Tours",
+"Food Tours",
+"City Tours",
+"Cruises Tours"
+
+]
