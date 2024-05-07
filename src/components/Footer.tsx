@@ -56,7 +56,11 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
           </div>
         </div>
       </div>
-      <div className="w-[30%] h-[80%] flex flex-col items-center gap-3">
+      <div
+        className={`w-[30%] h-[80%] flex flex-col items-center gap-3 ${
+          isContact ? "justify-center" : ""
+        } `}
+      >
         {/* EarthCanvas section */}
         {!isContact && (
           <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="">

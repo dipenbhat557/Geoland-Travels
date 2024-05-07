@@ -36,7 +36,7 @@ const ContactUs = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-5 h-auto">
       <Navbar isHome={true} />
       <div className="h-[480px] w-full relative ">
         <img src={heroBg} alt="bg" className="w-full h-full object-cover" />
@@ -62,7 +62,7 @@ const ContactUs = () => {
                 value={form.name}
                 onChange={handleChange}
                 placeholder="What's your good name?"
-                className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200  text-white rounded-lg outline-none  font-medium"
+                className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
               />
             </label>
             <label className="flex flex-col">
@@ -73,7 +73,7 @@ const ContactUs = () => {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="What's your web address?"
-                className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200  text-white rounded-lg outline-none  font-medium"
+                className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
               />
             </label>
           </div>
@@ -99,7 +99,7 @@ const ContactUs = () => {
               value={form.subject}
               onChange={handleChange}
               placeholder="What's your subject?"
-              className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200  text-white rounded-lg outline-none  font-medium"
+              className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
             />
           </label>
           <label className="flex flex-col">
@@ -122,13 +122,14 @@ const ContactUs = () => {
             {loading ? "Sending..." : "Send"}
           </button>
         </form>
-        <div className="w-[30%] h-[80%]  my-auto p-4 rounded-3xl justify-around flex flex-col items-center gap-3">
+        <div className="w-[30%] h-[300px]  my-auto p-4 flex flex-col relative  rounded-3xl justify-end  ">
           {/* EarthCanvas section */}
-
-          <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="">
+          <motion.div
+            variants={slideIn("right", "tween", 0.2, 1)}
+            className=" flex items-center justify-center absolute -top-[30%] right-[100%] w-full h-full"
+          >
             <EarthCanvas />
           </motion.div>
-
           <div className="w-full h-[40%]  justify-between items-center  gap-3 flex flex-col">
             <p className="tet-[13px]">Follow us on</p>
             <div className="flex w-full h-[50%] justify-center gap-6">
@@ -142,9 +143,8 @@ const ContactUs = () => {
 
       <WhyTour />
       <ReachOut />
-      <Gallery />
-      <Footer isContact={false} />
-    </>
+      <Footer isContact={true} />
+    </div>
   );
 };
 export default SectionWrapper(ContactUs);
