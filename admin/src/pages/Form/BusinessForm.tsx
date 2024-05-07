@@ -5,7 +5,7 @@ import DefaultLayout from '../../layout/DefaultLayout';
 const BusinessForm = () => {
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Business Section" />
+            <Breadcrumb pageName="Our Info" />
 
 
 

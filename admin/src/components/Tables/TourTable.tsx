@@ -30,16 +30,16 @@ const packageData: Package[] = [
     },
 ];
 
-const Message = () => {
+const TourTable = () => {
     return (
 
         <DefaultLayout>
-            <Breadcrumb pageName='Message From MD' />
+            <Breadcrumb pageName='Tour ' />
 
             <div className="flex justify-end py-2 ">
 
                 <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-                    <NavLink to="/forms/message-from-md" > Add New Message</NavLink>
+                    <NavLink to="/forms/tour-form" > Add New Message</NavLink>
 
                 </button>
             </div>
@@ -133,4 +133,5 @@ const Message = () => {
 
 
 
-export default Message;
+
+export default TourTable;
