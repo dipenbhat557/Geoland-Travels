@@ -37,15 +37,15 @@ export const tourDropdown = [
 export const destinationDropdown = [
   {
     title: "Paris",
-    link: "#",
+    link: "/destination",
   },
   {
     title: "Kathmandu",
-    link: "#",
+    link: "/destination",
   },
   {
     title: "Dubai",
-    link: "#",
+    link: "/destination",
   },
 ];
 
@@ -301,22 +301,18 @@ export const destItems = [
   },
 ];
 
-
-
-
-export const destinations_details=[
+export const destinations_details = [
   {
     img: heroBg,
     location: "Paris,France",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
     noOfResponse: 243,
-    description:"This is best availavle tourist spot in sout east asia",
-    note:"best Price",
+    description: "This is best availavle tourist spot in sout east asia",
+    note: "best Price",
     time: "2 D 1 N",
-    old_price:"2000",
+    old_price: "2000",
     price: "1400",
-    
   },
   {
     img: heroBg,
@@ -324,12 +320,11 @@ export const destinations_details=[
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
     noOfResponse: 243,
-    description:"This is best availavle tourist spot in sout east asia",
-    note:"best Price",
+    description: "This is best availavle tourist spot in sout east asia",
+    note: "best Price",
     time: "2 D 1 N",
-    old_price:"2000",
+    old_price: "2000",
     price: "1400",
-    
   },
   {
     img: heroBg,
@@ -337,21 +332,19 @@ export const destinations_details=[
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
     noOfResponse: 243,
-    description:"This is best availavle tourist spot in sout east asia",
-    note:"Best Price",
+    description: "This is best availavle tourist spot in sout east asia",
+    note: "Best Price",
     time: "2 D 1 N",
-    old_price:"2000",
+    old_price: "2000",
     price: "1400",
-    
-  }
+  },
 ];
 
-export const tour_types=[
-"  Nature Tours",
-"Adventure Tours",
-"Cultural Tours",
-"Food Tours",
-"City Tours",
-"Cruises Tours"
-
-]
+export const tour_types = [
+  "  Nature Tours",
+  "Adventure Tours",
+  "Cultural Tours",
+  "Food Tours",
+  "City Tours",
+  "Cruises Tours",
+];

@@ -21,7 +21,6 @@ const ItineraryCard = ({
   item,
   isFirst,
   isLast,
-  index,
 }: {
   item: string;
   isFirst: boolean;

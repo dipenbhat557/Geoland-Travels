@@ -5,7 +5,7 @@ import { slideIn } from "../utils/motion";
 import { motion } from "framer-motion";
 import EarthCanvas from "./canvas/Earth";
 
-const Footer = () => {
+const Footer = ({ isContact }: { isContact: boolean }) => {
   return (
     <div
       className={`${styles.padding} w-full h-[350px] bg-[#37383C] flex justify-between`}
@@ -58,9 +58,11 @@ const Footer = () => {
       </div>
       <div className="w-[30%] h-[80%] flex flex-col items-center gap-3">
         {/* EarthCanvas section */}
-        <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="">
-          <EarthCanvas />
-        </motion.div>
+        {!isContact && (
+          <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="">
+            <EarthCanvas />
+          </motion.div>
+        )}
         <div className="w-full h-[40%] items-center text-white gap-3 flex flex-col">
           <p className="tet-[13px]">Follow us on</p>
           <div className="flex w-full h-[50%] justify-center gap-6">
