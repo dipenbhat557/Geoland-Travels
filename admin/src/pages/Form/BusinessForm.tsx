@@ -5,6 +5,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
 const BusinessForm = () => {
+
   const [formData, setFormData] = useState({
     title: '',
     noOfDestinations: '',
@@ -30,7 +31,7 @@ const BusinessForm = () => {
   };
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Business Section" />
+   <Breadcrumb pageName="Our Info" />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
@@ -131,6 +132,7 @@ const BusinessForm = () => {
                   <span className="tracking-wider px-3">Post</span>
                 </button>
               </div>
+
             </div>
           </div>
         </div>

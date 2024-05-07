@@ -4,12 +4,12 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 
-import Calendar from './pages/Calendar';
+
 
 import Hero from './pages/Dashboard/Hero';
 
 import Profile from './pages/Profile';
-import Settings from './pages/Settings';
+
 
 import BusinessForm from './pages/Form/BusinessForm';
 import CoustomerReviewForm from './pages/Form/CoustomerReviewForm';
@@ -22,6 +22,8 @@ import Faq from './components/Tables/Faq';
 import SignIn from './pages/Auth/Signin';
 import { useRecoilValue } from 'recoil';
 import { isLoggedIn } from './store';
+import TourForm from './pages/Form/Tourform';
+import TourTable from './components/Tables/TourTable';
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -52,7 +54,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard" />
+              <PageTitle title=" Dashboard" />
               <Hero />
             </>
           }
@@ -67,15 +69,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/calendar"
-          element={
-            <>
-              <PageTitle title="Calendar" />
-              <Calendar />
-            </>
-          }
-        />
+
         <Route
           path="/profile"
           element={
@@ -92,6 +86,15 @@ function App() {
             <>
               <PageTitle title="Form Elements" />
               <BusinessForm />
+            </>
+          }
+        />
+        <Route
+          path="/forms/tour-form"
+          element={
+            <>
+              <PageTitle title="Form Elements" />
+              <TourForm />
             </>
           }
         />
@@ -160,14 +163,15 @@ function App() {
           }
         />
         <Route
-          path="/settings"
+          path="/tour"
           element={
             <>
-              <PageTitle title="Settings" />
-              <Settings />
+              <PageTitle title="FAQ" />
+              <TourTable></TourTable>
             </>
           }
         />
+
       </Routes>
     </>
   );
