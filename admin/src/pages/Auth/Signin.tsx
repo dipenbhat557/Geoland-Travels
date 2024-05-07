@@ -2,13 +2,13 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.png';
 import Logo from '../../images/logo/logo.png';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { currUser } from '../../store';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
 const SignIn: React.FC = () => {
-  const [currentUser, setCurrentUser] = useRecoilState(currUser);
+  const setCurrentUser = useSetRecoilState(currUser);
 
   const navigate = useNavigate();
   const userRef = collection(db, 'users');
@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
         phone: ud?.phone,
         role: ud?.role,
       });
-      console.log('This is current user ', currentUser);
+      //   console.log('This is current user ', currentUser);
       localStorage.setItem(
         'currentUser',
         JSON.stringify({
@@ -45,7 +45,7 @@ const SignIn: React.FC = () => {
       navigate('/');
     });
   };
-  useEffect(() => console.log('current user is ', currentUser), []);
+  //   useEffect(() => console.log('current user is ', currentUser), []);
 
   return (
     <>
