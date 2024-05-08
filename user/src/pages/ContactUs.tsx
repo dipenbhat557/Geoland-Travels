@@ -1,7 +1,7 @@
 import { heroBg } from "../assets";
 import Navbar from "../components/Navbar";
 import { styles } from "../styles";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { SectionWrapper } from "../hoc";
 
@@ -34,6 +34,10 @@ const ContactUs = () => {
   const handleSubmit = () => {
     setLoading(true);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col gap-5 h-auto">

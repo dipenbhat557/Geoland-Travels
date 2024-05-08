@@ -19,18 +19,18 @@ export const navLinks = [
   },
   {
     title: "Blogs",
-    link: "#",
+    link: "/blogs",
   },
 ];
 
 export const tourDropdown = [
   {
     title: "Inbound Tour",
-    link: "#",
+    link: "/destination",
   },
   {
     title: "Outbound Tour",
-    link: "#",
+    link: "/destination",
   },
 ];
 

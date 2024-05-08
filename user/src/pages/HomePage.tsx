@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Blogs from "../components/Blogs";
 import Explore from "../components/Explore";
 import Footer from "../components/Footer";
@@ -13,6 +14,9 @@ import TrendingDest from "../components/TrendingDest";
 import WhyTour from "../components/WhyTour";
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="flex flex-col">
       <Navbar isHome={true} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import TravelDate from "../components/TravelDate";
@@ -6,17 +6,23 @@ import Calendar from "../components/Calendar";
 import { destinations_details } from "../constants";
 import { tour_types } from "../constants";
 import { styles } from "../styles";
+import { useLocation } from "react-router-dom";
 
 const Destinations = () => {
   const [showpick, setshowpick] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col">
       <Navbar isHome={false} />
 
       <div className={` ${styles.padding} ${styles.sectionHeadText} mt-14`}>
-        Explore all things to do in #Destination
+        Explore all things to do in {location?.state?.title}
       </div>
 
       <div className="flex pl-4">
