@@ -84,7 +84,7 @@ function App() {
           path="/forms/business-form"
           element={
             <>
-              <PageTitle title="Form Elements" />
+              <PageTitle title="Our Info" />
               <BusinessForm />
             </>
           }
