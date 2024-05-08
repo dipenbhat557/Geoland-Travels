@@ -4,19 +4,13 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Loader from './common/Loader';
 import PageTitle from './components/PageTitle';
 
-
-
 import Hero from './pages/Dashboard/Hero';
 
 import Profile from './pages/Profile';
 
-
-import BusinessForm from './pages/Form/BusinessForm';
-import CoustomerReviewForm from './pages/Form/CustomerReviewForm';
-import MessageMd from './pages/Form/MessageMd';
 import FaqForm from './pages/Form/FaqForm';
-import Business from './components/Tables/Business';
-import CoustomerReview from './components/Tables/CustomerReview';
+import OurInfo from './components/Tables/OurInfo';
+// import CoustomerReview from './components/Tables/CustomerReview';
 import Message from './components/Tables/Message';
 import Faq from './components/Tables/Faq';
 import SignIn from './pages/Auth/Signin';
@@ -69,7 +63,6 @@ function App() {
           }
         />
 
-
         <Route
           path="/profile"
           element={
@@ -81,15 +74,6 @@ function App() {
         />
 
         <Route
-          path="/forms/business-form"
-          element={
-            <>
-              <PageTitle title="Our Info" />
-              <BusinessForm />
-            </>
-          }
-        />
-        <Route
           path="/forms/tour-form"
           element={
             <>
@@ -98,25 +82,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/forms/coutomer-review-form"
-          element={
-            <>
-              <PageTitle title="Form Elements" />
-              <CoustomerReviewForm />
-            </>
-          }
-        />
 
-        <Route
-          path="/forms/message-from-md"
-          element={
-            <>
-              <PageTitle title="Form Elements" />
-              <MessageMd />
-            </>
-          }
-        />
         <Route
           path="/forms/faq-form"
           element={
@@ -127,15 +93,15 @@ function App() {
           }
         />
         <Route
-          path="/business"
+          path="/our-info"
           element={
             <>
-              <PageTitle title="Business" />
-              <Business />
+              <PageTitle title="Our Info" />
+              <OurInfo />
             </>
           }
         />
-        <Route
+        {/* <Route
           path="/customer-review"
           element={
             <>
@@ -143,7 +109,7 @@ function App() {
               <CoustomerReview />
             </>
           }
-        />
+        /> */}
         <Route
           path="/message-from-md"
           element={
@@ -171,7 +137,6 @@ function App() {
             </>
           }
         />
-
       </Routes>
     </>
   );

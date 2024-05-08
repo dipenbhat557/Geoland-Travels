@@ -18,6 +18,7 @@ const FaqForm = () => {
       title: formData?.title,
       query: formData?.query,
       answer: formData?.answer,
+      date: Date.now(),
     });
     console.log(docRef.id);
     setFormData({
