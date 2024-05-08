@@ -1,7 +1,7 @@
 import { styles } from "../styles";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
-import { galleryItems } from "../constants";
+import { galleryItems, galleryItems2 } from "../constants";
 
 const Gallery = () => {
   return (
@@ -33,7 +33,7 @@ const Gallery = () => {
         className="h-[45%] m-auto overflow-hidden relative "
       >
         <ul className="flex  gap-5 h-full w-[calc(350px*9)] animate-scrolled infinite">
-          {galleryItems?.map((item: string, i: number) => (
+          {galleryItems2?.map((item: string, i: number) => (
             <div
               key={i}
               onClick={() =>

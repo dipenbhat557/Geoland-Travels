@@ -1,4 +1,4 @@
-import { canada, d1, heroBg, nepal, s1, s2, s3, s4, uae, usa } from "../assets";
+import { blog1, blog2, blog3, blog4, canada, canada2Bg, canadaBg, d1, dubai, effile, heroBg, ktm, london, nepal, r1, r2, r3, r4, r5, s1, s2, s3, s4, uae, usa } from "../assets";
 
 export const navLinks = [
   {
@@ -49,9 +49,10 @@ export const destinationDropdown = [
   },
 ];
 
+
 export const trendingItems = [
   {
-    img: heroBg,
+    img: canada2Bg,
     location: "Paris,France",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
@@ -60,7 +61,7 @@ export const trendingItems = [
     price: "225",
   },
   {
-    img: heroBg,
+    img: canadaBg,
     location: "Paris,France",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
@@ -69,7 +70,7 @@ export const trendingItems = [
     price: "225",
   },
   {
-    img: heroBg,
+    img: london,
     location: "Paris,France",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
@@ -78,7 +79,7 @@ export const trendingItems = [
     price: "225",
   },
   {
-    img: heroBg,
+    img: dubai,
     location: "Paris,France",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
     rating: 4.8,
@@ -116,17 +117,17 @@ export const whyTourItems = [
 ];
 
 export const trendingDest = [
-  { img: heroBg, title: "Maldives" },
-  { img: heroBg, title: "Maldives" },
-  { img: heroBg, title: "Maldives" },
-  { img: heroBg, title: "Maldives" },
-  { img: heroBg, title: "Maldives" },
-  { img: heroBg, title: "Maldives" },
+  { img: london, title: "UK" },
+  { img: canadaBg, title: "Canada" },
+  { img: dubai, title: "Dubai" },
+  { img: heroBg, title: "Canada" },
+  { img: canada2Bg, title: "Maldives" },
+  { img: effile, title: "Paris" },
 ];
 
 export const blogItems = [
   {
-    img: heroBg,
+    img: blog1,
     post: "Art Director",
     date: "April 06, 2024",
     title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
@@ -135,26 +136,27 @@ export const blogItems = [
     author: "Ali Tufan",
   },
   {
-    img: heroBg,
+    img: blog2,
     post: "Art Director",
     date: "April 06, 2024",
-    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    title: "A short tour to our destinations",
     content:
       "Write the blog description right here, Write the blog description right here, Write the blog description right here.Write the blog description right here, Write the blog description right here, Write the blog description right here. Write the blog description right here, Write the blog description right here, Write the blog description right here.",
     author: "Ali Tufan",
   },
   {
-    img: heroBg,
+    img: blog4,
     post: "Art Director",
     date: "April 06, 2024",
-    title: "All Inclusive Ultimate Circle Island Day Tour with Lunch",
+    title: "Blog by traveller about a last year tour of ",
     content:
       "Write the blog description right here, Write the blog description right here, Write the blog description right here.Write the blog description right here, Write the blog description right here, Write the blog description right here. Write the blog description right here, Write the blog description right here, Write the blog description right here.",
     author: "Ali Tufan",
   },
 ];
 
-export const galleryItems = [heroBg, heroBg, heroBg, heroBg, heroBg, heroBg];
+export const galleryItems = [london, ktm, canada2Bg, canadaBg, effile, dubai]
+export const galleryItems2 = [ canadaBg, effile, dubai,london, ktm, canada2Bg,];;
 
 export const locationItems = [
   {
@@ -194,38 +196,38 @@ export const locationItems = [
 export const reviewItems = [
   {
     name: "John Smith",
-    img: heroBg,
+    img: r1,
     title: "Excellent Service !!",
     content:
       "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
   },
   {
-    name: "John Smith1",
-    img: heroBg,
+    name: "Siddhantha ",
+    img: r2,
     title: "Excellent Service !!",
     content:
       "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
   },
   {
-    name: "John Smith2",
-    img: heroBg,
+    name: "Avash Smith2",
+    img: r3,
     title: "Excellent Service !!",
     content:
       "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
   },
   {
-    name: "John Smith3",
-    img: heroBg,
+    name: "Dipendra",
+    img: r4,
     title: "Excellent Service !!",
     content:
-      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+      "I had an amazing experience with this company. !",
   },
   {
-    name: "John Smith4",
-    img: heroBg,
+    name: "Jafroz",
+    img: r5,
     title: "Excellent Service !!",
     content:
-      "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
+      " The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
   },
   {
     name: "John Smith5",
@@ -235,7 +237,7 @@ export const reviewItems = [
       "I had an amazing experience with this company. The service was top-notch, and the staff was incredibly friendly. I highly recommend them!",
   },
   {
-    name: "John Smith6",
+    name: "Sargam",
     img: heroBg,
     title: "Excellent Service !!",
     content:
