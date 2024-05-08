@@ -2,7 +2,6 @@ import React from 'react';
 
 
 import DefaultLayout from '../../layout/DefaultLayout';
-import { Package } from '../../types/package';
 
 interface Dashboard {
   fieldname: string,
