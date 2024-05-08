@@ -5,25 +5,25 @@ import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 
 const packageData: Package[] = [
     {
-        name: 'Free package',
+        name: 'Review 1',
         price: 0.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Paid',
     },
     {
-        name: 'Standard Package',
+        name: 'Very Nice Package',
         price: 59.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Paid',
     },
     {
-        name: 'Business Package',
+        name: 'Good managment',
         price: 99.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Unpaid',
     },
     {
-        name: 'Standard Package',
+        name: 'Nice destination',
         price: 59.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Pending',

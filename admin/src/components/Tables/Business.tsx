@@ -6,29 +6,24 @@ import Breadcrumb from '../Breadcrumbs/Breadcrumb';
 
 const packageData: Package[] = [
     {
-        name: 'Free package',
+        name: 'Total Destinations',
         price: 0.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Paid',
     },
     {
-        name: 'Standard Package',
+        name: 'Happy Customers',
         price: 59.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Paid',
     },
     {
-        name: 'Business Package',
+        name: 'Amazing Tours',
         price: 99.0,
         invoiceDate: `Jan 13,2023`,
         status: 'Unpaid',
-    },
-    {
-        name: 'Standard Package',
-        price: 59.0,
-        invoiceDate: `Jan 13,2023`,
-        status: 'Pending',
-    },
+    }
+
 ];
 
 const Business = () => {
