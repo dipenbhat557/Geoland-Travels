@@ -12,7 +12,7 @@ import Profile from './pages/Profile';
 
 
 import BusinessForm from './pages/Form/BusinessForm';
-import CoustomerReviewForm from './pages/Form/CoustomerReviewForm';
+import CoustomerReviewForm from './pages/Form/CustomerReviewForm';
 import MessageMd from './pages/Form/MessageMd';
 import FaqForm from './pages/Form/FaqForm';
 import Business from './components/Tables/Business';
@@ -84,7 +84,7 @@ function App() {
           path="/forms/business-form"
           element={
             <>
-              <PageTitle title="Form Elements" />
+              <PageTitle title="Our Info" />
               <BusinessForm />
             </>
           }

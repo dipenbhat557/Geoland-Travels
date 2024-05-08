@@ -2,7 +2,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { heroBg } from "../assets";
 import { styles } from "../styles";
 import { IoLocationOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <div
       className="h-[580px] w-full relative mt-14"
@@ -36,6 +38,9 @@ const Hero = () => {
             return (
               <button
                 key={i}
+                onClick={() =>
+                  navigate("/destination", { state: { title: e } })
+                }
                 className="text-white bg-opacity-10 bg-slate-100 rounded-full w-[100px] py-2"
               >
                 {e}

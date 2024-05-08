@@ -12,7 +12,8 @@ const Pages = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/details" element={<Details />} />
         <Route path="/destination" element={<Destinations />} />
-        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blogs" element={<BlogPage isFromNavbar={true} />} />
+        <Route path="/blog" element={<BlogPage isFromNavbar={false} />} />
         <Route path="/contactus" element={<ContactUs />} />
       </Routes>
     </BrowserRouter>

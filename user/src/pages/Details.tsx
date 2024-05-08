@@ -6,6 +6,7 @@ import WhatsIncluded from "../components/WhatsIncluded";
 import Itinerary from "../components/Itinerary";
 import DetailReviews from "../components/DetailReviews";
 import LeaveReply from "../components/LeaveReply";
+import { useEffect } from "react";
 interface Tour {
   img: string;
   title: string;
@@ -37,6 +38,11 @@ interface Tour {
 const Details = () => {
   const location = useLocation();
   const tour: Tour = location?.state?.tour;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-col gap-3">
       <Navbar isHome={false} />

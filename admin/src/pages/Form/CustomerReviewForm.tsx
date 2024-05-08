@@ -12,7 +12,7 @@ interface FormData {
   designation: string;
   img: File | null;
 }
-const CoustomerReviewForm = () => {
+const CustomerReviewForm = () => {
   const [formData, setFormData] = useState<FormData>({
     title: '',
     name: '',
@@ -211,4 +211,4 @@ const CoustomerReviewForm = () => {
   );
 };
 
-export default CoustomerReviewForm;
+export default CustomerReviewForm;

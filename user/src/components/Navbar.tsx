@@ -116,7 +116,15 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     key={index}
                     className="hover:bg-[#80b38930] px-2 py-1 rounded-sm text-[14px] cursor-pointer "
                   >
-                    <p onClick={() => navigate("#")}>{service?.title}</p>
+                    <p
+                      onClick={() =>
+                        navigate(service?.link, {
+                          state: { title: service?.title },
+                        })
+                      }
+                    >
+                      {service?.title}
+                    </p>
                   </li>
                 );
               })}
@@ -136,7 +144,13 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     key={index}
                     className="hover:bg-[#80b38930]  px-2 py-1 rounded-sm text-[14px] cursor-pointer "
                   >
-                    <p onClick={() => navigate(service?.link)}>
+                    <p
+                      onClick={() =>
+                        navigate(service?.link, {
+                          state: { title: service?.title },
+                        })
+                      }
+                    >
                       {service?.title}
                     </p>
                   </li>
