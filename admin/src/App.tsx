@@ -18,6 +18,10 @@ import { useRecoilValue } from 'recoil';
 import { isLoggedIn } from './store';
 import TourForm from './pages/Form/Tourform';
 import TourTable from './components/Tables/TourTable';
+import Gallery from './components/Tables/Gallery';
+import GalleryForm from './pages/Form/GalleryForm';
+import Blog from './components/Tables/Blog';
+import BlogForm from './pages/Form/BlogForm';
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -101,15 +105,42 @@ function App() {
             </>
           }
         />
-        {/* <Route
-          path="/customer-review"
+        <Route
+          path="/gallery"
           element={
             <>
-              <PageTitle title="Customer Review" />
-              <CoustomerReview />
+              <PageTitle title="Gallery" />
+              <Gallery />
             </>
           }
-        /> */}
+        />
+        <Route
+          path="/forms/gallery-form"
+          element={
+            <>
+              <PageTitle title="Gallery Form" />
+              <GalleryForm />
+            </>
+          }
+        />
+        <Route
+          path="/blogs"
+          element={
+            <>
+              <PageTitle title="Blogs" />
+              <Blog />
+            </>
+          }
+        />
+        <Route
+          path="/forms/blog-form"
+          element={
+            <>
+              <PageTitle title="Blog Form" />
+              <BlogForm />
+            </>
+          }
+        />
         <Route
           path="/message-from-md"
           element={

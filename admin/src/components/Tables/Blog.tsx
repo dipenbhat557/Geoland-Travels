@@ -6,30 +6,31 @@ import {
   Timestamp,
   collection,
   deleteDoc,
-  deleteField,
   doc,
   getDocs,
-  updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import { MdDelete } from 'react-icons/md';
 
-interface FaqData {
+interface BlogData {
   title: string;
+  role: string;
+  blogTitle: string;
+  content: string;
+  author: string;
   date: string;
-  query: string;
-  answer: string;
+  img: string;
   id: string;
 }
 
-const Faq = () => {
-  const [faqs, setFaqs] = useState<FaqData[]>([]);
+const Blog = () => {
+  const [blogs, setBlogs] = useState<BlogData[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const gotFaqs: FaqData[] = [];
+    const gotBlogs: BlogData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, 'faqs'));
+      const querySnapshot = await getDocs(collection(db, 'blogs'));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
@@ -43,36 +44,39 @@ const Faq = () => {
           console.error('Invalid or missing date field:', date);
         }
 
-        const f: FaqData = {
+        const b: BlogData = {
           title: doc?.data()?.title,
           date: dateObject,
-          query: doc?.data()?.query,
-          answer: doc?.data()?.answer,
+          img: doc?.data()?.img,
           id: doc?.id,
+          role: doc?.data()?.role,
+          blogTitle: doc?.data()?.blogTitle,
+          content: doc?.data()?.content,
+          author: doc?.data()?.author,
         };
-        gotFaqs.push(f);
+        gotBlogs.push(b);
       });
-      setFaqs(gotFaqs);
+      setBlogs(gotBlogs);
     };
 
     fetchDocuments();
   }, []);
 
   const handleClick = async (id: string) => {
-    const faqRef = doc(db, 'faqs', id);
+    const blogRef = doc(db, 'blogs', id);
 
-    await deleteDoc(faqRef);
+    await deleteDoc(blogRef);
     console.log('Deleted successfully');
-    setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq.id !== id));
+    setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
   };
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="FAQ" />
+      <Breadcrumb pageName="Blogs" />
 
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/forms/faq-form"> Add New FAQ</NavLink>
+          <NavLink to="/forms/blog-form"> Add New Blog</NavLink>
         </button>
       </div>
 
@@ -96,20 +100,22 @@ const Faq = () => {
               </tr>
             </thead>
             <tbody>
-              {faqs.map((faq, key) => (
+              {blogs?.map((blog, key) => (
                 <tr key={key}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      {faq?.title}
+                      {blog?.title}
                     </h5>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{faq?.date}</p>
+                    <p className="text-black dark:text-white">{blog?.date}</p>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate('/forms/faq-form', { state: { faq: faq } })
+                        navigate('/forms/blog-form', {
+                          state: { blog: blog },
+                        })
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     >
@@ -120,7 +126,7 @@ const Faq = () => {
                     <div className="flex justify-center items-center space-x-3.5">
                       <MdDelete
                         className="text-2xl text-red-400 cursor-pointer"
-                        onClick={() => handleClick(faq?.id)}
+                        onClick={() => handleClick(blog?.id)}
                       />
                     </div>
                   </td>
@@ -134,4 +140,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default Blog;

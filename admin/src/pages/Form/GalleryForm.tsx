@@ -8,46 +8,66 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { db, storage } from '../../firebaseConfig';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-const FaqForm = () => {
+const GalleryForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const faq = location?.state?.faq;
+  const image = location?.state?.image;
   const [formData, setFormData] = useState({
-    title: faq?.title || '',
-    query: faq?.query || '',
-    answer: faq?.answer || '',
+    title: image?.title || '',
+    img: image?.img || '',
   });
+  const [img, setImg] = useState(null as File | null);
 
   const handleSubmit = async () => {
-    if (faq?.id) {
-      const faqRef = doc(db, 'faqs', faq?.id);
-      await setDoc(faqRef, {
-        title: formData?.title,
-        query: formData?.query,
-        answer: formData?.answer,
-        date: serverTimestamp(),
-      });
-      console.log('updated successfully');
-      navigate('/faq');
-    } else {
-      const faqRef = collection(db, 'faqs');
+    console.log('Submission started');
+    if (img) {
+      const storageRef = ref(storage, 'some-child/' + img.name);
+      try {
+        const snapshot = await uploadBytes(storageRef, img);
 
-      const docRef = await addDoc(faqRef, {
-        title: formData?.title,
-        query: formData?.query,
-        answer: formData?.answer,
-        date: serverTimestamp(),
-      });
-      console.log(docRef.id);
-      setFormData({
-        title: '',
-        query: '',
-        answer: '',
-      });
+        const downloadURL = await getDownloadURL(storageRef);
+
+        if (image?.id) {
+          const galleryRef = doc(db, 'gallery', image?.id);
+          await setDoc(galleryRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+          });
+          console.log('updated successfully');
+          navigate('/gallery');
+        } else {
+          const galleryRef = collection(db, 'gallery');
+
+          const docRef = await addDoc(galleryRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+          });
+          console.log(docRef.id);
+          setFormData({
+            title: '',
+            img: '',
+          });
+        }
+      } catch (error: any) {
+        console.error('Error uploading file:', error);
+      }
+    } else {
+      console.error('No file selected');
     }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImg(file);
+    }
+    console.log('file is selected');
   };
 
   return (
@@ -55,7 +75,7 @@ const FaqForm = () => {
       <Breadcrumb pageName="FAQ's" />
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/faq"> Go to FAQs</NavLink>
+          <NavLink to="/gallery"> Go to Gallery</NavLink>
         </button>
       </div>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -88,39 +108,13 @@ const FaqForm = () => {
 
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Queries
+                  Attach Image
                 </label>
-                <input
-                  value={formData?.query}
-                  name="query"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      query: e.target.value,
-                    }))
-                  }
-                  type="text"
-                  placeholder="Queries "
-                  className="w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input  dark:focus:border-primary dark:text-white"
-                />
-              </div>
 
-              <div>
-                <label className="mb-3  block text-black dark:text-white">
-                  Answers
-                </label>
                 <input
-                  type="text"
-                  value={formData?.answer}
-                  name="answer"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      answer: e.target.value,
-                    }))
-                  }
-                  placeholder="Answers "
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={handleFileChange}
+                  type="file"
+                  className={` w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                 />
               </div>
             </div>
@@ -146,4 +140,4 @@ const FaqForm = () => {
   );
 };
 
-export default FaqForm;
+export default GalleryForm;
