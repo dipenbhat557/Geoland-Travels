@@ -11,7 +11,7 @@ const InputFieldList = ({
   noOfInputs: number;
   setNoOfInputs: any;
   handleValueChange: any;
-  inputFields: { value: string }[];
+  inputFields: string[];
   setInputFields: any;
   title: string;
 }) => {
@@ -25,7 +25,7 @@ const InputFieldList = ({
           <input
             type="text"
             placeholder={`${title} ${index + 1}`}
-            value={inputFields[index]?.value || ''}
+            value={inputFields[index] || ''}
             onChange={(e) => handleValueChange(index, e)}
             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
           />
@@ -46,7 +46,7 @@ const InputFieldList = ({
           <button
             onClick={() => {
               setNoOfInputs((prevVal: number) => prevVal + 1);
-              setInputFields([...inputFields, { value: '' }]);
+              setInputFields([...inputFields, '']);
             }}
             className=" bg-transparent  text-blue-700 font-semibold hover:text-white py-2 px-1   "
           >

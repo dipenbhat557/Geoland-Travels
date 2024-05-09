@@ -2,67 +2,143 @@ import { useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import InputFieldList from './InputFields';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db, storage } from '../../firebaseConfig';
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from 'firebase/firestore';
+
+interface TourData {
+  title: string;
+  img: string;
+  id: string;
+  tourTitle: string;
+  location: string;
+  overview: string;
+  highlights: string[];
+  inclusion: string[];
+  exclusion: string[];
+  itinerary: string[];
+  price: number;
+  type: string;
+  trending: boolean;
+}
 
 const TourForm = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const tour: TourData = location?.state?.tour;
+
   const [img, setImg] = useState(null as File | null);
 
-  const [noOfHighlightInputs, setNoOfHighlightInputs] = useState(1);
-  const [noOfWhatsIncludedInputs, setNoOfWhatsIncludedInputs] = useState(1);
-  const [noOfWhatsNotIncludedInputs, setNoOfWhatsNotIncludedInputs] =
-    useState(1);
-  const [noOfItineraryInputs, setNoOfItineraryInputs] = useState(1);
+  const [noOfHighlightInputs, setNoOfHighlightInputs] = useState<number>(
+    tour?.highlights?.length || 1,
+  );
+  const [noOfInclusionInputs, setNoOfInclusionInputs] = useState<number>(
+    tour?.inclusion?.length || 1,
+  );
+  const [noOfExclusionInputs, setNoOfExclusionInputs] = useState<number>(
+    tour?.exclusion?.length || 1,
+  );
+  const [noOfItineraryInputs, setNoOfItineraryInputs] = useState<number>(
+    tour?.itinerary?.length || 1,
+  );
 
-  const [highlightInputFields, setHighlightInputFields] = useState([
-    { value: '' },
-  ]);
-  const [whatsIncludedInputFields, setWhatsIncludedInputFields] = useState([
-    { value: '' },
-  ]);
-  const [whatsNotIncludedInputFields, setWhatsNotIncludedInputFields] =
-    useState([{ value: '' }]);
-  const [itineraryInputFields, setItineraryInputFields] = useState([
-    { value: '' },
-  ]);
-
+  const [highlightInputFields, setHighlightInputFields] = useState<string[]>(
+    tour?.highlights || [''],
+  );
+  const [inclusionInputFields, setInclusionInputFields] = useState<string[]>(
+    tour?.inclusion || [''],
+  );
+  const [exclusionInputFields, setExclusionInputFields] = useState<string[]>(
+    tour?.exclusion || [''],
+  );
+  const [itineraryInputFields, setItineraryInputFields] = useState<string[]>(
+    tour?.itinerary || [''],
+  );
   const [formData, setFormData] = useState({
-    title: '',
-    tourTitle: '',
-    img: '',
-    location: '',
-    overview: '',
-    highlights: [],
-    inclusion: [],
-    exclusion: [],
-    itinerary: [],
-    price: 0,
-    type: 'inbound',
-    trending: false,
+    title: tour?.title || '',
+    tourTitle: tour?.tourTitle || '',
+    img: tour?.img || '',
+    location: tour?.location || '',
+    overview: tour?.overview || '',
+    highlights: tour?.highlights || [],
+    inclusion: tour?.inclusion || [],
+    exclusion: tour?.exclusion || [],
+    itinerary: tour?.itinerary || [],
+    price: tour?.price || 0,
+    type: tour?.type || 'inbound',
+    trending: tour?.trending || false,
+    id: tour?.id || '',
   });
 
-  // Function to update the value of an input field
   const handleHighlightsValueChange = (index: any, event: any) => {
     const values = [...highlightInputFields];
-    values[index].value = event.target.value;
+    values[index] = event.target.value;
     setHighlightInputFields(values);
+
+    // Update formData separately
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      highlights: [
+        ...prevFormData.highlights.slice(0, index),
+        event.target.value,
+        ...prevFormData.highlights.slice(index + 1),
+      ],
+    }));
   };
 
-  const handleWhatsIncludedValueChange = (index: any, event: any) => {
-    const values = [...whatsIncludedInputFields];
-    values[index].value = event.target.value;
-    setWhatsIncludedInputFields(values);
+  const handleInclusionValueChange = (index: any, event: any) => {
+    const values = [...inclusionInputFields];
+    values[index] = event.target.value;
+    setInclusionInputFields(values);
+
+    // Update formData separately
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      inclusion: [
+        ...prevFormData.inclusion.slice(0, index),
+        event.target.value,
+        ...prevFormData.inclusion.slice(index + 1),
+      ],
+    }));
   };
 
-  const handleWhatsNotIncludedValueChange = (index: any, event: any) => {
-    const values = [...whatsNotIncludedInputFields];
-    values[index].value = event.target.value;
-    setWhatsNotIncludedInputFields(values);
+  const handleExclusionValueChange = (index: any, event: any) => {
+    const values = [...exclusionInputFields];
+    values[index] = event.target.value;
+    setExclusionInputFields(values);
+
+    // Update formData separately
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      exclusion: [
+        ...prevFormData.exclusion.slice(0, index),
+        event.target.value,
+        ...prevFormData.exclusion.slice(index + 1),
+      ],
+    }));
   };
 
-  // Function to update the value of an input field
   const handleItineraryValueChange = (index: any, event: any) => {
     const values = [...itineraryInputFields];
-    values[index].value = event.target.value;
+    values[index] = event.target.value;
     setItineraryInputFields(values);
+
+    // Update formData separately
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      itinerary: [
+        ...prevFormData.itinerary.slice(0, index),
+        event.target.value,
+        ...prevFormData.itinerary.slice(index + 1),
+      ],
+    }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +161,76 @@ const TourForm = () => {
     }));
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    console.log('Submission started');
+    if (img) {
+      const storageRef = ref(storage, 'some-child/' + img.name);
+      try {
+        const snapshot = await uploadBytes(storageRef, img);
+
+        const downloadURL = await getDownloadURL(storageRef);
+
+        if (tour?.id) {
+          const tourRef = doc(db, 'tours', tour?.id);
+          await setDoc(tourRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+            tourTitle: formData?.tourTitle,
+            location: formData?.location,
+            overview: formData?.overview,
+            highlights: formData?.highlights,
+            inclusion: formData?.inclusion,
+            exclusion: formData?.exclusion,
+            itinerary: formData?.itinerary,
+            price: formData?.price,
+            type: formData?.type,
+            trending: formData?.trending,
+          });
+          console.log('updated successfully');
+          navigate('/tour');
+        } else {
+          const tourRef = collection(db, 'tours');
+
+          const docRef = await addDoc(tourRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+            tourTitle: formData?.tourTitle,
+            location: formData?.location,
+            overview: formData?.overview,
+            highlights: formData?.highlights,
+            inclusion: formData?.inclusion,
+            exclusion: formData?.exclusion,
+            itinerary: formData?.itinerary,
+            price: formData?.price,
+            type: formData?.type,
+            trending: formData?.trending,
+          });
+          console.log(docRef.id);
+          setFormData({
+            title: '',
+            img: '',
+            tourTitle: '',
+            location: '',
+            overview: '',
+            highlights: [''],
+            inclusion: [''],
+            exclusion: [''],
+            itinerary: [''],
+            price: 0,
+            type: '',
+            trending: false,
+            id: '',
+          });
+        }
+      } catch (error: any) {
+        console.error('Error uploading file:', error);
+      }
+    } else {
+      console.error('No file selected');
+    }
+  };
 
   return (
     <DefaultLayout>
@@ -184,11 +329,11 @@ const TourForm = () => {
                   Whats Included
                 </label>
                 <InputFieldList
-                  noOfInputs={noOfWhatsIncludedInputs}
-                  setNoOfInputs={setNoOfWhatsIncludedInputs}
-                  handleValueChange={handleWhatsIncludedValueChange}
-                  inputFields={whatsIncludedInputFields}
-                  setInputFields={setWhatsIncludedInputFields}
+                  noOfInputs={noOfInclusionInputs}
+                  setNoOfInputs={setNoOfInclusionInputs}
+                  handleValueChange={handleInclusionValueChange}
+                  inputFields={inclusionInputFields}
+                  setInputFields={setInclusionInputFields}
                   title="Whats Included "
                 />
               </div>
@@ -197,11 +342,11 @@ const TourForm = () => {
                   Whats Not Included
                 </label>
                 <InputFieldList
-                  noOfInputs={noOfWhatsNotIncludedInputs}
-                  setNoOfInputs={setNoOfWhatsNotIncludedInputs}
-                  handleValueChange={handleWhatsNotIncludedValueChange}
-                  inputFields={whatsNotIncludedInputFields}
-                  setInputFields={setWhatsNotIncludedInputFields}
+                  noOfInputs={noOfExclusionInputs}
+                  setNoOfInputs={setNoOfExclusionInputs}
+                  handleValueChange={handleExclusionValueChange}
+                  inputFields={exclusionInputFields}
+                  setInputFields={setExclusionInputFields}
                   title="Whats Not Included "
                 />
               </div>
