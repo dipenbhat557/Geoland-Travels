@@ -17,11 +17,12 @@ import SignIn from './pages/Auth/Signin';
 import { useRecoilValue } from 'recoil';
 import { isLoggedIn } from './store';
 import TourForm from './pages/Form/Tourform';
-import TourTable from './components/Tables/TourTable';
+import TourTable from './components/Tables/Tour';
 import Gallery from './components/Tables/Gallery';
 import GalleryForm from './pages/Form/GalleryForm';
 import Blog from './components/Tables/Blog';
 import BlogForm from './pages/Form/BlogForm';
+import SocialLinks from './components/Tables/SocialLinks';
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -163,8 +164,17 @@ function App() {
           path="/tour"
           element={
             <>
-              <PageTitle title="FAQ" />
+              <PageTitle title="Tour" />
               <TourTable></TourTable>
+            </>
+          }
+        />
+        <Route
+          path="/links"
+          element={
+            <>
+              <PageTitle title="Social Links" />
+              <SocialLinks />
             </>
           }
         />

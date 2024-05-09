@@ -8,6 +8,7 @@ import { MdInfo, MdSpaceDashboard, MdTour } from 'react-icons/md';
 import { AiFillMessage } from 'react-icons/ai';
 import { FaBlog, FaQuora, FaSignOutAlt } from 'react-icons/fa';
 import { RiGalleryFill } from 'react-icons/ri';
+import { PiLinkSimple } from 'react-icons/pi';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -206,8 +207,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/tour"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
+                    pathname.includes('tour') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <MdTour className="text-2xl" />
@@ -220,8 +220,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/gallery"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
+                    pathname.includes('gallery') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <RiGalleryFill className="text-2xl" />
@@ -232,12 +231,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/blogs"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
+                    pathname.includes('blogs') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <FaBlog className="text-2xl" />
                   Blogs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/links"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('links') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <PiLinkSimple className="text-2xl" />
+                  Social Links
                 </NavLink>
               </li>
             </ul>

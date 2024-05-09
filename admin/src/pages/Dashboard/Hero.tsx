@@ -1,54 +1,50 @@
 import React from 'react';
 
-
 import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 interface Dashboard {
-  fieldname: string,
-  datetime: string,
-  location: string,
-  title: string,
-  updatedby: string
+  fieldname: string;
+  datetime: string;
+  location: string;
+  title: string;
+  updatedby: string;
 }
 const dashboardData: Dashboard[] = [
   {
-    fieldname: "Tour",
-    datetime: "2022-03-3",
-    location: "lamahi dang",
-    title: "maldives tour",
-    updatedby: "Content writer"
+    fieldname: 'Tour',
+    datetime: '2022-03-3',
+    location: 'lamahi dang',
+    title: 'maldives tour',
+    updatedby: 'Content writer',
   },
   {
-    fieldname: "Tour",
-    datetime: "2022-03-3",
-    location: "lamahi dang",
-    title: "maldives tour",
-    updatedby: "Content writer"
+    fieldname: 'Tour',
+    datetime: '2022-03-3',
+    location: 'lamahi dang',
+    title: 'maldives tour',
+    updatedby: 'Content writer',
   },
   {
-    fieldname: "Tour",
-    datetime: "2022-03-3",
-    location: "lamahi dang",
-    title: "maldives tour",
-    updatedby: "Content writer"
+    fieldname: 'Tour',
+    datetime: '2022-03-3',
+    location: 'lamahi dang',
+    title: 'maldives tour',
+    updatedby: 'Content writer',
   },
   {
-    fieldname: "Tour",
-    datetime: "2022-03-3",
-    location: "lamahi dang",
-    title: "maldives tour",
-    updatedby: "Content writer"
+    fieldname: 'Tour',
+    datetime: '2022-03-3',
+    location: 'lamahi dang',
+    title: 'maldives tour',
+    updatedby: 'Content writer',
   },
-
 ];
-
-
 
 const Hero: React.FC = () => {
   return (
     <DefaultLayout>
-
-
+      <Breadcrumb pageName="Dashboard" />
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
@@ -80,7 +76,6 @@ const Hero: React.FC = () => {
                     <h5 className="font-medium text-black dark:text-white">
                       {packageItem.fieldname}
                     </h5>
-
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">
@@ -97,8 +92,6 @@ const Hero: React.FC = () => {
                       <p className="text-black dark:text-white">
                         {packageItem.title}
                       </p>
-
-
                     </div>
                   </td>
 
@@ -106,7 +99,6 @@ const Hero: React.FC = () => {
                     <h5 className="font-medium text-black dark:text-white">
                       {packageItem.updatedby}
                     </h5>
-
                   </td>
                 </tr>
               ))}
@@ -114,9 +106,6 @@ const Hero: React.FC = () => {
           </table>
         </div>
       </div>
-
-
-
     </DefaultLayout>
   );
 };
