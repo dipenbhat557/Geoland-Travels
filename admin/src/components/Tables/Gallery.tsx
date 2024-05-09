@@ -22,6 +22,7 @@ interface ImageData {
 const Gallery = () => {
   const [images, setImages] = useState<ImageData[]>([]);
   const navigate = useNavigate();
+  const [dataDeleted, setDataDeleted] = useState(false);
 
   useEffect(() => {
     const gotImages: ImageData[] = [];
@@ -60,6 +61,10 @@ const Gallery = () => {
     await deleteDoc(galleryRef);
     console.log('Deleted successfully');
     setImages((prevImages) => prevImages.filter((img) => img.id !== id));
+    setDataDeleted(true);
+    setTimeout(() => {
+      setDataDeleted(false);
+    }, 3000);
   };
 
   return (
@@ -74,6 +79,11 @@ const Gallery = () => {
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
+          {dataDeleted && (
+            <div className="w-full mx-auto h-[60px] opacity-70 bg-red-400 text-white  mb-2 flex items-center justify-center rounded-lg">
+              Data Deleted Successfully !!
+            </div>
+          )}
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">

@@ -25,6 +25,7 @@ interface FaqData {
 const Faq = () => {
   const [faqs, setFaqs] = useState<FaqData[]>([]);
   const navigate = useNavigate();
+  const [dataDeleted, setDataDeleted] = useState(false);
 
   useEffect(() => {
     const gotFaqs: FaqData[] = [];
@@ -64,6 +65,10 @@ const Faq = () => {
     await deleteDoc(faqRef);
     console.log('Deleted successfully');
     setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq.id !== id));
+    setDataDeleted(true);
+    setTimeout(() => {
+      setDataDeleted(false);
+    }, 3000);
   };
 
   return (
@@ -78,6 +83,11 @@ const Faq = () => {
 
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="max-w-full overflow-x-auto">
+          {dataDeleted && (
+            <div className="w-full mx-auto h-[60px] opacity-70 bg-red-400 text-white  mb-2 flex items-center justify-center rounded-lg">
+              Data Deleted Successfully !!
+            </div>
+          )}
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
