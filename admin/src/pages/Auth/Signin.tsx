@@ -27,7 +27,7 @@ const SignIn: React.FC = () => {
       setCurrentUser({
         email: ud?.email,
         name: ud?.name,
-        profile: ud?.profile,
+        profile: ud?.img,
         phone: ud?.phone,
         role: ud?.role,
       });
@@ -37,7 +37,7 @@ const SignIn: React.FC = () => {
         JSON.stringify({
           email: ud?.email,
           name: ud?.name,
-          profile: ud?.profile,
+          profile: ud?.img,
           phone: ud?.phone,
           role: ud?.role,
         }),

@@ -454,7 +454,7 @@ const TourForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-9 fixed right-15">
+        <div className="flex flex-col gap-9 sm:fixed right-15">
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex flex-col gap-5.5 p-40  items-center justify-evenly">
               <div>

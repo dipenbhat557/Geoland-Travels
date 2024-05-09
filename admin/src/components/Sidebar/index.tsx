@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../images/logo/logo.png';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { currUser } from '../../store';
 import { MdInfo, MdSpaceDashboard, MdTour } from 'react-icons/md';
 import { AiFillMessage } from 'react-icons/ai';
-import { FaBlog, FaQuora, FaSignOutAlt } from 'react-icons/fa';
+import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from 'react-icons/fa';
 import { RiGalleryFill } from 'react-icons/ri';
 import { PiLinkSimple } from 'react-icons/pi';
 
@@ -22,7 +22,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 
-  const setCurrentUser = useSetRecoilState(currUser);
+  const [currentUser, setCurrentUser] = useRecoilState(currUser);
   const navigate = useNavigate();
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
@@ -249,6 +249,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Social Links
                 </NavLink>
               </li>
+              {currentUser?.role === 'admin' && (
+                <li>
+                  <NavLink
+                    to="/users"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('users') && 'bg-graydark dark:bg-meta-4'
+                    }`}
+                  >
+                    <FaHouseUser className="text-2xl" />
+                    Users
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
 

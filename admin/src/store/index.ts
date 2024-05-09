@@ -18,7 +18,7 @@ export const currUser = atom({
   default: loadUserData() || {
     email: null,
     name: null,
-    profile: null,
+    pimg: null,
     phone: null,
     role: null,
   },

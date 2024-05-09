@@ -23,6 +23,8 @@ import GalleryForm from './pages/Form/GalleryForm';
 import Blog from './components/Tables/Blog';
 import BlogForm from './pages/Form/BlogForm';
 import SocialLinks from './components/Tables/SocialLinks';
+import User from './components/Tables/User';
+import UserForm from './pages/Form/UserForm';
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -166,6 +168,24 @@ function App() {
             <>
               <PageTitle title="Tour" />
               <TourTable></TourTable>
+            </>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <>
+              <PageTitle title="Users" />
+              <User />
+            </>
+          }
+        />
+        <Route
+          path="/forms/user-form"
+          element={
+            <>
+              <PageTitle title="User Form" />
+              <UserForm />
             </>
           }
         />

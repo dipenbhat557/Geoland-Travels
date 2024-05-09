@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
+import { getBlob, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db, storage } from '../../firebaseConfig';
 import {
   addDoc,
   collection,
@@ -8,21 +10,32 @@ import {
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore';
-import { db, storage } from '../../firebaseConfig';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const BlogForm = () => {
+interface UserData {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  role: string;
+  img: File | null;
+  id: string;
+}
+const UserForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const blog = location?.state?.blog;
-  const [formData, setFormData] = useState({
-    title: blog?.title || '',
-    img: blog?.img || '',
-    blogTitle: blog?.blogTitle || '',
-    author: blog?.author || '',
-    content: blog?.content || '',
+  const user = location?.state?.user;
+
+  const [formData, setFormData] = useState<UserData>({
+    name: user?.name || '',
+    email: user?.email || '',
+    password: user?.password || '',
+    phone: user?.phone || '',
+    role: user?.role || '',
+    img: user?.img || (null as File | null),
+    id: user?.id || '',
   });
+
   const [img, setImg] = useState(null as File | null);
 
   const handleSubmit = async () => {
@@ -34,36 +47,40 @@ const BlogForm = () => {
 
         const downloadURL = await getDownloadURL(storageRef);
 
-        if (blog?.id) {
-          const blogRef = doc(db, 'blogs', blog?.id);
-          await setDoc(blogRef, {
-            title: formData?.title,
+        if (user?.id) {
+          const userRef = doc(db, 'users', user?.id);
+          await setDoc(userRef, {
             img: downloadURL,
             date: serverTimestamp(),
-            blogTitle: formData?.blogTitle,
-            author: formData?.author,
-            content: formData?.content,
+            name: formData?.name,
+            email: formData?.email,
+            password: formData?.password,
+            phone: formData?.phone,
+            role: formData?.role,
           });
           console.log('updated successfully');
-          navigate('/blogs');
+          navigate('/users');
         } else {
-          const blogRef = collection(db, 'blogs');
+          const userRef = collection(db, 'users');
 
-          const docRef = await addDoc(blogRef, {
-            title: formData?.title,
+          const docRef = await addDoc(userRef, {
             img: downloadURL,
             date: serverTimestamp(),
-            blogTitle: formData?.blogTitle,
-            author: formData?.author,
-            content: formData?.content,
+            name: formData?.name,
+            email: formData?.email,
+            password: formData?.password,
+            phone: formData?.phone,
+            role: formData?.role,
           });
           console.log(docRef.id);
           setFormData({
-            title: '',
-            img: '',
-            blogTitle: '',
-            author: '',
-            content: '',
+            name: '',
+            email: '',
+            password: '',
+            phone: '',
+            role: '',
+            img: null as File | null,
+            id: '',
           });
         }
       } catch (error: any) {
@@ -82,16 +99,22 @@ const BlogForm = () => {
     console.log('file is selected');
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Blogs" />
-      <div className="flex justify-end py-2 ">
-        <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/blogs"> Go to Blogs</NavLink>
-        </button>
-      </div>
+      <Breadcrumb pageName="User Form " />
+
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
+          {/* <!-- Input Fields --> */}
+
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
@@ -101,77 +124,69 @@ const BlogForm = () => {
             <div className="flex flex-col gap-5.5 p-6.5">
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Title
+                  Name
                 </label>
                 <input
-                  value={formData?.title}
-                  name="title"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      title: e.target.value,
-                    }))
-                  }
+                  value={formData?.name}
+                  name="name"
+                  onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Title Input"
+                  placeholder="Name"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Blog Title
+                  Email
                 </label>
                 <input
-                  value={formData?.blogTitle}
-                  name="blogTitle"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      blogTitle: e.target.value,
-                    }))
-                  }
+                  value={formData?.email}
+                  name="email"
+                  onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Blog Title Input"
+                  placeholder="Email"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
-              </div>
+              </div>{' '}
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Author
+                  Password
                 </label>
                 <input
-                  value={formData?.author}
-                  name="author"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      author: e.target.value,
-                    }))
-                  }
+                  value={formData?.password}
+                  name="password"
+                  onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Author"
+                  placeholder="Password"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
-              </div>
+              </div>{' '}
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Content
+                  Phone
                 </label>
                 <input
-                  value={formData?.content}
-                  name="content"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      content: e.target.value,
-                    }))
-                  }
+                  value={formData?.phone}
+                  name="phone"
+                  onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Content"
+                  placeholder="Phone"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>{' '}
+              <div>
+                <label className="mb-3 block text-black dark:text-white">
+                  Role
+                </label>
+                <input
+                  value={formData?.role}
+                  name="role"
+                  onChange={(e) => handleChange(e)}
+                  type="text"
+                  placeholder="Role"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
-
               <div>
                 <label className="mb-3 block text-black dark:text-white">
                   Attach Image
@@ -187,8 +202,8 @@ const BlogForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-9 sm:fixed right-16">
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-col gap-9">
+          <div className="rounded-sm border border-stroke fixed right-15 bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex flex-col gap-5.5 p-40  items-center justify-evenly">
               <div>
                 <button
@@ -206,4 +221,4 @@ const BlogForm = () => {
   );
 };
 
-export default BlogForm;
+export default UserForm;
