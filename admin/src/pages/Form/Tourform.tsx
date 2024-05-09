@@ -1,17 +1,19 @@
-import { useState } from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
-import InputFieldList from './InputFields';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { db, storage } from '../../firebaseConfig';
+import { useState } from "react";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "../../layout/DefaultLayout";
+import InputFieldList from "./InputFields";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../../firebaseConfig";
 import {
   addDoc,
   collection,
   doc,
   serverTimestamp,
   setDoc,
-} from 'firebase/firestore';
+} from "firebase/firestore";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface TourData {
   title: string;
@@ -35,46 +37,48 @@ const TourForm = () => {
   const tour: TourData = location?.state?.tour;
 
   const [img, setImg] = useState(null as File | null);
+  const [dataSaved, setDataSaved] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   const [noOfHighlightInputs, setNoOfHighlightInputs] = useState<number>(
-    tour?.highlights?.length || 1,
+    tour?.highlights?.length || 1
   );
   const [noOfInclusionInputs, setNoOfInclusionInputs] = useState<number>(
-    tour?.inclusion?.length || 1,
+    tour?.inclusion?.length || 1
   );
   const [noOfExclusionInputs, setNoOfExclusionInputs] = useState<number>(
-    tour?.exclusion?.length || 1,
+    tour?.exclusion?.length || 1
   );
   const [noOfItineraryInputs, setNoOfItineraryInputs] = useState<number>(
-    tour?.itinerary?.length || 1,
+    tour?.itinerary?.length || 1
   );
 
   const [highlightInputFields, setHighlightInputFields] = useState<string[]>(
-    tour?.highlights || [''],
+    tour?.highlights || [""]
   );
   const [inclusionInputFields, setInclusionInputFields] = useState<string[]>(
-    tour?.inclusion || [''],
+    tour?.inclusion || [""]
   );
   const [exclusionInputFields, setExclusionInputFields] = useState<string[]>(
-    tour?.exclusion || [''],
+    tour?.exclusion || [""]
   );
   const [itineraryInputFields, setItineraryInputFields] = useState<string[]>(
-    tour?.itinerary || [''],
+    tour?.itinerary || [""]
   );
   const [formData, setFormData] = useState({
-    title: tour?.title || '',
-    tourTitle: tour?.tourTitle || '',
-    img: tour?.img || '',
-    location: tour?.location || '',
-    overview: tour?.overview || '',
+    title: tour?.title || "",
+    tourTitle: tour?.tourTitle || "",
+    img: tour?.img || "",
+    location: tour?.location || "",
+    overview: tour?.overview || "",
     highlights: tour?.highlights || [],
     inclusion: tour?.inclusion || [],
     exclusion: tour?.exclusion || [],
     itinerary: tour?.itinerary || [],
     price: tour?.price || 0,
-    type: tour?.type || 'inbound',
+    type: tour?.type || "inbound",
     trending: tour?.trending || false,
-    id: tour?.id || '',
+    id: tour?.id || "",
   });
 
   const handleHighlightsValueChange = (index: any, event: any) => {
@@ -146,13 +150,13 @@ const TourForm = () => {
     if (file) {
       setImg(file);
     }
-    console.log('file is selected');
+    console.log("file is selected");
   };
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+      | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -162,16 +166,16 @@ const TourForm = () => {
   };
 
   const handleSubmit = async () => {
-    console.log('Submission started');
+    console.log("Submission started");
     if (img) {
-      const storageRef = ref(storage, 'some-child/' + img.name);
+      const storageRef = ref(storage, "some-child/" + img.name);
       try {
-        const snapshot = await uploadBytes(storageRef, img);
+        await uploadBytes(storageRef, img);
 
         const downloadURL = await getDownloadURL(storageRef);
 
         if (tour?.id) {
-          const tourRef = doc(db, 'tours', tour?.id);
+          const tourRef = doc(db, "tours", tour?.id);
           await setDoc(tourRef, {
             title: formData?.title,
             img: downloadURL,
@@ -187,10 +191,10 @@ const TourForm = () => {
             type: formData?.type,
             trending: formData?.trending,
           });
-          console.log('updated successfully');
-          navigate('/tour');
+          console.log("updated successfully");
+          navigate("/tour");
         } else {
-          const tourRef = collection(db, 'tours');
+          const tourRef = collection(db, "tours");
 
           const docRef = await addDoc(tourRef, {
             title: formData?.title,
@@ -209,27 +213,39 @@ const TourForm = () => {
           });
           console.log(docRef.id);
           setFormData({
-            title: '',
-            img: '',
-            tourTitle: '',
-            location: '',
-            overview: '',
-            highlights: [''],
-            inclusion: [''],
-            exclusion: [''],
-            itinerary: [''],
+            title: "",
+            img: "",
+            tourTitle: "",
+            location: "",
+            overview: "",
+            highlights: [""],
+            inclusion: [""],
+            exclusion: [""],
+            itinerary: [""],
             price: 0,
-            type: '',
+            type: "",
             trending: false,
-            id: '',
+            id: "",
           });
         }
+        setDataSaved(true);
+
+        setTimeout(() => setDataSaved(false), 3000);
       } catch (error: any) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       }
     } else {
-      console.error('No file selected');
+      console.error("No file selected");
     }
+
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: formData?.title,
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "Tour",
+      user: currentUser?.name,
+    });
   };
 
   return (
@@ -247,6 +263,11 @@ const TourForm = () => {
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
+              {dataSaved && (
+                <div className="w-full h-[60px] bg-[#06905E]  mb-2 flex items-center justify-center rounded-lg">
+                  Data Uploaded Successfully !!
+                </div>
+              )}
               <div>
                 <label className="mb-3 block text-black dark:text-white">
                   Title
@@ -389,11 +410,11 @@ const TourForm = () => {
                     id="inbound-radio"
                     type="radio"
                     value="inbound"
-                    checked={formData?.type === 'inbound'}
+                    checked={formData?.type === "inbound"}
                     onChange={() =>
                       setFormData((prevState) => ({
                         ...prevState,
-                        type: 'inbound',
+                        type: "inbound",
                       }))
                     }
                     className=" cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -411,11 +432,11 @@ const TourForm = () => {
                     id="inbound-radio"
                     type="radio"
                     value="outbound"
-                    checked={formData?.type === 'outbound'}
+                    checked={formData?.type === "outbound"}
                     onChange={() =>
                       setFormData((prevState) => ({
                         ...prevState,
-                        type: 'outbound',
+                        type: "outbound",
                       }))
                     }
                     className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"

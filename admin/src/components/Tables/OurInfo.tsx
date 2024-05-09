@@ -1,10 +1,19 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { MdDelete, MdEdit } from 'react-icons/md';
-import { useEffect, useState } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { NavLink, useNavigate } from "react-router-dom";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { MdDelete, MdEdit } from "react-icons/md";
+import { useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface InfoData {
   noOfDestinations: number;
@@ -22,21 +31,22 @@ const OurInfo = () => {
     noOfCustomers: 0,
   });
   const [dataSubmitted, setDataSubmitted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   useEffect(() => {
-    const docRef = doc(db, 'ourInfo', '6ehvkjpjNJpYqIwTvuVd');
+    const docRef = doc(db, "ourInfo", "6ehvkjpjNJpYqIwTvuVd");
     const fetcthing = async () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log('Document data:', docSnap.data());
+        console.log("Document data:", docSnap.data());
         setFormData({
           noOfDestinations: docSnap.data().noOfDestinations,
           noOfTours: docSnap.data().noOfTours,
           noOfCustomers: docSnap.data().noOfCustomers,
         });
       } else {
-        console.log('No such document!');
+        console.log("No such document!");
       }
     };
     fetcthing();
@@ -47,12 +57,12 @@ const OurInfo = () => {
   };
 
   const handleSaveClick = () => {
-    console.log('form data is ', formData);
+    console.log("form data is ", formData);
     setEditable(false);
     setLoading(true);
 
     const saving = async () => {
-      await setDoc(doc(db, 'ourInfo', '6ehvkjpjNJpYqIwTvuVd'), {
+      await setDoc(doc(db, "ourInfo", "6ehvkjpjNJpYqIwTvuVd"), {
         noOfDestinations: formData?.noOfDestinations,
         noOfCustomers: formData?.noOfCustomers,
         noOfTours: formData?.noOfTours,
@@ -62,6 +72,14 @@ const OurInfo = () => {
       setTimeout(() => {
         setDataSubmitted(false);
       }, 3000);
+      const historyRef = collection(db, "history");
+      await addDoc(historyRef, {
+        title: "Our Info updated",
+        role: currentUser?.role,
+        date: serverTimestamp(),
+        item: "Our Info",
+        user: currentUser?.name,
+      });
     };
 
     saving();
@@ -86,7 +104,7 @@ const OurInfo = () => {
                 onClick={editable ? handleSaveClick : handleEditClick}
                 disabled={loading}
               >
-                {editable ? (loading ? 'Saving...' : 'Save') : 'Edit'}
+                {editable ? (loading ? "Saving..." : "Save") : "Edit"}
               </button>
             </div>
             <div className="w-[80%] h-[90%] sm:h-[75%] flex flex-col sm:flex-row justify-around gap-5">
@@ -97,8 +115,8 @@ const OurInfo = () => {
                   value={formData?.noOfDestinations}
                   className={` ${
                     !editable
-                      ? 'text-slate-500  focus:outline-none'
-                      : 'text-slate-800 focus:border-primary'
+                      ? "text-slate-500  focus:outline-none"
+                      : "text-slate-800 focus:border-primary"
                   } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                   placeholder="Enter no of Destinations : "
                   onChange={(e) =>
@@ -116,8 +134,8 @@ const OurInfo = () => {
                   value={formData?.noOfCustomers}
                   className={` ${
                     !editable
-                      ? 'text-slate-500  focus:outline-none'
-                      : 'text-slate-800 focus:border-primary'
+                      ? "text-slate-500  focus:outline-none"
+                      : "text-slate-800 focus:border-primary"
                   } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                   placeholder="Enter no of customers"
                   onChange={(e) =>
@@ -135,8 +153,8 @@ const OurInfo = () => {
                   value={formData?.noOfTours}
                   className={` ${
                     !editable
-                      ? 'text-slate-500   focus:border-red-400'
-                      : 'text-slate-800 focus:border-primary'
+                      ? "text-slate-500   focus:border-red-400"
+                      : "text-slate-800 focus:border-primary"
                   } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                   readOnly={!editable}
                   onChange={(e) =>

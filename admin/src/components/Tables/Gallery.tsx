@@ -1,16 +1,20 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useEffect, useState } from "react";
 import {
   Timestamp,
+  addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
-} from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
-import { MdDelete } from 'react-icons/md';
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { MdDelete } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface ImageData {
   title: string;
@@ -23,22 +27,23 @@ const Gallery = () => {
   const [images, setImages] = useState<ImageData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   useEffect(() => {
     const gotImages: ImageData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, 'gallery'));
+      const querySnapshot = await getDocs(collection(db, "gallery"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = '';
+        let dateObject = "";
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log('Date:', dateObject);
+          console.log("Date:", dateObject);
         } else {
-          console.error('Invalid or missing date field:', date);
+          console.error("Invalid or missing date field:", date);
         }
 
         const f: ImageData = {
@@ -56,15 +61,23 @@ const Gallery = () => {
   }, []);
 
   const handleClick = async (id: string) => {
-    const galleryRef = doc(db, 'gallery', id);
+    const galleryRef = doc(db, "gallery", id);
 
     await deleteDoc(galleryRef);
-    console.log('Deleted successfully');
+    console.log("Deleted successfully");
     setImages((prevImages) => prevImages.filter((img) => img.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: "Gallery image deleted",
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "Gallery",
+      user: currentUser?.name,
+    });
   };
 
   return (
@@ -115,7 +128,7 @@ const Gallery = () => {
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate('/forms/gallery-form', {
+                        navigate("/forms/gallery-form", {
                           state: { image: image },
                         })
                       }

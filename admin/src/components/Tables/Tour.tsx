@@ -1,16 +1,20 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
+import { NavLink, useNavigate } from "react-router-dom";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
 import {
   Timestamp,
+  addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
-} from 'firebase/firestore';
-import { useEffect, useState } from 'react';
-import { db } from '../../firebaseConfig';
-import { MdDelete } from 'react-icons/md';
+  serverTimestamp,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../../firebaseConfig";
+import { MdDelete } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface TourData {
   title: string;
@@ -33,22 +37,23 @@ const Tour = () => {
   const [tours, setTours] = useState<TourData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   useEffect(() => {
     const gotTours: TourData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, 'tours'));
+      const querySnapshot = await getDocs(collection(db, "tours"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = '';
+        let dateObject = "";
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log('Date:', dateObject);
+          console.log("Date:", dateObject);
         } else {
-          console.error('Invalid or missing date field:', date);
+          console.error("Invalid or missing date field:", date);
         }
 
         const t: TourData = {
@@ -77,15 +82,23 @@ const Tour = () => {
   }, []);
 
   const handleClick = async (id: string) => {
-    const tourRef = doc(db, 'tours', id);
+    const tourRef = doc(db, "tours", id);
 
     await deleteDoc(tourRef);
-    console.log('Deleted successfully');
+    console.log("Deleted successfully");
     setTours((prevTours) => prevTours.filter((tour) => tour.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: "Tour deleted",
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "Tour",
+      user: currentUser?.name,
+    });
   };
 
   return (
@@ -136,7 +149,7 @@ const Tour = () => {
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate('/forms/tour-form', {
+                        navigate("/forms/tour-form", {
                           state: { tour: tour },
                         })
                       }

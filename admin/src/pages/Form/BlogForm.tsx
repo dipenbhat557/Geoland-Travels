@@ -1,41 +1,45 @@
-import { useState } from 'react';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import DefaultLayout from '../../layout/DefaultLayout';
+import { useState } from "react";
+import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import DefaultLayout from "../../layout/DefaultLayout";
 import {
   addDoc,
   collection,
   doc,
   serverTimestamp,
   setDoc,
-} from 'firebase/firestore';
-import { db, storage } from '../../firebaseConfig';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+} from "firebase/firestore";
+import { db, storage } from "../../firebaseConfig";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 const BlogForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const blog = location?.state?.blog;
   const [formData, setFormData] = useState({
-    title: blog?.title || '',
-    img: blog?.img || '',
-    blogTitle: blog?.blogTitle || '',
-    author: blog?.author || '',
-    content: blog?.content || '',
+    title: blog?.title || "",
+    img: blog?.img || "",
+    blogTitle: blog?.blogTitle || "",
+    author: blog?.author || "",
+    content: blog?.content || "",
   });
   const [img, setImg] = useState(null as File | null);
+  const [dataSaved, setDataSaved] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   const handleSubmit = async () => {
-    console.log('Submission started');
+    console.log("Submission started");
     if (img) {
-      const storageRef = ref(storage, 'some-child/' + img.name);
+      const storageRef = ref(storage, "some-child/" + img.name);
       try {
-        const snapshot = await uploadBytes(storageRef, img);
+        await uploadBytes(storageRef, img);
 
         const downloadURL = await getDownloadURL(storageRef);
 
         if (blog?.id) {
-          const blogRef = doc(db, 'blogs', blog?.id);
+          const blogRef = doc(db, "blogs", blog?.id);
           await setDoc(blogRef, {
             title: formData?.title,
             img: downloadURL,
@@ -44,10 +48,10 @@ const BlogForm = () => {
             author: formData?.author,
             content: formData?.content,
           });
-          console.log('updated successfully');
-          navigate('/blogs');
+          console.log("updated successfully");
+          navigate("/blogs");
         } else {
-          const blogRef = collection(db, 'blogs');
+          const blogRef = collection(db, "blogs");
 
           const docRef = await addDoc(blogRef, {
             title: formData?.title,
@@ -59,18 +63,30 @@ const BlogForm = () => {
           });
           console.log(docRef.id);
           setFormData({
-            title: '',
-            img: '',
-            blogTitle: '',
-            author: '',
-            content: '',
+            title: "",
+            img: "",
+            blogTitle: "",
+            author: "",
+            content: "",
           });
         }
+        setDataSaved(true);
+
+        setTimeout(() => setDataSaved(false), 3000);
+
+        const historyRef = collection(db, "history");
+        await addDoc(historyRef, {
+          title: formData?.title,
+          role: currentUser?.role,
+          date: serverTimestamp(),
+          item: "Blog",
+          user: currentUser?.name,
+        });
       } catch (error: any) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       }
     } else {
-      console.error('No file selected');
+      console.error("No file selected");
     }
   };
 
@@ -79,7 +95,7 @@ const BlogForm = () => {
     if (file) {
       setImg(file);
     }
-    console.log('file is selected');
+    console.log("file is selected");
   };
 
   return (
@@ -92,6 +108,11 @@ const BlogForm = () => {
       </div>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
+          {dataSaved && (
+            <div className="w-full h-[60px] bg-[#06905E]  mb-2 flex items-center justify-center rounded-lg">
+              Data Uploaded Successfully !!
+            </div>
+          )}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">

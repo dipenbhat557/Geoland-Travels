@@ -1,9 +1,18 @@
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { useEffect, useState } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db, storage } from '../../firebaseConfig';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { db, storage } from "../../firebaseConfig";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 const Message = () => {
   const [editable, setEditable] = useState(false);
@@ -11,22 +20,23 @@ const Message = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null as File | null);
   const [formData, setFormData] = useState({
-    name: '',
-    message: '',
-    facebook: '',
-    instagram: '',
-    linkedin: '',
-    img: '',
+    name: "",
+    message: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+    img: "",
   });
   const [dataSubmitted, setDataSubmitted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   useEffect(() => {
-    const docRef = doc(db, 'messages', 'QrQ6SBmLF4SCtlmI5dnB');
+    const docRef = doc(db, "messages", "QrQ6SBmLF4SCtlmI5dnB");
     const fetcthing = async () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log('Document data:', docSnap.data());
+        console.log("Document data:", docSnap.data());
         setFormData({
           name: docSnap?.data()?.name,
           message: docSnap?.data()?.message,
@@ -36,7 +46,7 @@ const Message = () => {
           img: docSnap?.data()?.img,
         });
       } else {
-        console.log('No such document!');
+        console.log("No such document!");
       }
     };
     fetcthing();
@@ -47,21 +57,21 @@ const Message = () => {
   };
 
   const handleSaveClick = async () => {
-    console.log('form data is ', formData);
+    console.log("form data is ", formData);
     setEditable(false);
     setLoading(true);
 
     if (image) {
-      const storageRef = ref(storage, 'some-child/' + image.name);
+      const storageRef = ref(storage, "some-child/" + image.name);
       try {
-        const snapshot = await uploadBytes(storageRef, image);
+        await uploadBytes(storageRef, image);
 
         const downloadURL = await getDownloadURL(storageRef);
 
-        console.log('Download URL:', downloadURL);
+        console.log("Download URL:", downloadURL);
 
-        const messageRef = doc(db, 'messages', 'QrQ6SBmLF4SCtlmI5dnB');
-        const docRef = await setDoc(messageRef, {
+        const messageRef = doc(db, "messages", "QrQ6SBmLF4SCtlmI5dnB");
+        await setDoc(messageRef, {
           name: formData?.name,
           message: formData?.message,
           facebook: formData?.facebook,
@@ -76,11 +86,19 @@ const Message = () => {
         }, 3000);
         setLoading(false);
       } catch (error: any) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       }
     } else {
-      console.error('No file selected');
+      console.error("No file selected");
     }
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: "Message updated",
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "Message",
+      user: currentUser?.name,
+    });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +127,7 @@ const Message = () => {
                 onClick={editable ? handleSaveClick : handleEditClick}
                 disabled={loading}
               >
-                {editable ? (loading ? 'Saving...' : 'Save') : 'Edit'}
+                {editable ? (loading ? "Saving..." : "Save") : "Edit"}
               </button>
             </div>
             <div>
@@ -130,8 +148,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               />
             </div>
@@ -153,8 +171,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               ></textarea>
             </div>
@@ -170,8 +188,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               />
             </div>
@@ -194,8 +212,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               />
             </div>
@@ -217,8 +235,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               />
             </div>
@@ -240,8 +258,8 @@ const Message = () => {
                 readOnly={!editable}
                 className={` ${
                   !editable
-                    ? 'text-slate-500  focus:outline-none'
-                    : 'text-slate-800 focus:border-primary'
+                    ? "text-slate-500  focus:outline-none"
+                    : "text-slate-800 focus:border-primary"
                 } w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
               />
             </div>

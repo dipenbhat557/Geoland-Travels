@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-import Logo from '../../images/logo/logo.png';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { currUser } from '../../store';
-import { MdInfo, MdSpaceDashboard, MdTour } from 'react-icons/md';
-import { AiFillMessage } from 'react-icons/ai';
-import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from 'react-icons/fa';
-import { RiGalleryFill } from 'react-icons/ri';
-import { PiLinkSimple } from 'react-icons/pi';
+import { useRecoilState } from "recoil";
+import { currUser } from "../../store";
+import { MdInfo, MdSpaceDashboard, MdTour } from "react-icons/md";
+import { AiFillMessage } from "react-icons/ai";
+import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from "react-icons/fa";
+import { RiGalleryFill } from "react-icons/ri";
+import { PiLinkSimple } from "react-icons/pi";
+import { logo } from "../../assets";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -23,11 +23,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebar = useRef<any>(null);
 
   const [currentUser, setCurrentUser] = useRecoilState(currUser);
-  const navigate = useNavigate();
 
-  const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
+  const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
   // close on click outside
@@ -42,8 +41,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         return;
       setSidebarOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -52,21 +51,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       if (!sidebarOpen || keyCode !== 27) return;
       setSidebarOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   useEffect(() => {
-    localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
+    localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
     if (sidebarExpanded) {
-      document.querySelector('body')?.classList.add('sidebar-expanded');
+      document.querySelector("body")?.classList.add("sidebar-expanded");
     } else {
-      document.querySelector('body')?.classList.remove('sidebar-expanded');
+      document.querySelector("body")?.classList.remove("sidebar-expanded");
     }
   }, [sidebarExpanded]);
 
   const handleSignOut = () => {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem("currentUser");
 
     setCurrentUser({
       email: null,
@@ -75,20 +74,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       phone: null,
       role: null,
     });
-    window.location.href = '/signin';
+    window.location.href = "/signin";
   };
 
   return (
     <aside
       ref={sidebar}
       className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/">
-          <img src={Logo} alt="Logo" />
+          <img src={logo} alt="Logo" />
         </NavLink>
 
         <button
@@ -126,18 +125,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
-              <li>
-                <NavLink
-                  to="/"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('dashboard') &&
-                    'bg-graydark dark:bg-meta-4'
-                  }`}
-                >
-                  <MdSpaceDashboard className="text-2xl" />
-                  Dashboard
-                </NavLink>
-              </li>
+              {currentUser?.role === "admin" && (
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes("dashboard") &&
+                      "bg-graydark dark:bg-meta-4"
+                    }`}
+                  >
+                    <MdSpaceDashboard className="text-2xl" />
+                    Dashboard
+                  </NavLink>
+                </li>
+              )}
 
               {/* <!-- Menu Item Dashboard --> */}
 
@@ -150,8 +151,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/our-info"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('Our Info') &&
-                    'bg-graydark dark:bg-meta-4'
+                    pathname.includes("Our Info") &&
+                    "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <MdInfo className="text-2xl" />
@@ -180,7 +181,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/message-from-md"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('Message') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes("Message") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <AiFillMessage className="text-2xl" />
@@ -195,7 +196,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/faq"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('FAQ') && 'bg - graydark dark:bg-meta-4'
+                    pathname.includes("FAQ") && "bg - graydark dark:bg-meta-4"
                   }`}
                 >
                   <FaQuora className="text-2xl" />
@@ -207,7 +208,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/tour"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('tour') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes("tour") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <MdTour className="text-2xl" />
@@ -220,7 +221,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/gallery"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('gallery') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes("gallery") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <RiGalleryFill className="text-2xl" />
@@ -231,7 +232,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/blogs"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('blogs') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes("blogs") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <FaBlog className="text-2xl" />
@@ -242,19 +243,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/links"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('links') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes("links") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <PiLinkSimple className="text-2xl" />
                   Social Links
                 </NavLink>
               </li>
-              {currentUser?.role === 'admin' && (
+              {currentUser?.role === "admin" && (
                 <li>
                   <NavLink
                     to="/users"
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                      pathname.includes('users') && 'bg-graydark dark:bg-meta-4'
+                      pathname.includes("users") && "bg-graydark dark:bg-meta-4"
                     }`}
                   >
                     <FaHouseUser className="text-2xl" />
@@ -275,7 +276,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 to="/signin"
                 onClick={handleSignOut}
                 className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                  pathname.includes('Message') && 'bg-graydark dark:bg-meta-4'
+                  pathname.includes("Message") && "bg-graydark dark:bg-meta-4"
                 }`}
               >
                 <FaSignOutAlt className="text-2xl" />

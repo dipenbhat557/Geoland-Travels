@@ -1,25 +1,24 @@
-import React, { FormEvent, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import LogoDark from '../../images/logo/logo-dark.png';
-import Logo from '../../images/logo/logo.png';
-import { useSetRecoilState } from 'recoil';
-import { currUser } from '../../store';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import React, { FormEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { currUser } from "../../store";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { logo } from "../../assets";
 
 const SignIn: React.FC = () => {
   const setCurrentUser = useSetRecoilState(currUser);
 
   const navigate = useNavigate();
-  const userRef = collection(db, 'users');
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const userRef = collection(db, "users");
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const q = query(
       userRef,
-      where('email', '==', formData?.email?.trim()),
-      where('password', '==', formData?.password?.trim()),
+      where("email", "==", formData?.email?.trim()),
+      where("password", "==", formData?.password?.trim())
     );
     const userSnaps = await getDocs(q);
     userSnaps?.forEach((user) => {
@@ -33,16 +32,16 @@ const SignIn: React.FC = () => {
       });
       //   console.log('This is current user ', currentUser);
       localStorage.setItem(
-        'currentUser',
+        "currentUser",
         JSON.stringify({
           email: ud?.email,
           name: ud?.name,
           profile: ud?.img,
           phone: ud?.phone,
           role: ud?.role,
-        }),
+        })
       );
-      navigate('/');
+      navigate("/");
     });
   };
   //   useEffect(() => console.log('current user is ', currentUser), []);
@@ -54,8 +53,8 @@ const SignIn: React.FC = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="py-17.5 px-26 text-center">
               <Link className="mb-5.5 inline-block" to="/">
-                <img className="hidden dark:block" src={Logo} alt="Logo" />
-                <img className="dark:hidden" src={LogoDark} alt="Logo" />
+                <img className="hidden dark:block" src={logo} alt="Logo" />
+                <img className="dark:hidden" src={logo} alt="Logo" />
               </Link>
 
               <p className="2xl:px-20"></p>

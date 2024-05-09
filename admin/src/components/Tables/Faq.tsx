@@ -1,18 +1,20 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useEffect, useState } from "react";
 import {
   Timestamp,
+  addDoc,
   collection,
   deleteDoc,
-  deleteField,
   doc,
   getDocs,
-  updateDoc,
-} from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
-import { MdDelete } from 'react-icons/md';
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { MdDelete } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface FaqData {
   title: string;
@@ -26,22 +28,23 @@ const Faq = () => {
   const [faqs, setFaqs] = useState<FaqData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
 
   useEffect(() => {
     const gotFaqs: FaqData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, 'faqs'));
+      const querySnapshot = await getDocs(collection(db, "faqs"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = '';
+        let dateObject = "";
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log('Date:', dateObject);
+          console.log("Date:", dateObject);
         } else {
-          console.error('Invalid or missing date field:', date);
+          console.error("Invalid or missing date field:", date);
         }
 
         const f: FaqData = {
@@ -60,15 +63,23 @@ const Faq = () => {
   }, []);
 
   const handleClick = async (id: string) => {
-    const faqRef = doc(db, 'faqs', id);
+    const faqRef = doc(db, "faqs", id);
 
     await deleteDoc(faqRef);
-    console.log('Deleted successfully');
+    console.log("Deleted successfully");
     setFaqs((prevFaqs) => prevFaqs.filter((faq) => faq.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: "Faq deleted",
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "FAQ",
+      user: currentUser?.name,
+    });
   };
 
   return (
@@ -119,7 +130,7 @@ const Faq = () => {
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate('/forms/faq-form', { state: { faq: faq } })
+                        navigate("/forms/faq-form", { state: { faq: faq } })
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     >

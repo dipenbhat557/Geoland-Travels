@@ -1,16 +1,20 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../Breadcrumbs/Breadcrumb';
-import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+import DefaultLayout from "../../layout/DefaultLayout";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useEffect, useState } from "react";
 import {
   Timestamp,
+  addDoc,
   collection,
   deleteDoc,
   doc,
   getDocs,
-} from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
-import { MdDelete } from 'react-icons/md';
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+import { MdDelete } from "react-icons/md";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../store";
 
 interface UserData {
   name: string;
@@ -27,22 +31,29 @@ const User = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
+  const currentUser = useRecoilValue(currUser);
+
+  useEffect(() => {
+    if (currentUser?.role !== "admin") {
+      navigate("/signin");
+    }
+  }, [currUser]);
 
   useEffect(() => {
     const gotUsers: UserData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, 'users'));
+      const querySnapshot = await getDocs(collection(db, "users"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = '';
+        let dateObject = "";
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log('Date:', dateObject);
+          console.log("Date:", dateObject);
         } else {
-          console.error('Invalid or missing date field:', date);
+          console.error("Invalid or missing date field:", date);
         }
 
         const u: UserData = {
@@ -64,15 +75,23 @@ const User = () => {
   }, []);
 
   const handleClick = async (id: string) => {
-    const userRef = doc(db, 'users', id);
+    const userRef = doc(db, "users", id);
 
     await deleteDoc(userRef);
-    console.log('Deleted successfully');
+    console.log("Deleted successfully");
     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
+    const historyRef = collection(db, "history");
+    await addDoc(historyRef, {
+      title: "User deleted",
+      role: currentUser?.role,
+      date: serverTimestamp(),
+      item: "User",
+      user: currentUser?.name,
+    });
   };
 
   return (
@@ -96,7 +115,10 @@ const User = () => {
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                  Title
+                  Name
+                </th>
+                <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  Role
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Date & Time
@@ -118,12 +140,15 @@ const User = () => {
                     </h5>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white">{user?.role}</p>
+                  </td>
+                  <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <p className="text-black dark:text-white">{user?.date}</p>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate('/forms/user-form', {
+                        navigate("/forms/user-form", {
                           state: { user: user },
                         })
                       }

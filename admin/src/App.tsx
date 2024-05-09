@@ -1,30 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
-import Loader from './common/Loader';
-import PageTitle from './components/PageTitle';
+import Loader from "./common/Loader";
+import PageTitle from "./components/PageTitle";
 
-import Hero from './pages/Dashboard/Hero';
+import Hero from "./pages/Dashboard/Hero";
 
-import Profile from './pages/Profile';
-
-import FaqForm from './pages/Form/FaqForm';
-import OurInfo from './components/Tables/OurInfo';
+import FaqForm from "./pages/Form/FaqForm";
+import OurInfo from "./components/Tables/OurInfo";
 // import CoustomerReview from './components/Tables/CustomerReview';
-import Message from './components/Tables/Message';
-import Faq from './components/Tables/Faq';
-import SignIn from './pages/Auth/Signin';
-import { useRecoilValue } from 'recoil';
-import { isLoggedIn } from './store';
-import TourForm from './pages/Form/Tourform';
-import TourTable from './components/Tables/Tour';
-import Gallery from './components/Tables/Gallery';
-import GalleryForm from './pages/Form/GalleryForm';
-import Blog from './components/Tables/Blog';
-import BlogForm from './pages/Form/BlogForm';
-import SocialLinks from './components/Tables/SocialLinks';
-import User from './components/Tables/User';
-import UserForm from './pages/Form/UserForm';
+import Message from "./components/Tables/Message";
+import Faq from "./components/Tables/Faq";
+import SignIn from "./pages/Auth/Signin";
+import { useRecoilValue } from "recoil";
+import { isLoggedIn } from "./store";
+import TourForm from "./pages/Form/Tourform";
+import TourTable from "./components/Tables/Tour";
+import Gallery from "./components/Tables/Gallery";
+import GalleryForm from "./pages/Form/GalleryForm";
+import Blog from "./components/Tables/Blog";
+import BlogForm from "./pages/Form/BlogForm";
+import SocialLinks from "./components/Tables/SocialLinks";
+import User from "./components/Tables/User";
+import UserForm from "./pages/Form/UserForm";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -42,7 +41,7 @@ function App() {
 
   useEffect(() => {
     if (!isLogIn) {
-      navigate('/signin');
+      navigate("/signin");
     }
   }, []);
 
@@ -66,16 +65,6 @@ function App() {
             <>
               <PageTitle title="Signin" />
               <SignIn />
-            </>
-          }
-        />
-
-        <Route
-          path="/profile"
-          element={
-            <>
-              <PageTitle title="Profile" />
-              <Profile />
             </>
           }
         />
@@ -105,6 +94,15 @@ function App() {
             <>
               <PageTitle title="Our Info" />
               <OurInfo />
+            </>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <PageTitle title="Dashboard" />
+              <Dashboard />
             </>
           }
         />
