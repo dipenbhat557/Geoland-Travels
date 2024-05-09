@@ -65,16 +65,16 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                 key={index}
                 className={` flex items-center text-[14px] gap-2 cursor-pointer relative`}
                 onMouseEnter={() => {
-                  if (nav.title === "Tours") {
+                  if (nav.title === "Destination") {
                     setShowDropdown1(true);
-                  } else if (nav.title === "Destination") {
+                  } else if (nav.title === "Most Sold Packages") {
                     setShowDropdown2(true);
                   }
                 }}
                 onMouseLeave={() => {
-                  if (nav.title === "Tours") {
+                  if (nav.title === "Destination") {
                     handleMouseLeave1();
-                  } else if (nav.title === "Destination") {
+                  } else if (nav.title === "Most Sold Packages") {
                     handleMouseLeave2();
                   }
                 }}
@@ -82,7 +82,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                   navigate(nav.link);
                 }}
               >
-                {nav.title === "Tours" || nav.title === "Destination" ? (
+                {nav.title === "Destination" ||
+                nav.title === "Most Sold Packages" ? (
                   <>
                     {nav.title}
                     <IoMdArrowDropdown className={`inline  `} />

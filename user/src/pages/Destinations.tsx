@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import TravelDate from "../components/TravelDate";
-import Calendar from "../components/Calendar";
 import { destinations_details } from "../constants";
 import { tour_types } from "../constants";
 import { styles } from "../styles";
 import { useLocation } from "react-router-dom";
 
 const Destinations = () => {
-  const [showpick, setshowpick] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
 
@@ -27,25 +25,6 @@ const Destinations = () => {
 
       <div className="flex pl-4">
         <div className=" w-[20%] h-[25%] border   rounded-t-lg mt-[8%]">
-          <div
-            className={`${styles.padding} w-full h-[20%] text-[13px] flex flex-col gap-2 rounded-t-lg bg-[rgb(6,144,94)] text-white`}
-          >
-            <p className="text-center">When are You travelling?</p>
-            <input
-              className=" rounded-lg mx-auto "
-              onClick={() => {
-                setshowpick(!showpick);
-              }}
-            />
-            {showpick ? (
-              <div className="">
-                {" "}
-                <Calendar />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
           <div className={`${styles.padding} w-full h-[80%] flex flex-col`}>
             <h6 className="py-5">Tour Type</h6>
             <ul>

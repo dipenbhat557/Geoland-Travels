@@ -1,8 +1,34 @@
-import { blog1, blog2, blog3, blog4, canada, canada2Bg, canadaBg, d1, dubai, effile, heroBg, ktm, london, nepal, r1, r2, r3, r4, r5, s1, s2, s3, s4, uae, usa } from "../assets";
+import {
+  blog1,
+  blog2,
+  blog3,
+  blog4,
+  canada,
+  canada2Bg,
+  canadaBg,
+  d1,
+  dubai,
+  effile,
+  heroBg,
+  ktm,
+  london,
+  nepal,
+  r1,
+  r2,
+  r3,
+  r4,
+  r5,
+  s1,
+  s2,
+  s3,
+  s4,
+  uae,
+  usa,
+} from "../assets";
 
 export const navLinks = [
   {
-    title: "Tours",
+    title: "Destination",
     link: "#",
   },
   {
@@ -10,7 +36,7 @@ export const navLinks = [
     link: "#",
   },
   {
-    title: "Destination",
+    title: "Most Sold Packages",
     link: "#",
   },
   {
@@ -48,7 +74,6 @@ export const destinationDropdown = [
     link: "/destination",
   },
 ];
-
 
 export const trendingItems = [
   {
@@ -155,8 +180,8 @@ export const blogItems = [
   },
 ];
 
-export const galleryItems = [london, ktm, canada2Bg, canadaBg, effile, dubai]
-export const galleryItems2 = [ canadaBg, effile, dubai,london, ktm, canada2Bg,];;
+export const galleryItems = [london, ktm, canada2Bg, canadaBg, effile, dubai];
+export const galleryItems2 = [canadaBg, effile, dubai, london, ktm, canada2Bg];
 
 export const locationItems = [
   {
@@ -219,8 +244,7 @@ export const reviewItems = [
     name: "Dipendra",
     img: r4,
     title: "Excellent Service !!",
-    content:
-      "I had an amazing experience with this company. !",
+    content: "I had an amazing experience with this company. !",
   },
   {
     name: "Jafroz",

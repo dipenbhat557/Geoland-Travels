@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { styles } from "../styles";
 import { blogItems } from "../constants";
-import Gallery from "../components/Gallery";
+import Gallery from "../components/Glimpse";
 import Footer from "../components/Footer";
 import { heroBg } from "../assets";
 import { useEffect } from "react";

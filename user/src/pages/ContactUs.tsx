@@ -5,14 +5,15 @@ import { useState, useRef, useEffect } from "react";
 
 import { SectionWrapper } from "../hoc";
 
-import ReachOut from "../components/ReachOut";
+// import ReachOut from "../components/ReachOut";
 import WhyTour from "../components/WhyTour";
-import Gallery from "../components/Gallery";
+import Gallery from "../components/Glimpse";
 import Footer from "../components/Footer";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import EarthCanvas from "../components/canvas/Earth";
 import { slideIn } from "../utils/motion";
 import { motion } from "framer-motion";
+import Glimpse from "../components/Glimpse";
 
 const ContactUs = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -130,7 +131,7 @@ const ContactUs = () => {
           {/* EarthCanvas section */}
           <motion.div
             variants={slideIn("right", "tween", 0.2, 1)}
-            className=" flex items-center justify-center absolute -top-[30%] right-[100%] w-full h-full"
+            className=" flex items-center justify-center absolute -top-[30%]  w-full h-full"
           >
             <EarthCanvas />
           </motion.div>
@@ -145,7 +146,8 @@ const ContactUs = () => {
         </div>
       </div>
 
-      <ReachOut />
+      {/* <ReachOut /> */}
+      {/* <Glimpse /> */}
       <WhyTour />
       <Footer isContact={true} />
     </div>

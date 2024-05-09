@@ -29,6 +29,7 @@ interface TourData {
   price: number;
   type: string;
   trending: boolean;
+  category: string[];
 }
 
 const TourForm = () => {
@@ -65,7 +66,7 @@ const TourForm = () => {
   const [itineraryInputFields, setItineraryInputFields] = useState<string[]>(
     tour?.itinerary || [""]
   );
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<TourData>({
     title: tour?.title || "",
     tourTitle: tour?.tourTitle || "",
     img: tour?.img || "",
@@ -79,6 +80,7 @@ const TourForm = () => {
     type: tour?.type || "inbound",
     trending: tour?.trending || false,
     id: tour?.id || "",
+    category: tour?.category || [""],
   });
 
   const handleHighlightsValueChange = (index: any, event: any) => {
@@ -190,6 +192,7 @@ const TourForm = () => {
             price: formData?.price,
             type: formData?.type,
             trending: formData?.trending,
+            category: formData?.category,
           });
           console.log("updated successfully");
           navigate("/tour");
@@ -210,6 +213,7 @@ const TourForm = () => {
             price: formData?.price,
             type: formData?.type,
             trending: formData?.trending,
+            category: formData?.category,
           });
           console.log(docRef.id);
           setFormData({
@@ -226,6 +230,7 @@ const TourForm = () => {
             type: "",
             trending: false,
             id: "",
+            category: [""],
           });
         }
         setDataSaved(true);
@@ -470,6 +475,56 @@ const TourForm = () => {
                   }
                   className="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-5">
+              <p className="mb-3 px-5 block text-black dark:text-white">
+                Category of Tour
+              </p>
+              <div className="px-5 mb-3 flex  justify-start">
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    type="checkbox"
+                    value="inbound"
+                    checked={formData?.category?.includes("Culture")}
+                    onChange={() =>
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        category: prevState?.category?.push("Culture"),
+                      }))
+                    }
+                    className=" cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-radio-1"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    In Bound
+                  </label>
+                </div>
+
+                <div className="flex items-center px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    id="inbound-radio"
+                    type="radio"
+                    value="outbound"
+                    checked={formData?.type === "outbound"}
+                    onChange={() =>
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        type: "outbound",
+                      }))
+                    }
+                    className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-radio-2"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Out Bound
+                  </label>
+                </div>
               </div>
             </div>
           </div>

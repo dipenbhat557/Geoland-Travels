@@ -31,6 +31,7 @@ interface TourData {
   price: number;
   type: string;
   trending: boolean;
+  category: string[];
 }
 
 const Tour = () => {
@@ -72,6 +73,7 @@ const Tour = () => {
           price: doc?.data()?.price,
           type: doc?.data()?.type,
           trending: doc?.data()?.trending,
+          category: doc?.data()?.category,
         };
         gotTours.push(t);
       });

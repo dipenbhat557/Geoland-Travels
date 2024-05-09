@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { galleryItems, galleryItems2 } from "../constants";
 
-const Gallery = () => {
+const Glimpse = () => {
   return (
     <div className={`${styles.padding} w-full h-[900px] flex flex-col`}>
-      <p className={`${styles.sectionHeadText} h-[6%]`}>Gallery</p>
+      <p className={`${styles.sectionHeadText} h-[6%]`}>Glimpses</p>
       <motion.div
         variants={fadeIn("up", "spring", 0.95, 2.75)}
         className="h-[45%] m-auto overflow-hidden relative "
@@ -52,4 +52,4 @@ const Gallery = () => {
     </div>
   );
 };
-export default Gallery;
+export default Glimpse;

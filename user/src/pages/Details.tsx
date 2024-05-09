@@ -4,7 +4,7 @@ import { styles } from "../styles";
 import TourOverview from "../components/TourOverview";
 import WhatsIncluded from "../components/WhatsIncluded";
 import Itinerary from "../components/Itinerary";
-import DetailReviews from "../components/DetailReviews";
+// import DetailReviews from "../components/DetailReviews";
 import LeaveReply from "../components/LeaveReply";
 import { useEffect } from "react";
 interface Tour {
@@ -148,7 +148,7 @@ const Details = () => {
         <TourOverview tour={tour} />
         <WhatsIncluded tour={tour} />
         <Itinerary tour={tour} />
-        <DetailReviews tour={tour} />
+        {/* <DetailReviews tour={tour} /> */}
         <LeaveReply />
       </div>
     </div>
