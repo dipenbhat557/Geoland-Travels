@@ -112,18 +112,24 @@ const Hero = () => {
               </div>
             ))}
         </div>
-        <div className="w-[40%] h-[20%] flex items-end justify-between">
-          {["Culture", "Food", "Nature", "Adventure"].map((e, i) => {
-            return (
-              <button
-                key={i}
-                onClick={() => navigate("/destination", { state: { tour: e } })}
-                className="text-white bg-opacity-10 bg-slate-100 rounded-full w-[100px] py-2"
-              >
-                {e}
-              </button>
-            );
-          })}
+        <div className="w-[60%] h-[20%] flex items-end justify-between">
+          {["Nature", "Adventure", "Culture", "Food", "City", "Cruise"].map(
+            (e, i) => {
+              return (
+                <button
+                  key={i}
+                  onClick={() =>
+                    navigate("/destination", {
+                      state: { key: "category", value: e },
+                    })
+                  }
+                  className="text-white bg-opacity-10 hover:bg-opacity-40 bg-slate-100 rounded-full w-[100px] py-2"
+                >
+                  {e}
+                </button>
+              );
+            }
+          )}
         </div>
       </div>
     </div>

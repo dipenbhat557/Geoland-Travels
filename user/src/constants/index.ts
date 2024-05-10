@@ -52,26 +52,11 @@ export const navLinks = [
 export const tourDropdown = [
   {
     title: "Inbound Tour",
-    link: "/destination",
+    val: "inbound",
   },
   {
     title: "Outbound Tour",
-    link: "/destination",
-  },
-];
-
-export const destinationDropdown = [
-  {
-    title: "Paris",
-    link: "/destination",
-  },
-  {
-    title: "Kathmandu",
-    link: "/destination",
-  },
-  {
-    title: "Dubai",
-    link: "/destination",
+    val: "outbound",
   },
 ];
 

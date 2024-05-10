@@ -1,11 +1,13 @@
-import { destinationDropdown, navLinks, tourDropdown } from "../constants";
+import { navLinks, tourDropdown } from "../constants";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { logo } from "../assets";
 import { styles } from "../styles";
+import { useRecoilValue } from "recoil";
+import { TourData, toursData } from "../store";
 const Navbar = ({ isHome }: { isHome: boolean }) => {
   const navigate = useNavigate();
   const [showDropdown1, setShowDropdown1] = useState(false);
@@ -13,6 +15,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
   const [toggle, setToggle] = useState(false);
   let timeoutId1: NodeJS.Timeout;
   let timeoutId2: NodeJS.Timeout;
+  const tours: TourData[] = useRecoilValue(toursData);
+  const [packages, setPackages] = useState<TourData[]>([]);
 
   const handleMouseLeave1 = () => {
     timeoutId1 = setTimeout(() => {
@@ -39,6 +43,11 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
       clearTimeout(timeoutId2);
     }
   };
+
+  useEffect(() => {
+    const packageResults = tours.filter((t: TourData) => t?.trending === true);
+    setPackages(packageResults);
+  }, []);
 
   return (
     <>
@@ -119,8 +128,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                   >
                     <p
                       onClick={() =>
-                        navigate(service?.link, {
-                          state: { title: service?.title },
+                        navigate("/destination", {
+                          state: { key: "type", value: service?.val },
                         })
                       }
                     >
@@ -139,7 +148,7 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
             onMouseOver={() => handleMouseOverDropdown2()}
           >
             <ul className="w-full">
-              {destinationDropdown?.map((service, index) => {
+              {packages?.map((service, index) => {
                 return (
                   <li
                     key={index}
@@ -147,12 +156,12 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                   >
                     <p
                       onClick={() =>
-                        navigate(service?.link, {
-                          state: { title: service?.title },
+                        navigate("/details", {
+                          state: { tour: service },
                         })
                       }
                     >
-                      {service?.title}
+                      {service?.tourTitle}
                     </p>
                   </li>
                 );
