@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { logo } from "../../assets";

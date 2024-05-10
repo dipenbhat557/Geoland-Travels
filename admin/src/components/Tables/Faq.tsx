@@ -14,7 +14,7 @@ import {
 import { db } from "../../firebaseConfig";
 import { MdDelete } from "react-icons/md";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../../pages/store";
 
 interface FaqData {
   title: string;

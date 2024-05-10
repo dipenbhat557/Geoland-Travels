@@ -11,7 +11,7 @@ import {
 import { db } from "../../firebaseConfig";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 
 const FaqForm = () => {
   const location = useLocation();

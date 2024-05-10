@@ -13,7 +13,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 
 interface TourData {
   title: string;
@@ -30,6 +30,7 @@ interface TourData {
   type: string;
   trending: boolean;
   category: string[];
+  duration: string;
 }
 
 const TourForm = () => {
@@ -81,6 +82,7 @@ const TourForm = () => {
     trending: tour?.trending || false,
     id: tour?.id || "",
     category: tour?.category || [""],
+    duration: tour?.duration || "",
   });
 
   const handleHighlightsValueChange = (index: any, event: any) => {
@@ -193,6 +195,7 @@ const TourForm = () => {
             type: formData?.type,
             trending: formData?.trending,
             category: formData?.category,
+            duration: formData?.duration,
           });
           console.log("updated successfully");
           navigate("/tour");
@@ -214,6 +217,7 @@ const TourForm = () => {
             type: formData?.type,
             trending: formData?.trending,
             category: formData?.category,
+            duration: formData?.duration,
           });
           console.log(docRef.id);
           setFormData({
@@ -231,6 +235,7 @@ const TourForm = () => {
             trending: false,
             id: "",
             category: [""],
+            duration: "",
           });
         }
         setDataSaved(true);
@@ -251,6 +256,22 @@ const TourForm = () => {
       item: "Tour",
       user: currentUser?.name,
     });
+    window.scrollTo(0, 0);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    const isCategorySelected = formData.category.includes(category);
+    if (isCategorySelected) {
+      setFormData((prevState) => ({
+        ...prevState,
+        category: prevState.category.filter((c) => c !== category),
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        category: [...prevState.category, category],
+      }));
+    }
   };
 
   return (
@@ -296,6 +317,19 @@ const TourForm = () => {
                   name="tourTitle"
                   onChange={(e) => handleChange(e)}
                   placeholder="Tour Title"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-black dark:text-white">
+                  Tour Duration
+                </label>
+                <input
+                  type="text"
+                  value={formData?.duration}
+                  name="duration"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Tour Duration"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
@@ -478,51 +512,99 @@ const TourForm = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 ">
               <p className="mb-3 px-5 block text-black dark:text-white">
                 Category of Tour
               </p>
-              <div className="px-5 mb-3 flex  justify-start">
+              <div className="px-5 mb-3 flex flex-wrap gap-4 justify-start">
                 <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
                   <input
                     type="checkbox"
-                    value="inbound"
-                    checked={formData?.category?.includes("Culture")}
-                    onChange={() =>
-                      setFormData((prevState) => ({
-                        ...prevState,
-                        category: prevState?.category?.push("Culture"),
-                      }))
-                    }
-                    className=" cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    value="Nature"
+                    checked={formData?.category?.includes("Nature")}
+                    onChange={() => handleCategoryChange("Nature")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
-                    htmlFor="bordered-radio-1"
+                    htmlFor="bordered-checkbox-1"
                     className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    In Bound
+                    Nature
                   </label>
                 </div>
-
-                <div className="flex items-center px-5 border border-gray-200 rounded dark:border-gray-700">
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
                   <input
-                    id="inbound-radio"
-                    type="radio"
-                    value="outbound"
-                    checked={formData?.type === "outbound"}
-                    onChange={() =>
-                      setFormData((prevState) => ({
-                        ...prevState,
-                        type: "outbound",
-                      }))
-                    }
-                    className="w-4 cursor-pointer h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    type="checkbox"
+                    value="Adventure"
+                    checked={formData?.category?.includes("Adventure")}
+                    onChange={() => handleCategoryChange("Adventure")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label
-                    htmlFor="bordered-radio-2"
+                    htmlFor="bordered-checkbox-1"
                     className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    Out Bound
+                    Adventure
+                  </label>
+                </div>
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    type="checkbox"
+                    value="Culture"
+                    checked={formData?.category?.includes("Culture")}
+                    onChange={() => handleCategoryChange("Culture")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-checkbox-1"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Culture
+                  </label>
+                </div>
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    type="checkbox"
+                    value="Food"
+                    checked={formData?.category?.includes("Food")}
+                    onChange={() => handleCategoryChange("Food")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-checkbox-1"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Food
+                  </label>
+                </div>
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    type="checkbox"
+                    value="City"
+                    checked={formData?.category?.includes("City")}
+                    onChange={() => handleCategoryChange("City")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-checkbox-1"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    City
+                  </label>
+                </div>
+                <div className="flex items-center mr-4 px-5 border border-gray-200 rounded dark:border-gray-700">
+                  <input
+                    type="checkbox"
+                    value="Cruise"
+                    checked={formData?.category?.includes("Cruise")}
+                    onChange={() => handleCategoryChange("Cruise")}
+                    className="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label
+                    htmlFor="bordered-checkbox-1"
+                    className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Cruise
                   </label>
                 </div>
               </div>

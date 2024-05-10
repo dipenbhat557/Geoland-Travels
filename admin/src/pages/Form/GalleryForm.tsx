@@ -12,7 +12,7 @@ import { db, storage } from "../../firebaseConfig";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 
 const GalleryForm = () => {
   const location = useLocation();

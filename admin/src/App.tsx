@@ -13,7 +13,7 @@ import Message from "./components/Tables/Message";
 import Faq from "./components/Tables/Faq";
 import SignIn from "./pages/Auth/Signin";
 import { useRecoilValue } from "recoil";
-import { isLoggedIn } from "./store";
+import { isLoggedIn } from "./pages/store";
 import TourForm from "./pages/Form/Tourform";
 import TourTable from "./components/Tables/Tour";
 import Gallery from "./components/Tables/Gallery";

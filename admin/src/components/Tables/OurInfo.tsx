@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../../pages/store";
 
 interface InfoData {
   noOfDestinations: number;

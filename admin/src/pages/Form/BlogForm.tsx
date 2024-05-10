@@ -12,7 +12,7 @@ import { db, storage } from "../../firebaseConfig";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 
 const BlogForm = () => {
   const location = useLocation();
@@ -35,7 +35,6 @@ const BlogForm = () => {
       const storageRef = ref(storage, "some-child/" + img.name);
       try {
         await uploadBytes(storageRef, img);
-
         const downloadURL = await getDownloadURL(storageRef);
 
         if (blog?.id) {
@@ -48,11 +47,9 @@ const BlogForm = () => {
             author: formData?.author,
             content: formData?.content,
           });
-          console.log("updated successfully");
           navigate("/blogs");
         } else {
           const blogRef = collection(db, "blogs");
-
           const docRef = await addDoc(blogRef, {
             title: formData?.title,
             img: downloadURL,
@@ -61,7 +58,7 @@ const BlogForm = () => {
             author: formData?.author,
             content: formData?.content,
           });
-          console.log(docRef.id);
+
           setFormData({
             title: "",
             img: "",

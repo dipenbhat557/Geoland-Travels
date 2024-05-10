@@ -12,7 +12,7 @@ import {
 import { db, storage } from "../../firebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../../pages/store";
 
 const Message = () => {
   const [editable, setEditable] = useState(false);

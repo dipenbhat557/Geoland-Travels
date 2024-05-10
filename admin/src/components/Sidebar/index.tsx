@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../../pages/store";
 import { MdInfo, MdSpaceDashboard, MdTour } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
 import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from "react-icons/fa";

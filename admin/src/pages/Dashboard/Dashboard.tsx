@@ -4,7 +4,7 @@ import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 

@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { currUser } from "../../store";
+import { currUser } from "../store";
 
 interface UserData {
   name: string;

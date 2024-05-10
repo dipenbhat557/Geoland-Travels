@@ -3,8 +3,56 @@ import { heroBg } from "../assets";
 import { styles } from "../styles";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react"; // Import useEffect and useRef
+import { TourData, toursData } from "../store";
+import { useRecoilValue } from "recoil";
+
 const Hero = () => {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [searchResult, setSearchResult] = useState<TourData[]>([]);
+  const tours = useRecoilValue(toursData);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (boxRef.current && !boxRef.current.contains(event.target as Node)) {
+        setClicked(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchQuery(event.target.value);
+    if (searchQuery.trim() !== "") {
+      const searchResults = tours.filter((t: TourData) =>
+        t?.tourTitle?.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      );
+      setSearchResult(searchResults);
+    }
+    setClicked(true);
+  };
+
+  const handleSearchButtonClick = () => {
+    if (searchQuery.trim() !== "") {
+      const searchResults = tours.filter((t: TourData) =>
+        t?.tourTitle.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      );
+      setSearchResult(searchResults);
+      console.log(searchResult);
+    }
+    setClicked(true);
+  };
+
   return (
     <div
       className="h-[580px] w-full relative mt-14"
@@ -23,24 +71,53 @@ const Hero = () => {
             <IoLocationOutline className="text-3xl" />
             <input
               type="text"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
               className="w-[70%] px-2 py-2  focus:outline-none rounded-md placeholder:text-[13px]"
               placeholder="Search destination"
             />
             <div
+              onClick={handleSearchButtonClick}
               className={`${styles.primaryBgColor} rounded-full flex items-center justify-center w-[40px] cursor-pointer h-[40px]`}
             >
               <AiOutlineSearch className="text-white text-2xl" />
             </div>
           </div>
+          {clicked &&
+            (searchResult?.length > 0 ? (
+              <div
+                ref={boxRef}
+                className="w-[30%] rounded-b-md absolute z-50  right-[35%] top-[61%] h-auto"
+              >
+                {searchResult?.map((s, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className="w-full cursor-pointer h-auto p-3 bg-slate-200 border-b border-slate-300 flex items-center justify-center"
+                    >
+                      <p
+                        onClick={() =>
+                          navigate("/destination", { state: { tour: s } })
+                        }
+                      >
+                        {s?.tourTitle}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] right-[35%] top-[61%] rounded-b-lg">
+                "No results found"
+              </div>
+            ))}
         </div>
         <div className="w-[40%] h-[20%] flex items-end justify-between">
           {["Culture", "Food", "Nature", "Adventure"].map((e, i) => {
             return (
               <button
                 key={i}
-                onClick={() =>
-                  navigate("/destination", { state: { title: e } })
-                }
+                onClick={() => navigate("/destination", { state: { tour: e } })}
                 className="text-white bg-opacity-10 bg-slate-100 rounded-full w-[100px] py-2"
               >
                 {e}

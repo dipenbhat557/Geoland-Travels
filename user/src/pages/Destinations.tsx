@@ -29,7 +29,7 @@ const Destinations = () => {
             <h6 className="py-5">Tour Type</h6>
             <ul>
               {tour_types.map((item, index) => (
-                <li>
+                <li key={index}>
                   <div className="flex items-center mb-4">
                     <input
                       key={index}

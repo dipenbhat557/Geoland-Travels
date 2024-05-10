@@ -13,7 +13,7 @@ const Hero = () => {
           alt="logo"
           src={logo}
         />
-        <p className="text-[45px] text-white opacity-40">
+        <p className="text-[45px] dark:text-white opacity-40">
           Welcome to Geoland Travels
         </p>
       </div>
