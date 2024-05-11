@@ -5,12 +5,18 @@ import TourOverview from "../components/TourOverview";
 import WhatsIncluded from "../components/WhatsIncluded";
 import Itinerary from "../components/Itinerary";
 import LeaveReply from "../components/LeaveReply";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TourData } from "../store";
+import { SectionWrapper } from "../hoc";
+import Footer from "../components/Footer";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 const Details = () => {
   const location = useLocation();
   const tour: TourData = location?.state?.tour;
+  const [clicked, setClicked] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,33 +48,70 @@ const Details = () => {
           </div>
         </div>
         <div
-          className={`${styles.padding} w-full h-[500px] rounded-lg flex justify-between`}
+          className={`${styles.padding} relative w-full h-[500px] rounded-lg `}
         >
-          <div className="w-[59.5%] h-full rounded-l-lg">
-            <img
-              src={tour?.img?.[0]}
-              alt="img"
-              className="w-full h-full object-cover rounded-l-lg"
-            />
+          <div className="w-full  h-full rounded-lg flex justify-between">
+            <div className="w-[59.5%] h-full rounded-l-lg">
+              <img
+                src={tour?.img?.[0]}
+                alt="img"
+                className="w-full h-full object-cover rounded-l-lg"
+              />
+            </div>
+            <div className="flex flex-col justify-between w-[40%] h-full rounded-r-lg">
+              <div className="w-full h-[49.5%] rounded-tr-lg">
+                <img
+                  src={tour?.img?.[1]}
+                  alt="img"
+                  className="w-full h-full object-cover rounded-tr-lg"
+                />
+              </div>
+              <div className="w-full relative h-[49%] rounded-br-lg">
+                <img
+                  src={tour?.img?.[2]}
+                  alt="img"
+                  className="w-full h-full object-cover rounded-br-lg"
+                />
+                <p
+                  onClick={() => setClicked(true)}
+                  className="absolute rounded-lg bg-[#05073C] text-white cursor-pointer text-[12px] px-3 py-2 bottom-5 right-5"
+                >
+                  See all photos
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col justify-between w-[40%] h-full rounded-r-lg">
-            <div className="w-full h-[49.5%] rounded-tr-lg">
-              <img
-                src={tour?.img?.[1]}
-                alt="img"
-                className="w-full h-full object-cover rounded-tr-lg"
-              />
-            </div>
-            <div className="w-full relative h-[49%] rounded-br-lg">
-              <img
-                src={tour?.img?.[2]}
-                alt="img"
-                className="w-full h-full object-cover rounded-br-lg"
-              />
-              <p className="absolute rounded-lg bg-[#05073C] text-white cursor-pointer text-[12px] px-3 py-2 bottom-5 right-5">
-                See all photos
-              </p>
-            </div>
+          <div
+            className={`w-[95%] mx-auto h-full ${
+              clicked ? "absolute top-4" : "hidden"
+            } z-20`}
+          >
+            <img
+              src={tour?.img?.[currentIndex]}
+              alt="img"
+              className="w-full h-full object-cover"
+            />
+            <IoMdClose
+              onClick={() => setClicked(false)}
+              className="text-[65px] cursor-pointer text-red-500 absolute top-[10%] z-40 right-[5%]"
+            />
+            <MdKeyboardArrowRight
+              onClick={() => {
+                console.log(currentIndex);
+                setCurrentIndex(
+                  Math.min(tour?.img?.length - 1, currentIndex + 1)
+                );
+              }}
+              className="text-[65px] cursor-pointer text-white absolute top-[48%] z-40 right-[5%]"
+            />
+            <div className="w-full h-full bg-black opacity-20 absolute z-30 top-0 right-0" />
+            <MdKeyboardArrowLeft
+              onClick={() => {
+                console.log(currentIndex);
+                setCurrentIndex(Math.max(0, currentIndex - 1));
+              }}
+              className="text-[65px] cursor-pointer text-white absolute top-[48%] z-40 left-[5%]"
+            />
           </div>
         </div>
         <div className={`${styles.padding} h-auto items-center flex gap-14`}>
@@ -93,7 +136,7 @@ const Details = () => {
               <p className="text-[12px] font-light">{tour?.ages}</p>
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className=" flex gap-2">
             <div className="w-[40px] h-[40px] border border-slate-200 rounded-lg" />
             <div className="flex flex-col gap-1">
               <p>Languages</p>
@@ -103,11 +146,12 @@ const Details = () => {
         </div>
         <TourOverview tour={tour} />
         <WhatsIncluded tour={tour} />
-        <Itinerary />
+        <Itinerary tour={tour} />
         {/* <DetailReviews tour={tour} /> */}
         <LeaveReply />
+        <Footer isContact={false} />
       </div>
     </div>
   );
 };
-export default Details;
+export default SectionWrapper(Details);

@@ -4,16 +4,23 @@ import { styles } from "../styles";
 import { useState, useRef, useEffect } from "react";
 
 import { SectionWrapper } from "../hoc";
+import * as emailjs from "emailjs-com";
 
 // import ReachOut from "../components/ReachOut";
 import WhyTour from "../components/WhyTour";
-import Gallery from "../components/Glimpse";
 import Footer from "../components/Footer";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import EarthCanvas from "../components/canvas/Earth";
 import { slideIn } from "../utils/motion";
 import { motion } from "framer-motion";
-import Glimpse from "../components/Glimpse";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
+interface SocialLinkData {
+  facebookLink: string;
+  instaLink: string;
+  whatsappLink: number;
+}
 
 const ContactUs = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -25,20 +32,87 @@ const ContactUs = () => {
     branch: "",
   });
   const [loading, setLoading] = useState(false);
+  const [links, setLinks] = useState<SocialLinkData>();
 
-  // Handle input changes
+  useEffect(() => {
+    const docRef = doc(db, "socialLinks", "cXM2ywx01R2BDRwHXFov");
+    const fetcthing = async () => {
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setLinks({
+          facebookLink: docSnap.data().facebookLink,
+          instaLink: docSnap.data().instaLink,
+          whatsappLink: docSnap.data().whatsappLink,
+        });
+      } else {
+        console.log("No such document!");
+      }
+    };
+    fetcthing();
+  }, []);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+
+    console.log("on change data is ", form);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    console.log("DAta is ", form);
+    e.preventDefault();
     setLoading(true);
+
+    emailjs
+      .send(
+        "service_htp2klw",
+        "template_a9c3yzv",
+        {
+          from_name: form.name,
+          to_name: "Geoland Travels",
+          from_email: form.email,
+          to_email: "bhattadipen557@gmail.com",
+          message: `This is to ${form.branch} branch of Geoland Travels. ${form.message}`,
+        },
+        "70gtdMrv58XYFp0DP"
+      )
+
+      .then(
+        () => {
+          setLoading(false);
+          alert("Thank you. I will get back to you as soon as possible.");
+
+          setForm({
+            name: "",
+            email: "",
+            message: "",
+            subject: "",
+            branch: "",
+          });
+        },
+        (error: any) => {
+          setLoading(false);
+          console.log(error);
+          alert("Something went wrong");
+        }
+      );
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleWhatsAppClick = () => {
+    const receiverNumber = links?.whatsappLink;
+    if (receiverNumber) {
+      const whatsappURL = `https://wa.me/${receiverNumber}`;
+      window.open(whatsappURL, "_blank");
+    } else {
+      console.error("WhatsApp number not provided");
+    }
+  };
 
   return (
     <div className="flex flex-col gap-5 h-auto">
@@ -88,6 +162,7 @@ const ContactUs = () => {
               className="p-2 border border-slate-200 cursor-pointer rounded-md shadow-sm shadow-slate-300 mb-2 placeholder:text-[10px] sm:placeholder:text-[12px]"
               onChange={handleChange}
               value={form.branch}
+              name="branch"
             >
               <option value="">Select branch</option>
               <option value="Nepal">Nepal</option>
@@ -138,9 +213,19 @@ const ContactUs = () => {
           <div className="w-full h-[40%]  justify-between items-center  gap-3 flex flex-col">
             <p className="tet-[13px]">Follow us on</p>
             <div className="flex w-full h-[50%] justify-center gap-6">
-              <FaFacebook className="text-blue-600 text-3xl cursor-pointer" />
-              <FaWhatsapp className="text-green-600 text-3xl cursor-pointer" />
-              <FaInstagram className="text-pink-500 text-3xl cursor-pointer" />
+              <FaWhatsapp
+                onClick={handleWhatsAppClick}
+                className="text-2xl text-green-600 cursor-pointer"
+              />
+
+              <FaFacebook
+                onClick={() => window.open(links?.facebookLink, "_blank")}
+                className="text-2xl  text-blue-600 cursor-pointer"
+              />
+              <FaInstagram
+                onClick={() => window.open(links?.instaLink, "_blank")}
+                className="text-2xl  text-pink-600 cursor-pointer"
+              />
             </div>
           </div>
         </div>

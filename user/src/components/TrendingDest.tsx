@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { destItems } from "../constants";
+// import { destItems } from "../constants";
 import { styles } from "../styles";
 import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
@@ -33,7 +33,7 @@ const TrendingDest = () => {
             className=" cursor-pointer w-full h-[47%] rounded-lg relative"
           >
             <img
-              src={trendingDest?.[0]?.img || def}
+              src={trendingDest?.[0]?.img?.[0] || def}
               alt="trending dest"
               className="w-full h-full object-cover rounded-lg"
             />
@@ -48,7 +48,7 @@ const TrendingDest = () => {
             className=" cursor-pointer w-full relative h-[47%] rounded-lg"
           >
             <img
-              src={trendingDest?.[1]?.img || def}
+              src={trendingDest?.[1]?.img?.[0] || def}
               alt="trending dest"
               className="w-full h-full object-cover rounded-lg"
             />
@@ -65,7 +65,7 @@ const TrendingDest = () => {
             className=" cursor-pointer rounded-lg relative w-full h-[47%]"
           >
             <img
-              src={trendingDest?.[2]?.img || def}
+              src={trendingDest?.[2]?.img?.[0] || def}
               alt="trending dest"
               className="w-full h-full object-cover rounded-lg"
             />
@@ -81,7 +81,7 @@ const TrendingDest = () => {
               className=" cursor-pointer w-[47%] relative h-full rounded-lg"
             >
               <img
-                src={trendingDest?.[3]?.img || def}
+                src={trendingDest?.[3]?.img?.[0] || def}
                 alt="trending dest"
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -96,7 +96,7 @@ const TrendingDest = () => {
               className="w-[47%] cursor-pointer relative h-full rounded-lg"
             >
               <img
-                src={trendingDest?.[4]?.img || def}
+                src={trendingDest?.[4]?.img?.[0] || def}
                 alt="trending dest"
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -113,7 +113,7 @@ const TrendingDest = () => {
           className=" cursor-pointer h-full relative w-[30%] rounded-lg"
         >
           <img
-            src={trendingDest?.[5]?.img || def}
+            src={trendingDest?.[5]?.img?.[0] || def}
             alt="trending dest"
             className="w-full h-full object-cover rounded-lg"
           />

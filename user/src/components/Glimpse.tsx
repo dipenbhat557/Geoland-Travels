@@ -1,7 +1,6 @@
 import { styles } from "../styles";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
-import { galleryItems, galleryItems2 } from "../constants";
 import { useEffect, useState } from "react";
 import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
@@ -29,7 +28,7 @@ const Glimpse = () => {
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log("Date:", dateObject);
+          // console.log("Date:", dateObject);
         } else {
           console.error("Invalid or missing date field:", date);
         }

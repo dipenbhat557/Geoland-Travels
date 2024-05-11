@@ -3,7 +3,7 @@ import { heroBg } from "../assets";
 import { styles } from "../styles";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react"; // Import useEffect and useRef
+import { useState, useEffect, useRef } from "react";
 import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
 

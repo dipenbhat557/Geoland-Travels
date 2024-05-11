@@ -13,6 +13,18 @@ import OutboundTour from "../components/OutBoundTour";
 import TrendingDest from "../components/TrendingDest";
 import WhyTour from "../components/WhyTour";
 
+// const Navbar = lazy(() => import("../components/Navbar"));
+// const Blogs = lazy(() => import("../components/Blogs"));
+// const Explore = lazy(() => import("../components/Explore"));
+// const Footer = lazy(() => import("../components/Footer"));
+// const Gallery = lazy(() => import("../components/Glimpse"));
+// const Hero = lazy(() => import("../components/Hero"));
+// const InboundTour = lazy(() => import("../components/InboundTour"));
+// const Message = lazy(() => import("../components/Message"));
+// const OutboundTour = lazy(() => import("../components/OutBoundTour"));
+// const TrendingDest = lazy(() => import("../components/TrendingDest"));
+// const WhyTour = lazy(() => import("../components/WhyTour"));
+
 const HomePage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);

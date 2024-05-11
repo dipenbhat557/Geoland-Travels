@@ -29,7 +29,7 @@ const InboundTour = () => {
             >
               <div className="w-full h-[60%] rounded-3xl">
                 <img
-                  src={item?.img || def}
+                  src={item?.img?.[0] || def}
                   alt="trending"
                   className="w-full h-full object-cover rounded-3xl"
                 />

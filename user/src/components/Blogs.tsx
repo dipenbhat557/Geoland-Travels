@@ -32,7 +32,7 @@ const Blogs = () => {
 
         if (date instanceof Timestamp) {
           dateObject = date.toDate().toString().slice(0, 21);
-          console.log("Date:", dateObject);
+          // console.log("Date:", dateObject);
         } else {
           console.error("Invalid or missing date field:", date);
         }

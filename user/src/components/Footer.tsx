@@ -32,7 +32,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        // console.log("Document data:", docSnap.data());
         setLinks({
           facebookLink: docSnap.data().facebookLink,
           instaLink: docSnap.data().instaLink,
@@ -99,7 +99,6 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
     >
       <div className="w-[65%] h-[80%] flex flex-col justify-around">
         <div className="w-full h-[40%] gap-3 flex flex-col">
-          {" "}
           <p className="text-[22px] font-bold text-white">
             Let's go on adventure !!
           </p>
@@ -190,7 +189,6 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
           isContact ? "justify-center" : ""
         } `}
       >
-        {/* EarthCanvas section */}
         {!isContact && (
           <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="">
             <EarthCanvas />

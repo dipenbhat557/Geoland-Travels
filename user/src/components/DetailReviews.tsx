@@ -1,7 +1,6 @@
 import { styles } from "../styles";
-import { Tour } from "./TourOverview";
 
-const DetailReviews = ({ tour }: { tour: Tour }) => {
+const DetailReviews = () => {
   return (
     <div className={`${styles.padding} flex flex-col gap-3`}>
       <p className={`${styles.sectionSubText}`}>Reviews</p>
@@ -23,7 +22,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Location Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.location}.0</p>
+            {/* <p>{tour?.review?.location}.0</p> */}
           </div>
           <div
             className={`${styles.paddingX} py-2 w-[49.8%]  bg-[#06905E0F] flex justify-between`}
@@ -32,7 +31,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Price Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.price}.0</p>
+            {/* <p>{tour?.review?.price}.0</p> */}
           </div>
         </div>
         <div className="w-full h-auto flex justify-between ">
@@ -43,7 +42,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Food Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.food}.0</p>
+            {/* <p>{tour?.review?.food}.0</p> */}
           </div>
           <div
             className={`${styles.paddingX} py-2 w-[49.8%]  bg-[#06905E0F] flex justify-between`}
@@ -52,7 +51,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Security Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.security}.0</p>
+            {/* <p>{tour?.review?.security}.0</p> */}
           </div>
         </div>
 
@@ -64,7 +63,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Rooms Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.rooms}.0</p>
+            {/* <p>{tour?.review?.rooms}.0</p> */}
           </div>
           <div
             className={`${styles.paddingX} py-2 w-[49.8%]  bg-[#06905E0F] flex justify-between`}
@@ -73,7 +72,7 @@ const DetailReviews = ({ tour }: { tour: Tour }) => {
               <p>Tour Operator Rating</p>
               <p>Excellent</p>
             </div>
-            <p>{tour?.review?.tourOperator}.0</p>
+            {/* <p>{tour?.review?.tourOperator}.0</p> */}
           </div>
         </div>
         <button
