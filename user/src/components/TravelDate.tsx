@@ -1,19 +1,20 @@
+import { useNavigate } from "react-router-dom";
+import { TourData } from "../store";
 import { styles } from "../styles";
 
 interface prop {
   img: string;
   location: string;
   title: string;
-  rating: number;
-  noOfResponse: number;
   description: string;
-  note: string;
-  time: string;
+  duration: string;
   old_price: number;
   price: number;
+  item: TourData;
 }
 
 const TravelDate = (prop: prop) => {
+  const navigate = useNavigate();
   return (
     <div className="border rounded-md w-full  flex mb-8">
       <div className="relative h-[232px] w-[245px] rounded-lg">
@@ -21,22 +22,20 @@ const TravelDate = (prop: prop) => {
         <div className="w-[35px] h-[35px] bg-white rounded-full absolute top-5 right-5" />
       </div>
 
-      <div className="flex flex-col justify-evenly items-center w-[45%] p-3 ">
+      <div className="flex flex-col justify-evenly gap-3 items-center w-[45%] p-3 ">
         <span className="text-xs  w-full text-left opacity-50">
           {prop.location}
         </span>
-        <h6 className=" line-clamp-2 mt-3 tracking-tight font-semibold  font-sans">
+        <h6 className=" line-clamp-2  tracking-tight font-semibold  font-sans">
           {prop.title}
         </h6>
-        <div className="flex justify-center p-1">
-          <span className="text-center opacity-70 text-xm">
-            {prop.rating} ({prop.noOfResponse})
-          </span>
-        </div>
-        <p className="w-full text-left opacity-70">{prop.description}</p>
+
+        <p className="w-full text-left opacity-70 line-clamp-6">
+          {prop.description}
+        </p>
 
         <span className="text-[#EB662B] text-xs text-left w-[90%]">
-          {prop.note}
+          Best Price Guaranteed
         </span>
       </div>
 
@@ -45,12 +44,17 @@ const TravelDate = (prop: prop) => {
       <div
         className={`flex flex-col justify-between items-center ${styles.padding} `}
       >
-        <p className=" opacity-60 text-center">{prop.time}</p>
+        <p className=" opacity-60 text-center">{prop.duration}</p>
 
         <div className="flex flex-col text-center gap-2">
           <span className=" line-through opacity-40 ">{prop.old_price}</span>
           <span className="">From {prop.price}</span>
-          <button className=" border border-[#06905E] rounded-md m-1 ml-5 px-4 py-2 mb-3">
+          <button
+            onClick={() =>
+              navigate("/details", { state: { tour: prop?.item } })
+            }
+            className=" border border-[#06905E] rounded-md m-1 ml-5 px-4 py-2 mb-3"
+          >
             View Details
           </button>
         </div>

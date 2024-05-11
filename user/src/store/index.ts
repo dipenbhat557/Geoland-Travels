@@ -4,9 +4,7 @@ import { getDocs, collection, Timestamp } from "firebase/firestore"; // Import n
 
 export interface TourData {
   title: string;
-  date: string;
-  img: string;
-  id: string;
+  img: string[];
   tourTitle: string;
   location: string;
   overview: string;
@@ -15,9 +13,14 @@ export interface TourData {
   exclusion: string[];
   itinerary: string[];
   price: number;
+  date: string;
   type: string;
   trending: boolean;
   category: string[];
+  duration: string;
+  groupSize: string;
+  ages: string;
+  languages: string;
 }
 
 export const toursData = selector({
@@ -42,7 +45,6 @@ export const toursData = selector({
           title: data.title,
           date: dateObject,
           img: data.img,
-          id: doc.id,
           tourTitle: data.tourTitle,
           location: data.location,
           overview: data.overview,
@@ -54,6 +56,11 @@ export const toursData = selector({
           type: data.type,
           trending: data.trending,
           category: data.category,
+
+          duration: data.duration,
+          groupSize: data.groupSize,
+          ages: data.ages,
+          languages: data.languages,
         };
         gotTours.push(t);
       });

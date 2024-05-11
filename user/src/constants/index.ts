@@ -352,10 +352,15 @@ export const destinations_details = [
 ];
 
 export const tour_types = [
-  "  Nature Tours",
-  "Adventure Tours",
-  "Cultural Tours",
-  "Food Tours",
-  "City Tours",
-  "Cruises Tours",
+  { title: "Nature Tours", content: "Nature" },
+
+  { title: "Cultural Tours", content: "Cultural" },
+
+  { title: "Adventure Tours", content: "Adventure" },
+
+  { title: "Food Tours", content: "Food" },
+
+  { title: "City Tours", content: "City" },
+
+  { title: "Cruise Tours", content: "Cruise" },
 ];

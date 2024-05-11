@@ -18,8 +18,7 @@ import { currUser } from "../../pages/store";
 
 interface TourData {
   title: string;
-  date: string;
-  img: string;
+  img: string[];
   id: string;
   tourTitle: string;
   location: string;
@@ -29,9 +28,14 @@ interface TourData {
   exclusion: string[];
   itinerary: string[];
   price: number;
+  date: string;
   type: string;
   trending: boolean;
   category: string[];
+  duration: string;
+  groupSize: string;
+  ages: string;
+  languages: string;
 }
 
 const Tour = () => {
@@ -63,7 +67,6 @@ const Tour = () => {
           img: doc?.data()?.img,
           id: doc?.id,
           tourTitle: doc?.data()?.tourTitle,
-
           location: doc?.data()?.location,
           overview: doc?.data()?.overview,
           highlights: doc?.data()?.highlights,
@@ -74,6 +77,10 @@ const Tour = () => {
           type: doc?.data()?.type,
           trending: doc?.data()?.trending,
           category: doc?.data()?.category,
+          duration: doc?.data()?.duration,
+          ages: doc?.data()?.ages,
+          languages: doc?.data()?.languages,
+          groupSize: doc?.data()?.groupSize,
         };
         gotTours.push(t);
       });

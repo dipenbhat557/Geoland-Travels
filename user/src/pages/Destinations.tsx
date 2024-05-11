@@ -2,25 +2,56 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import TravelDate from "../components/TravelDate";
-import { destinations_details } from "../constants";
 import { tour_types } from "../constants";
 import { styles } from "../styles";
 import { useLocation } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { TourData, toursData } from "../store";
+import { def } from "../assets";
 
 const Destinations = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const location = useLocation();
+  const tours: TourData[] = useRecoilValue(toursData);
+  const key = location?.state?.key;
+  const value = location?.state?.val;
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [currentTours, setCurrentTours] = useState<TourData[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    let res: TourData[] = [];
+    if (key === "type") {
+      res = tours?.filter((t: TourData) => t?.type === value);
+    } else if (key === "category") {
+      res = tours?.filter((t: TourData) => t?.category.includes(value));
+    }
+    setCurrentTours(res);
   }, []);
+
+  const handleSortType = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checkedType = e.target.value;
+    if (e.target.checked) {
+      setSelectedTypes((prevTypes) => [...prevTypes, checkedType]);
+    } else {
+      setSelectedTypes((prevTypes) =>
+        prevTypes.filter((type) => type !== checkedType)
+      );
+    }
+  };
+
+  useEffect(() => {
+    const updatedTours = tours.filter((tour) =>
+      selectedTypes.every((type) => tour.category.includes(type))
+    );
+    setCurrentTours(updatedTours);
+  }, [selectedTypes]);
 
   return (
     <div className="flex flex-col">
       <Navbar isHome={false} />
 
       <div className={` ${styles.padding} ${styles.sectionHeadText} mt-14`}>
-        Explore all things to do in {location?.state?.title}
+        Explore all things to do in {value}
       </div>
 
       <div className="flex pl-4">
@@ -33,16 +64,18 @@ const Destinations = () => {
                   <div className="flex items-center mb-4">
                     <input
                       key={index}
-                      id="default-checkbox"
+                      id={`checkbox-${index}`}
                       type="checkbox"
-                      value=""
+                      value={item?.content}
+                      onChange={handleSortType}
+                      checked={selectedTypes.includes(item?.content)}
                       className="w-4 h-4 bg-gray-100  rounded-lg   focus:outline-none"
                     />
                     <label
-                      form="default-checkbox"
+                      htmlFor={`checkbox-${index}`}
                       className="ms-2 text-sm font-medium "
                     >
-                      {item}
+                      {item?.title}
                     </label>
                   </div>
                 </li>
@@ -53,39 +86,22 @@ const Destinations = () => {
 
         <div className="w-[70%] pl-8 pt-6 flex flex-col gap-3">
           <div className="w-full flex items-center text-[10px] text-slate-700 h-[50px] justify-between">
-            <p>1362 results</p>
+            <p>{currentTours?.length} results</p>
             <p>Sort by: Featured</p>
           </div>
-          {destinations_details.map((item, index) => (
+          {currentTours.map((item, index) => (
             <TravelDate
               key={index}
-              img={item.img}
+              img={item.img?.[0] || def}
               location={item.location}
-              title={item.title}
-              rating={item.rating}
-              noOfResponse={item.noOfResponse}
-              description={item.description}
-              note={item.note}
-              time={item.time}
-              old_price={parseFloat(item.old_price)}
-              price={parseFloat(item.price)}
+              title={item.tourTitle}
+              description={item.overview}
+              duration={item.duration}
+              old_price={item.price + 999}
+              price={item.price}
+              item={item}
             />
           ))}
-          <div className="w-[60%] h-[50px] flex items-center justify-center mx-auto gap-6">
-            {[1, 2, 3, 4, 5, "...", 20].map?.((item, index) => {
-              return (
-                <p
-                  key={index}
-                  className={`${
-                    index === currentIndex ? styles.primaryBgColor : ""
-                  } px-2 cursor-pointer rounded-full`}
-                  onClick={() => setCurrentIndex(index)}
-                >
-                  {item}
-                </p>
-              );
-            })}
-          </div>
         </div>
       </div>
       <Footer isContact={false} />

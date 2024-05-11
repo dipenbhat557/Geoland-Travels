@@ -123,7 +123,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
           (searchResult?.length > 0 ? (
             <div
               ref={boxRef2}
-              className="w-[47%] rounded-b-lg absolute z-20  left-[4.6%] mt-16  h-auto"
+              className="w-[47%] rounded-b-lg absolute z-20  left-[4.6%] mt-44  h-[200px] overflow-y-scroll"
             >
               {searchResult?.map((s, i) => {
                 return (

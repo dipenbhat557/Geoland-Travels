@@ -3,7 +3,8 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import { styles } from "../styles";
-import { Tour } from "./TourOverview";
+import { destItems } from "../constants";
+// import { Tour } from "./TourOverview";
 
 const verticalStyle = {
   content: "''",
@@ -16,6 +17,35 @@ const verticalStyle = {
   borderRadius: "1px" /* Adjust as needed */,
   borderStyle: "dotted" /* Set the line to be dotted */,
 };
+
+export interface Tour {
+  img: string;
+  title: string;
+  rating: number;
+  noOfResponse: number;
+  isBestSeller: boolean;
+  isFreeCancellation: boolean;
+  location: string;
+  noOfBookings: string;
+  duration: string;
+  groupSize: string;
+  ages: string;
+  languages: string;
+  cost: string;
+  overview: string;
+  highlights: string[];
+  included: string[];
+  excluded: string[];
+  itinerary: string[];
+  review: {
+    location: number;
+    price: number;
+    food: number;
+    security: number;
+    rooms: number;
+    tourOperator: number;
+  };
+}
 
 const ItineraryCard = ({
   item,
@@ -43,7 +73,8 @@ const ItineraryCard = ({
   );
 };
 
-const Itinerary = ({ tour }: { tour: Tour }) => {
+const Itinerary = () => {
+  const tour = destItems?.[0];
   return (
     <div className={`${styles.padding} w-[50%] h-auto flex flex-col gap-3`}>
       <p className={`${styles.sectionSubText}`}>Itinerary</p>

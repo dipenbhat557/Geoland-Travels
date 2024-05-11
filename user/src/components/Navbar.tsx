@@ -1,7 +1,7 @@
 import { navLinks, tourDropdown } from "../constants";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { ImCross } from "react-icons/im";
 import { logo } from "../assets";
@@ -17,6 +17,11 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
   let timeoutId2: NodeJS.Timeout;
   const tours: TourData[] = useRecoilValue(toursData);
   const [packages, setPackages] = useState<TourData[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [searchResult, setSearchResult] = useState<TourData[]>([]);
+
+  const boxRef3 = useRef<HTMLDivElement>(null);
 
   const handleMouseLeave1 = () => {
     timeoutId1 = setTimeout(() => {
@@ -49,10 +54,39 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
     setPackages(packageResults);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (boxRef3.current && !boxRef3.current.contains(event.target as Node)) {
+        setClicked(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchQuery(event.target.value);
+    if (searchQuery.trim() !== "") {
+      const searchResults = tours.filter((t: TourData) =>
+        t?.tourTitle?.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      );
+      setSearchResult(searchResults);
+    }
+    setClicked(true);
+  };
+
   return (
     <>
       <div
-        className={` bg-white bg-opacity-10 backdrop-blur-sm hover:backdrop-blur-lg	border-radius:0.5rem fixed w-full h-[60px] hidden sm:flex items-center  justify-around z-30`}
+        className={`${
+          clicked ? "relative" : "fixed"
+        } bg-white bg-opacity-10 backdrop-blur-sm hover:backdrop-blur-lg	border-radius:0.5rem  w-full h-[60px] hidden sm:flex items-center  justify-around z-30`}
       >
         <div
           className="w-[20%] h-[90%] cursor-pointer"
@@ -62,11 +96,47 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
         </div>
         {!isHome && (
           <input
+            value={searchQuery}
+            onChange={handleSearchInputChange}
             type="text"
             className="w-[20%] p-1 px-3 text-[14px]  placeholder:text-slate-400 placeholder:text-[13px] placeholder:text-center rounded-lg border border-slate-200 focus:outline-none"
             placeholder="Search destination or activity"
           />
         )}
+        {clicked &&
+          (searchResult?.length > 0 ? (
+            <div
+              ref={boxRef3}
+              className="w-[25%] rounded-b-lg absolute z-40  left-[19%] top-[90%]  h-auto "
+            >
+              {searchResult?.map((s, i) => {
+                return (
+                  <div
+                    key={i}
+                    className={`w-full  cursor-pointer h-auto p-3 bg-slate-200 border-b border-slate-300 flex items-center justify-center ${
+                      i === searchResult?.length - 1 ? "rounded-b-lg" : ""
+                    }`}
+                  >
+                    <p
+                      onClick={() =>
+                        navigate("/destination", { state: { tour: s } })
+                      }
+                    >
+                      {s?.tourTitle}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div
+              ref={boxRef3}
+              className="w-[25%] rounded-b-lg absolute z-20  left-[19%] top-[90%]  bg-slate-200   flex items-center justify-center  h-[50px] "
+            >
+              "No results found"
+            </div>
+          ))}
+
         <div className=" w-[55%] h-full items-center justify-end gap-2 flex">
           <div className="flex items-center  justify-around w-[80%]">
             {navLinks?.map((nav, index) => (
@@ -129,7 +199,7 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     <p
                       onClick={() =>
                         navigate("/destination", {
-                          state: { key: "type", value: service?.val },
+                          state: { key: "type", val: service?.val },
                         })
                       }
                     >
