@@ -17,7 +17,7 @@ import { currUser } from "../store";
 
 interface TourData {
   title: string;
-  img: string;
+  img: string[];
   id: string;
   tourTitle: string;
   location: string;
@@ -31,6 +31,9 @@ interface TourData {
   trending: boolean;
   category: string[];
   duration: string;
+  groupSize: string;
+  ages: string;
+  languages: string;
 }
 
 const TourForm = () => {
@@ -38,7 +41,7 @@ const TourForm = () => {
   const navigate = useNavigate();
   const tour: TourData = location?.state?.tour;
 
-  const [img, setImg] = useState(null as File | null);
+  const [img, setImg] = useState([] as File[]);
   const [dataSaved, setDataSaved] = useState(false);
   const currentUser = useRecoilValue(currUser);
 
@@ -54,6 +57,9 @@ const TourForm = () => {
   const [noOfItineraryInputs, setNoOfItineraryInputs] = useState<number>(
     tour?.itinerary?.length || 1
   );
+  const [noOfImageInputs, setNoOfImageInputs] = useState<number>(
+    tour?.img?.length || 1
+  );
 
   const [highlightInputFields, setHighlightInputFields] = useState<string[]>(
     tour?.highlights || [""]
@@ -67,10 +73,11 @@ const TourForm = () => {
   const [itineraryInputFields, setItineraryInputFields] = useState<string[]>(
     tour?.itinerary || [""]
   );
+
   const [formData, setFormData] = useState<TourData>({
     title: tour?.title || "",
     tourTitle: tour?.tourTitle || "",
-    img: tour?.img || "",
+    img: tour?.img || [""],
     location: tour?.location || "",
     overview: tour?.overview || "",
     highlights: tour?.highlights || [],
@@ -83,7 +90,19 @@ const TourForm = () => {
     id: tour?.id || "",
     category: tour?.category || [""],
     duration: tour?.duration || "",
+    groupSize: tour?.groupSize || "",
+    ages: tour?.ages || "",
+    languages: tour?.languages || "",
   });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      setImg(fileArray);
+    }
+    console.log("files are selected");
+  };
 
   const handleHighlightsValueChange = (index: any, event: any) => {
     const values = [...highlightInputFields];
@@ -149,14 +168,6 @@ const TourForm = () => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImg(file);
-    }
-    console.log("file is selected");
-  };
-
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -171,18 +182,21 @@ const TourForm = () => {
 
   const handleSubmit = async () => {
     console.log("Submission started");
-    if (img) {
-      const storageRef = ref(storage, "some-child/" + img.name);
+    if (img.length > 0) {
       try {
-        await uploadBytes(storageRef, img);
+        const uploadTasks = img.map(async (file) => {
+          const storageRef = ref(storage, "some-child/" + file.name);
+          await uploadBytes(storageRef, file);
+          return getDownloadURL(storageRef);
+        });
 
-        const downloadURL = await getDownloadURL(storageRef);
+        const downloadURLs = await Promise.all(uploadTasks);
 
         if (tour?.id) {
           const tourRef = doc(db, "tours", tour?.id);
           await setDoc(tourRef, {
             title: formData?.title,
-            img: downloadURL,
+            img: downloadURLs,
             date: serverTimestamp(),
             tourTitle: formData?.tourTitle,
             location: formData?.location,
@@ -196,6 +210,9 @@ const TourForm = () => {
             trending: formData?.trending,
             category: formData?.category,
             duration: formData?.duration,
+            groupSize: formData?.groupSize,
+            ages: formData?.ages,
+            languages: formData?.languages,
           });
           console.log("updated successfully");
           navigate("/tour");
@@ -204,7 +221,7 @@ const TourForm = () => {
 
           const docRef = await addDoc(tourRef, {
             title: formData?.title,
-            img: downloadURL,
+            img: downloadURLs,
             date: serverTimestamp(),
             tourTitle: formData?.tourTitle,
             location: formData?.location,
@@ -218,11 +235,14 @@ const TourForm = () => {
             trending: formData?.trending,
             category: formData?.category,
             duration: formData?.duration,
+            groupSize: formData?.groupSize,
+            ages: formData?.ages,
+            languages: formData?.languages,
           });
           console.log(docRef.id);
           setFormData({
             title: "",
-            img: "",
+            img: [""],
             tourTitle: "",
             location: "",
             overview: "",
@@ -236,11 +256,15 @@ const TourForm = () => {
             id: "",
             category: [""],
             duration: "",
+            groupSize: "",
+            ages: "",
+            languages: "",
           });
         }
         setDataSaved(true);
 
         setTimeout(() => setDataSaved(false), 3000);
+        window.scrollTo(0, 0);
       } catch (error: any) {
         console.error("Error uploading file:", error);
       }
@@ -335,11 +359,51 @@ const TourForm = () => {
               </div>
               <div>
                 <label className="mb-3 block text-black dark:text-white">
+                  Group Size
+                </label>
+                <input
+                  type="text"
+                  value={formData?.groupSize}
+                  name="groupSize"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Group Size"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-black dark:text-white">
+                  Age Group
+                </label>
+                <input
+                  type="text"
+                  value={formData?.ages}
+                  name="ages"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Age Group"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-black dark:text-white">
+                  Languages
+                </label>
+                <input
+                  type="text"
+                  value={formData?.languages}
+                  name="languages"
+                  onChange={(e) => handleChange(e)}
+                  placeholder="Languages"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                />
+              </div>
+              <div>
+                <label className="mb-3 block text-black dark:text-white">
                   Attach Image
                 </label>
 
                 <input
                   type="file"
+                  multiple
                   onChange={(e) => handleFileChange(e)}
                   className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                 />

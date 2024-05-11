@@ -15,34 +15,35 @@ import founder from "./founderImg.svg";
 import logo from "./logo.png";
 import exploreBg from "./exploreBg.svg";
 import canada from "./flagImg/canada.png";
-import canadaBg from "./canada.jpg"
-import canada2Bg from "./canada2.webp"
-import dubai from  "./dubai.webp"
-import effile from "./effile.jpg"
-import ktm from "./kathmandu.webp"
-import london from "./London.jpeg"
+import canadaBg from "./canada.jpg";
+import canada2Bg from "./canada2.webp";
+import dubai from "./dubai.webp";
+import effile from "./effile.jpg";
+import ktm from "./kathmandu.webp";
+import london from "./London.jpeg";
 
-import blog1 from "./blog1.png"
-import blog2 from "./blog2.png"
-import blog3 from "./blog3.jpeg"
-import blog4 from "./blog4.jpeg"
+import blog1 from "./blog1.png";
+import blog2 from "./blog2.png";
+import blog3 from "./blog3.jpeg";
+import blog4 from "./blog4.jpeg";
 import nepal from "./flagImg/nepal.png";
 import uae from "./flagImg/uae.png";
 import usa from "./flagImg/usa.png";
 import d1 from "./destImg/d1.png";
+import def from "./default.jpg";
 
 export {
   heroBg,
-blog1,
-blog2,
-blog3,
-blog4,
-canadaBg,
-canada2Bg,
-dubai,
-effile,
-ktm,
-london,
+  blog1,
+  blog2,
+  blog3,
+  blog4,
+  canadaBg,
+  canada2Bg,
+  dubai,
+  effile,
+  ktm,
+  london,
   e1,
   e2,
   e3,
@@ -63,4 +64,5 @@ london,
   canada,
   usa,
   d1,
+  def,
 };

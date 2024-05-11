@@ -1,8 +1,41 @@
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa6";
-import { founder } from "../assets";
+import { def } from "../assets";
 import { styles } from "../styles";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 const Message = () => {
+  const [message, setMessage] = useState({
+    name: "",
+    message: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+    img: "",
+  });
+
+  useEffect(() => {
+    const docRef = doc(db, "messages", "QrQ6SBmLF4SCtlmI5dnB");
+    const fetcthing = async () => {
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setMessage({
+          name: docSnap?.data()?.name,
+          message: docSnap?.data()?.message,
+          facebook: docSnap?.data()?.facebook,
+          instagram: docSnap?.data()?.instagram,
+          linkedin: docSnap?.data()?.linkedin,
+          img: docSnap?.data()?.img,
+        });
+      } else {
+        console.log("No such document!");
+      }
+    };
+    fetcthing();
+  }, []);
   return (
     <div
       className={`${styles.padding} bg-[#F9F9F6] w-full h-[650px] flex justify-center items-center`}
@@ -10,7 +43,7 @@ const Message = () => {
       <div className="w-[95%] h-[95%] shadow-md shadow-slate-400 justify-between rounded-lg flex ">
         <div className="w-[45%] h-full rounded-l-lg">
           <img
-            src={founder}
+            src={message?.img || def}
             alt="founder"
             className="w-full h-full object-cover rounded-l-lg"
           />
@@ -22,23 +55,22 @@ const Message = () => {
             Message From MD
           </p>
           <p className="w-[95%] font-light text-[18px] overflow-y-scroll text-center tracking-wider leading-loose">
-            “Welcome to GeoLand Travels, where your adventure begins! Our
-            personalized journeys cater to your desires and budget, offering
-            cultural immersion, adrenaline-fueled escapades, or serene getaways.
-            With customizable itineraries tailored to match your interests,
-            preferences, and budget, we'll create a journey as extraordinary as
-            you are. Explore majestic mountains, pristine beaches, and vibrant
-            cities as you immerse yourself in local culture and create memories
-            to last a lifetime. Contact us today to start planning your next
-            unforgettable adventure with GeoLand Travels!”
+            {message?.message}
           </p>
-          <p className="w-full text-right text-slate-600">
-            -Sharad Kumar Sharma
-          </p>
+          <p className="w-full text-right text-slate-600">-{message?.name}</p>
           <div className="w-[60%] h-[15%] flex items-center justify-around">
-            <FaFacebook className="text-3xl text-blue-600" />
-            <FaLinkedin className="text-3xl text-blue-600" />
-            <FaInstagram className="text-3xl text-pink-500" />
+            <FaFacebook
+              onClick={() => window.open(message?.facebook, "_blank")}
+              className="cursor-pointer text-3xl text-blue-600"
+            />
+            <FaLinkedin
+              onClick={() => window.open(message?.linkedin, "_blank")}
+              className="cursor-pointer text-3xl text-blue-600"
+            />
+            <FaInstagram
+              onClick={() => window.open(message?.instagram, "_blank")}
+              className="cursor-pointer text-3xl text-pink-500"
+            />
           </div>
         </div>
       </div>

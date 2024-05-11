@@ -93,7 +93,9 @@ const Hero = () => {
                   return (
                     <div
                       key={i}
-                      className="w-full cursor-pointer h-auto p-3 bg-slate-200 border-b border-slate-300 flex items-center justify-center"
+                      className={`w-full  cursor-pointer h-auto p-3 bg-slate-200 border-b border-slate-300 flex items-center justify-center ${
+                        i === searchResult?.length - 1 ? "rounded-b-lg" : ""
+                      }`}
                     >
                       <p
                         onClick={() =>
@@ -107,7 +109,10 @@ const Hero = () => {
                 })}
               </div>
             ) : (
-              <div className="w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] right-[35%] top-[61%] rounded-b-lg">
+              <div
+                ref={boxRef}
+                className="w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] right-[35%] top-[61%] rounded-b-lg"
+              >
                 "No results found"
               </div>
             ))}

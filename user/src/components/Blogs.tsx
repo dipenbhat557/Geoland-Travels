@@ -1,14 +1,66 @@
 import { useNavigate } from "react-router-dom";
-import { blogItems } from "../constants";
 import { styles } from "../styles";
+import { useEffect, useState } from "react";
+import { Timestamp, collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { def } from "../assets";
+
+export interface BlogData {
+  title: string;
+  role: string;
+  blogTitle: string;
+  content: string;
+  author: string;
+  date: string;
+  img: string;
+  id: string;
+}
 
 const Blogs = () => {
   const navigate = useNavigate();
+  const [blogs, setBlogs] = useState<BlogData[]>([]);
+
+  useEffect(() => {
+    let gotBlogs: BlogData[] = [];
+    const fetchDocuments = async () => {
+      const querySnapshot = await getDocs(collection(db, "blogs"));
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const date = data.date;
+        let dateObject = "";
+
+        if (date instanceof Timestamp) {
+          dateObject = date.toDate().toString().slice(0, 21);
+          console.log("Date:", dateObject);
+        } else {
+          console.error("Invalid or missing date field:", date);
+        }
+
+        const b: BlogData = {
+          title: doc?.data()?.title,
+          date: dateObject,
+          img: doc?.data()?.img,
+          id: doc?.id,
+          role: doc?.data()?.role,
+          blogTitle: doc?.data()?.blogTitle,
+          content: doc?.data()?.content,
+          author: doc?.data()?.author,
+        };
+        gotBlogs.push(b);
+      });
+      gotBlogs = gotBlogs?.length > 3 ? gotBlogs?.slice(0, 3) : gotBlogs;
+      setBlogs(gotBlogs);
+    };
+
+    fetchDocuments();
+  }, []);
+
   return (
     <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
       <p className={`${styles.sectionHeadText} h-[10%]`}>Blogs</p>
       <div className="w-full h-[90%] flex justify-between items-center">
-        {blogItems?.map((item, index) => {
+        {blogs?.map((item, index) => {
           return (
             <div
               key={index}
@@ -17,7 +69,7 @@ const Blogs = () => {
             >
               <div className="w-full relative h-[75%] rounded-3xl">
                 <img
-                  src={item?.img}
+                  src={item?.img || def}
                   alt="trending"
                   className="w-full h-full object-cover rounded-3xl"
                 />
@@ -25,7 +77,7 @@ const Blogs = () => {
                   Trips
                 </p>
               </div>
-              <div className="flex gap-4 ">
+              <div className="flex justify-between px-3">
                 <p className="  flex items-center font-light text-[13px] ml-3">
                   {item?.date}
                 </p>
@@ -33,8 +85,8 @@ const Blogs = () => {
                   By &nbsp; {item?.author}
                 </p>
               </div>
-              <p className="h-[15%]  font-semibold flex items-center line-clamp-2">
-                {item?.title}
+              <p className="h-[15%]  font-semibold flex items-center line-clamp-1">
+                {item?.blogTitle}
               </p>
             </div>
           );

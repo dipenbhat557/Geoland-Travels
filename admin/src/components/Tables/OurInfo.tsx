@@ -1,7 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../Breadcrumbs/Breadcrumb";
-import { MdDelete, MdEdit } from "react-icons/md";
 import { useEffect, useState } from "react";
 import {
   addDoc,

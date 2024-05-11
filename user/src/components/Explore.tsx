@@ -1,7 +1,43 @@
+import { useEffect, useState } from "react";
 import { e1, e2, e3, exploreBg } from "../assets";
 import { styles } from "../styles";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { useNavigate } from "react-router-dom";
+
+interface InfoData {
+  noOfDestinations: number;
+  noOfTours: number;
+  noOfCustomers: number;
+}
 
 const Explore = () => {
+  const navigate = useNavigate();
+  const [info, setInfo] = useState<InfoData>({
+    noOfDestinations: 0,
+    noOfTours: 0,
+    noOfCustomers: 0,
+  });
+
+  useEffect(() => {
+    const docRef = doc(db, "ourInfo", "6ehvkjpjNJpYqIwTvuVd");
+    const fetcthing = async () => {
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        setInfo({
+          noOfDestinations: docSnap.data().noOfDestinations,
+          noOfTours: docSnap.data().noOfTours,
+          noOfCustomers: docSnap.data().noOfCustomers,
+        });
+      } else {
+        console.log("No such document!");
+      }
+    };
+    fetcthing();
+  }, []);
+
   return (
     <div className={`${styles.padding} w-full h-[500px]`}>
       <div className="relative w-full h-full flex justify-center gap-[10%] items-center">
@@ -17,6 +53,7 @@ const Explore = () => {
             more meaningfully with your destination and have more fun!
           </p>
           <button
+            onClick={() => navigate("/destination")}
             className={`${styles.primaryBgColor} w-[40%] rounded-lg text-[14px] py-2 text-white font-light `}
           >
             Explore Our Tours
@@ -35,7 +72,7 @@ const Explore = () => {
               <p
                 className={` ${styles.primaryTextColor} text-[26px] font-bold `}
               >
-                240
+                {info?.noOfDestinations}
               </p>
               <p className="font-light text-[14px]">Total Destinations</p>
             </div>
@@ -50,7 +87,7 @@ const Explore = () => {
               <p
                 className={` ${styles.primaryTextColor} text-[26px] font-bold `}
               >
-                92,842
+                {info?.noOfCustomers}
               </p>
               <p className="font-light text-[14px]">Happy Customers</p>
             </div>
@@ -60,7 +97,7 @@ const Explore = () => {
               <img src={e1} alt="e1" className="w-full h-full object-contain" />
             </div>
             <p className={` ${styles.primaryTextColor} text-[26px] font-bold `}>
-              3672
+              {info?.noOfTours}
             </p>
             <p className="font-light text-[14px]">Amazing Tours</p>
           </div>
