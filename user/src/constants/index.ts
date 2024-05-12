@@ -43,7 +43,7 @@ export const navLinks = [
     link: "#",
   },
   {
-    title: "Our Team",
+    title: "Gallery",
     link: "#",
   },
   {

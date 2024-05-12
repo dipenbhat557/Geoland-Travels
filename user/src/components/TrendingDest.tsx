@@ -19,6 +19,7 @@ const TrendingDest = () => {
 
   return (
     <div
+      id="trending"
       className={`${styles.padding} w-full h-[500px] justify-between flex flex-col `}
     >
       <p className={`${styles.sectionHeadText} h-[10%]`}>

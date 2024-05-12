@@ -320,16 +320,16 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                 setToggle(!toggle);
               }}
             >
-              {link.title === "Tours" ? (
-                <a className="w-full text-left" href="#">
+              {link.title === "Destination" ? (
+                <a className="w-full text-left" href="/destination">
                   Tours
                 </a>
-              ) : link.title === "Destination" ? (
-                <a className="w-full text-left" href="#">
-                  Destination
+              ) : link.title === "Most Sold Packages" ? (
+                <a className="w-full text-left" href="#trending">
+                  Most Sold Packages
                 </a>
               ) : link.title === "About Us" ? (
-                <a className="w-full text-left" href="#">
+                <a className="w-full text-left" href="/aboutus">
                   About Us
                 </a>
               ) : (

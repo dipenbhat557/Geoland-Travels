@@ -55,25 +55,25 @@ const Hero = () => {
 
   return (
     <div
-      className="h-[580px] w-full relative mt-14"
+      className="h-[600px] sm:h-[580px] w-full relative mt-0 sm:mt-14"
       style={{ backgroundImage: `url(${heroBg})` }}
     >
       <div className="w-full h-full z-10 absolute  opacity-10" />
       <div className="w-full h-full absolute z-20 flex items-center justify-center flex-col ">
-        <div className="w-full h-[50%] flex items-center justify-center flex-col gap-3">
-          <p className="w-[45%] text-center text-[45px] text-white font-semibold">
+        <div className="w-full h-[90%] sm:h-[50%] flex items-center justify-center flex-col gap-14 sm:gap-3">
+          <p className="sm:w-[45%] text-center text-[30px] sm:text-[45px] text-white font-semibold">
             Choose a Destination For Your Next Adventure?
           </p>
           <p className="text-[14px] font-light text-white tracking-wider">
             From local escapes to far-flung adventures
           </p>
-          <div className="w-[30%] items-center justify-around h-[20%] rounded-full bg-white flex">
+          <div className="w-[80%] sm:w-[30%] items-center justify-around h-[10%] sm:h-[20%] rounded-full bg-white flex">
             <IoLocationOutline className="text-3xl" />
             <input
               type="text"
               value={searchQuery}
               onChange={handleSearchInputChange}
-              className="w-[70%] px-2 py-2  focus:outline-none rounded-md placeholder:text-[13px]"
+              className="w-[70%] px-2 sm:py-2  focus:outline-none rounded-md placeholder:text-[13px]"
               placeholder="Search destination"
             />
             <div
@@ -87,7 +87,7 @@ const Hero = () => {
             (searchResult?.length > 0 ? (
               <div
                 ref={boxRef}
-                className="w-[30%] rounded-b-md absolute z-50  right-[35%] top-[61%] h-auto"
+                className="w-[70%] sm:w-[30%] rounded-b-md absolute z-50 left-[15%] sm:right-[35%] top-[57%] sm:top-[61%] h-auto"
               >
                 {searchResult?.map((s, i) => {
                   return (
@@ -111,13 +111,13 @@ const Hero = () => {
             ) : (
               <div
                 ref={boxRef}
-                className="w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] right-[35%] top-[61%] rounded-b-lg"
+                className="w-[70%] sm:w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] left-[15%] sm:right-[35%] top-[57%] sm:top-[61%] -b-lg"
               >
                 "No results found"
               </div>
             ))}
         </div>
-        <div className="w-[60%] h-[20%] flex items-end justify-between">
+        <div className="w-[60%] h-[20%] hidden  sm:flex items-end justify-between">
           {["Nature", "Adventure", "Culture", "Food", "City", "Cruise"].map(
             (e, i) => {
               return (

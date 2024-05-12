@@ -95,11 +95,11 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
 
   return (
     <div
-      className={`${styles.padding} w-full h-[350px] bg-[#37383C] flex justify-between`}
+      className={`${styles.padding} w-full h-[240px] sm:h-[350px] bg-[#37383C] flex justify-between`}
     >
       <div className="w-[65%] h-[80%] flex flex-col justify-around">
         <div className="w-full h-[40%] gap-3 flex flex-col">
-          <p className="text-[22px] font-bold text-white">
+          <p className="text-[18px] sm:text-[22px] font-bold text-white">
             Let's go on adventure !!
           </p>
           <div className="w-[80%] h-[40%] rounded-lg flex justify-around items-center bg-white">
@@ -112,7 +112,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
             />
             <button
               onClick={handleSearchButtonClick}
-              className={`${styles.primaryBgColor} text-white w-[15%] rounded-lg flex items-center justify-center h-[80%]`}
+              className={`${styles.primaryBgColor} text-white p-1 text-[10px] sm:text-[16px] w-[35%] sm:w-[15%] rounded-lg flex items-center justify-center h-[40%] sm:h-[80%]`}
             >
               Search
             </button>
@@ -151,9 +151,9 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
               "No results found"
             </div>
           ))}
-        <div className="w-[80%] h-[30%] gap-3 flex justify-between">
-          <div className="w-[60%] h-full gap-4 flex flex-col">
-            <div className="w-[35%] h-[70%] cursor-pointer">
+        <div className="w-[80%] h-[50%] sm:h-[30%] gap-3 flex justify-between">
+          <div className="w-full sm:w-[60%] h-full gap-4 flex flex-col">
+            <div className="w-[80%] sm:w-[35%] h-full sm:h-[70%] cursor-pointer">
               <img
                 onClick={() => window?.scrollTo(0, 0)}
                 src={logo}
@@ -161,12 +161,12 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="w-[80%] text-white font-light text-[14px]">
+            <p className="hidden sm:flex w-[80%] text-white font-light text-[14px]">
               "Embark on Unforgettable Adventures with Our Expertise: Where
               Every Destination Becomes a Story."
             </p>
           </div>
-          <div className="w-[30%] h-full flex justify-center text-white items-center">
+          <div className="w-[30%] h-full hidden sm:flex justify-center text-white items-center">
             <div className="w-[50%] h-full flex flex-col justify-between items-center">
               <p className="cursor-pointer">Privacy Policy</p>
               <p

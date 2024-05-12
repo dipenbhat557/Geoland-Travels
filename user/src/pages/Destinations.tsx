@@ -24,6 +24,8 @@ const Destinations = () => {
       res = tours?.filter((t: TourData) => t?.type === value);
     } else if (key === "category") {
       res = tours?.filter((t: TourData) => t?.category.includes(value));
+    } else {
+      res = tours;
     }
     setCurrentTours(res);
   }, []);
