@@ -41,7 +41,7 @@ const AboutUs = () => {
         </div>
         <div className="flex flex-col items-center gap-5 p-4">
           <p className="text-[27px] w-[70%] text-center font-semibold">
-            TRAVEL TIPS : HERE YOU’LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
+            TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
             PREPARED BEFORE SETTING OFF ON YOUR TRIP
           </p>
           <button className="px-9 py-3 rounded-lg bg-primary text-white">

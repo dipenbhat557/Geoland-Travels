@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "../styles";
 import { motion } from "framer-motion";
 import { slideIn } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
-import { faqs } from "../constants";
 import { useNavigate } from "react-router-dom";
+import { Timestamp, collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
+interface FaqData {
+  title: string;
+  date: string;
+  query: string;
+  answer: string;
+  id: string;
+}
 
 const FAQs = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const navigate = useNavigate();
+  const [faqs, setFaqs] = useState<FaqData[]>([]);
 
   const toggleAnswer = (index: number) => {
     if (expandedIndex === index) {
@@ -17,6 +27,38 @@ const FAQs = () => {
       setExpandedIndex(index);
     }
   };
+
+  useEffect(() => {
+    const gotFaqs: FaqData[] = [];
+    const fetchDocuments = async () => {
+      const querySnapshot = await getDocs(collection(db, "faqs"));
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const date = data.date;
+        let dateObject = "";
+
+        if (date instanceof Timestamp) {
+          dateObject = date.toDate().toString().slice(0, 21);
+          console.log("Date:", dateObject);
+        } else {
+          console.error("Invalid or missing date field:", date);
+        }
+
+        const f: FaqData = {
+          title: doc?.data()?.title,
+          date: dateObject,
+          query: doc?.data()?.query,
+          answer: doc?.data()?.answer,
+          id: doc?.id,
+        };
+        gotFaqs.push(f);
+      });
+      setFaqs(gotFaqs);
+    };
+
+    fetchDocuments();
+  }, []);
 
   return (
     <div className={`${styles.padding} w-full  `}>
@@ -44,7 +86,7 @@ const FAQs = () => {
                   onClick={() => toggleAnswer(index)}
                 >
                   <h3 className="sm:text-lg font-serif font-semibold ">
-                    {faq.question}
+                    {faq.query}
                   </h3>
                   <button
                     className="text-primary focus:outline-none "

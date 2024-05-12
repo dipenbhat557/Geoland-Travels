@@ -1,4 +1,7 @@
 import {
+  a1,
+  a2,
+  a3,
   blog1,
   blog2,
   blog3,
@@ -375,3 +378,16 @@ export const faqs = [
   { question: "What is your name?", answer: "Why do you need" },
   { question: "I just need to know your name", answer: "Sorry you can't" },
 ];
+
+const boardTeam = [
+  { img: a1, name: "Dipendra Bhatta", role: "Manager" },
+  { img: a2, name: "Dipendra Bhatta", role: "Manager" },
+  { img: a3, name: "Dipendra Bhatta", role: "Manager" },
+];
+const staffTeam = [
+  { img: d1, name: "Dipendra Bhatta", role: "Manager" },
+  { img: a1, name: "Dipendra Bhatta", role: "Manager" },
+  { img: a2, name: "Dipendra Bhatta", role: "Manager" },
+];
+
+export const team = [boardTeam, staffTeam];
