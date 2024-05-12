@@ -4,6 +4,8 @@ import Details from "./Details";
 import BlogPage from "./BlogPage";
 import ContactUs from "./ContactUs";
 import Destinations from "./Destinations";
+import AboutUs from "./AboutUs";
+import OurTeam from "./OurTeam";
 
 const Pages = () => {
   return (
@@ -15,6 +17,8 @@ const Pages = () => {
         <Route path="/blogs" element={<BlogPage isFromNavbar={true} />} />
         <Route path="/blog" element={<BlogPage isFromNavbar={false} />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/team" element={<OurTeam />} />
       </Routes>
     </BrowserRouter>
   );

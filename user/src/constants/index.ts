@@ -60,6 +60,12 @@ export const tourDropdown = [
   },
 ];
 
+export const aboutUsDropdown = [
+  { title: "About Us", link: "/aboutus" },
+  { title: "Message from MD", link: "/#messagefrommd" },
+  { title: "Our Team", link: "/team" },
+];
+
 export const trendingItems = [
   {
     img: canada2Bg,
@@ -363,4 +369,9 @@ export const tour_types = [
   { title: "City Tours", content: "City" },
 
   { title: "Cruise Tours", content: "Cruise" },
+];
+
+export const faqs = [
+  { question: "What is your name?", answer: "Why do you need" },
+  { question: "I just need to know your name", answer: "Sorry you can't" },
 ];

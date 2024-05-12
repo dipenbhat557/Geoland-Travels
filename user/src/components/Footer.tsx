@@ -169,7 +169,12 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
           <div className="w-[30%] h-full flex justify-center text-white items-center">
             <div className="w-[50%] h-full flex flex-col justify-between items-center">
               <p className="cursor-pointer">Privacy Policy</p>
-              <p className="cursor-pointer">About</p>
+              <p
+                onClick={() => navigate("/aboutus")}
+                className="cursor-pointer"
+              >
+                About
+              </p>
             </div>
 
             <div className="w-[50%] h-full flex flex-col justify-between items-center">

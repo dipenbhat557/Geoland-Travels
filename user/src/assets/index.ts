@@ -31,6 +31,14 @@ import uae from "./flagImg/uae.png";
 import usa from "./flagImg/usa.png";
 import d1 from "./destImg/d1.png";
 import def from "./default.jpg";
+import map from "./map.svg";
+import aboutBg from "./aboutImg/aboutBg.png";
+import commitment from "./aboutImg/commitment.png";
+import question from "./aboutImg/question.png";
+import a1 from "./achievementImg/a1.png";
+import a2 from "./achievementImg/a2.png";
+import a3 from "./achievementImg/a3.png";
+import a4 from "./achievementImg/a4.png";
 
 export {
   heroBg,
@@ -65,4 +73,12 @@ export {
   usa,
   d1,
   def,
+  map,
+  aboutBg,
+  commitment,
+  question,
+  a1,
+  a2,
+  a3,
+  a4,
 };

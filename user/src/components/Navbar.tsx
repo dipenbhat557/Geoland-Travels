@@ -1,4 +1,4 @@
-import { navLinks, tourDropdown } from "../constants";
+import { aboutUsDropdown, navLinks, tourDropdown } from "../constants";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -12,9 +12,11 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
   const navigate = useNavigate();
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
+  const [showDropdown3, setShowDropdown3] = useState(false);
   const [toggle, setToggle] = useState(false);
   let timeoutId1: NodeJS.Timeout;
   let timeoutId2: NodeJS.Timeout;
+  let timeoutId3: NodeJS.Timeout;
   const tours: TourData[] = useRecoilValue(toursData);
   const [packages, setPackages] = useState<TourData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,6 +48,19 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
     setShowDropdown2(true);
     if (timeoutId2) {
       clearTimeout(timeoutId2);
+    }
+  };
+
+  const handleMouseLeave3 = () => {
+    timeoutId3 = setTimeout(() => {
+      setShowDropdown3(false);
+    }, 1000);
+  };
+
+  const handleMouseOverDropdown3 = () => {
+    setShowDropdown3(true);
+    if (timeoutId3) {
+      clearTimeout(timeoutId3);
     }
   };
 
@@ -136,7 +151,6 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
               "No results found"
             </div>
           ))}
-
         <div className=" w-[55%] h-full items-center justify-end gap-2 flex">
           <div className="flex items-center  justify-around w-[80%]">
             {navLinks?.map((nav, index) => (
@@ -148,6 +162,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     setShowDropdown1(true);
                   } else if (nav.title === "Most Sold Packages") {
                     setShowDropdown2(true);
+                  } else if (nav.title === "About Us") {
+                    setShowDropdown3(true);
                   }
                 }}
                 onMouseLeave={() => {
@@ -155,6 +171,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     handleMouseLeave1();
                   } else if (nav.title === "Most Sold Packages") {
                     handleMouseLeave2();
+                  } else if (nav.title === "About Us") {
+                    handleMouseLeave3();
                   }
                 }}
                 onClick={() => {
@@ -162,7 +180,8 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                 }}
               >
                 {nav.title === "Destination" ||
-                nav.title === "Most Sold Packages" ? (
+                nav.title === "Most Sold Packages" ||
+                nav.title === "About Us" ? (
                   <>
                     {nav.title}
                     <IoMdArrowDropdown className={`inline  `} />
@@ -182,7 +201,6 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
             Contact Us
           </button>
         </div>
-
         {showDropdown1 && (
           <div
             className="dropdown-menu top-14 p-3 rounded-b-xl rounded-r-xl left-[45%] shadow-md shadow-black text-black bg-white w-[16%] absolute z-50 "
@@ -233,6 +251,26 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                     >
                       {service?.tourTitle}
                     </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}{" "}
+        {showDropdown3 && (
+          <div
+            className="dropdown-menu top-14 p-3 rounded-b-xl rounded-r-xl left-[55%] shadow-md shadow-black text-black bg-white w-[16%] absolute z-50 "
+            onMouseLeave={() => setShowDropdown3(false)}
+            onMouseOver={() => handleMouseOverDropdown3()}
+          >
+            <ul className="w-full">
+              {aboutUsDropdown?.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    className="hover:bg-[#80b38930]  px-2 py-1 rounded-sm text-[14px] cursor-pointer "
+                  >
+                    <a href={item?.link}>{item?.title}</a>
                   </li>
                 );
               })}
@@ -289,6 +327,10 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
               ) : link.title === "Destination" ? (
                 <a className="w-full text-left" href="#">
                   Destination
+                </a>
+              ) : link.title === "About Us" ? (
+                <a className="w-full text-left" href="#">
+                  About Us
                 </a>
               ) : (
                 <a className="w-full text-left" href={link?.link}>

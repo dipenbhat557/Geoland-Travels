@@ -38,6 +38,7 @@ const Message = () => {
   }, []);
   return (
     <div
+      id="messagefrommd"
       className={`${styles.padding} bg-[#F9F9F6] w-full h-[650px] flex justify-center items-center`}
     >
       <div className="w-[95%] h-[95%] shadow-md shadow-slate-400 justify-between rounded-lg flex ">
