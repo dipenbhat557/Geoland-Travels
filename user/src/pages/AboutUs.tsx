@@ -23,99 +23,103 @@ const AboutUs = () => {
   }, [currentElement]);
 
   return (
-    <div className="flex flex-col sm:gap-5 h-auto">
-      <Navbar isHome={true} />
-      <div className="h-[500px] sm:h-[580px] flex justify-center items-end w-full relative sm:mt-14">
-        <div className="w-full h-full absolute -z-10">
-          {[img1, img3, img4, img5, img6, img7]?.map((element, index) => (
-            <div
-              key={index}
-              className={`absolute w-full h-full  ${
-                index === currentElement ? "visible" : "hidden"
-              }`}
-            >
-              <img
-                src={element}
-                alt="Background Photo"
-                className={`photo-slide w-full h-full photo-element ${
-                  index === currentElement ? "photo-fade-in" : "photo-fade-out"
+    <Suspense fallback={<Loading />}>
+      <div className="flex flex-col sm:gap-5 h-auto">
+        <Navbar isHome={true} />
+        <div className="h-[500px] sm:h-[580px] flex justify-center items-end w-full relative sm:mt-14">
+          <div className="w-full h-full absolute -z-10">
+            {[img1, img3, img4, img5, img6, img7]?.map((element, index) => (
+              <div
+                key={index}
+                className={`absolute w-full h-full  ${
+                  index === currentElement ? "visible" : "hidden"
                 }`}
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                }}
+              >
+                <img
+                  src={element}
+                  alt="Background Photo"
+                  className={`photo-slide w-full h-full photo-element ${
+                    index === currentElement
+                      ? "photo-fade-in"
+                      : "photo-fade-out"
+                  }`}
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="w-full h-full bg-black opacity-40 absolute z-10" />
+          <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
+            <div
+              className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[20px] sm:text-[25px]`}
+            >
+              About Geoland Travels
+            </div>
+            <div className="w-full h-[30%] bg-white" />
+          </div>
+        </div>
+        <div className={`${styles.padding} flex flex-col gap-9 h-auto w-full`}>
+          <div className="border border-black rounded-lg p-5 sm:leading-loose sm:tracking-wide">
+            Geoland Travels and Tours, a registered Private Limited company in
+            Nepal, boasts 10 years of experience backed by seasoned
+            professionals with over 20 years in tourism. With 24 skilled staff,
+            we specialize in airline ticketing, luxury coaches, and deluxe
+            tours, offering personalized services including hotel bookings,
+            package tours, and cultural experiences. Our online booking system
+            simplifies ticketing for domestic and international travel. As
+            trusted members of NATTA and IATA, we're renowned in Dubai and Nepal
+            as a leading tour operator and Destination Management Company. Our
+            focus extends globally, with expertise in Asia, the Middle East,
+            Europe, and beyond, while promoting Nepal's diverse attractions. We
+            prioritize teamwork, Turn Around Time (TAT), and collaboration with
+            travel partners worldwide.
+          </div>
+          <div className="flex flex-col items-center gap-5 p-2 sm:p-4">
+            <p className=" text-[20px] sm:text-[27px] w-full sm:w-[70%] text-center font-semibold">
+              TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET
+              YOU PREPARED BEFORE SETTING OFF ON YOUR TRIP
+            </p>
+            <button
+              onClick={() => navigate("/traveltips")}
+              className="px-9 py-3 hover:bg-black rounded-lg bg-primary text-white"
+            >
+              Click Here
+            </button>
+          </div>
+          <div className="flex w-full h-[150px] justify-between items-center">
+            <div className="w-[20%] h-full">
+              <img
+                src={a1}
+                alt="achievement"
+                className="w-full h-full object-contain"
               />
             </div>
-          ))}
-        </div>
-        <div className="w-full h-full bg-black opacity-50 absolute z-10" />
-        <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
-          <div
-            className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[20px] sm:text-[25px]`}
-          >
-            About Geoland Travels
+            <div className="w-[20%] h-full">
+              <img
+                src={a2}
+                alt="achievement"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="w-[20%] h-full">
+              <img
+                src={a3}
+                alt="achievement"
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="w-[20%] h-full">
+              <img
+                src={a4}
+                alt="achievement"
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
-          <div className="w-full h-[30%] bg-white" />
-        </div>
-      </div>
-      <div className={`${styles.padding} flex flex-col gap-9 h-auto w-full`}>
-        <div className="border border-black rounded-lg p-5 sm:leading-loose sm:tracking-wide">
-          Geoland Travels and Tours, a registered Private Limited company in
-          Nepal, boasts 10 years of experience backed by seasoned professionals
-          with over 20 years in tourism. With 24 skilled staff, we specialize in
-          airline ticketing, luxury coaches, and deluxe tours, offering
-          personalized services including hotel bookings, package tours, and
-          cultural experiences. Our online booking system simplifies ticketing
-          for domestic and international travel. As trusted members of NATTA and
-          IATA, we're renowned in Dubai and Nepal as a leading tour operator and
-          Destination Management Company. Our focus extends globally, with
-          expertise in Asia, the Middle East, Europe, and beyond, while
-          promoting Nepal's diverse attractions. We prioritize teamwork, Turn
-          Around Time (TAT), and collaboration with travel partners worldwide.
-        </div>
-        <div className="flex flex-col items-center gap-5 p-2 sm:p-4">
-          <p className=" text-[20px] sm:text-[27px] w-full sm:w-[70%] text-center font-semibold">
-            TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
-            PREPARED BEFORE SETTING OFF ON YOUR TRIP
-          </p>
-          <button
-            onClick={() => navigate("/traveltips")}
-            className="px-9 py-3 hover:bg-black rounded-lg bg-primary text-white"
-          >
-            Click Here
-          </button>
-        </div>
-        <div className="flex w-full h-[150px] justify-between items-center">
-          <div className="w-[20%] h-full">
-            <img
-              src={a1}
-              alt="achievement"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="w-[20%] h-full">
-            <img
-              src={a2}
-              alt="achievement"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="w-[20%] h-full">
-            <img
-              src={a3}
-              alt="achievement"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div className="w-[20%] h-full">
-            <img
-              src={a4}
-              alt="achievement"
-              className="w-full h-full object-contain"
-            />
-          </div>
-        </div>
 
           <div
             className={`sm:${styles.padding} flex flex-col items-center gap-4`}
