@@ -39,11 +39,12 @@ import a1 from "./achievementImg/a1.png";
 import a2 from "./achievementImg/a2.png";
 import a3 from "./achievementImg/a3.png";
 import a4 from "./achievementImg/a4.png";
-
+import iconlogo from "./iconLogo.png"
 export {
   heroBg,
   blog1,
   blog2,
+  iconlogo,
   blog3,
   blog4,
   canadaBg,

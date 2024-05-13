@@ -48,7 +48,7 @@ const AboutUs = () => {
             TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
             PREPARED BEFORE SETTING OFF ON YOUR TRIP
           </p>
-          <button className="px-9 py-3 rounded-lg bg-primary text-white">
+          <button className="px-9 py-3 rounded-lg bg-primary hover:bg-black  text-white">
             Click Here
           </button>
         </div>
