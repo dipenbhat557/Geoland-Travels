@@ -391,3 +391,5 @@ const staffTeam = [
 ];
 
 export const team = [boardTeam, staffTeam];
+
+export const privacyPolicy = "";
