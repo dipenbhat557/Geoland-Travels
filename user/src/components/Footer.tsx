@@ -1,7 +1,7 @@
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import { styles } from "../styles";
 import { logo } from "../assets";
-import { slideIn } from "../utils/motion";
+import { fadeIn, slideIn } from "../utils/motion";
 import { motion } from "framer-motion";
 import EarthCanvas from "./canvas/Earth";
 import { useEffect, useRef, useState } from "react";
@@ -94,7 +94,8 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
   };
 
   return (
-    <div
+    <motion.div
+      variants={fadeIn("up", "spring", 0.5, 0.6)}
       className={`${styles.padding} w-full h-[240px] sm:h-[350px] bg-[#37383C] flex justify-between`}
     >
       <div className="w-[65%] h-[80%] flex  flex-col-reverse sm:flex-col justify-around">
@@ -166,24 +167,25 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
               Every Destination Becomes a Story."
             </p>
           </div>
-          <div className="w-[30%] h-full hidden sm:flex justify-center text-white items-center">
-            <div className="w-[50%] h-full flex flex-col justify-between items-center">
-              <p className="cursor-pointer">Privacy Policy</p>
+          <div className="w-[30%] h-full hidden sm:flex flex-col gap-4 justify-center text-white items-center">
+            <div className="w-full h-[50%] flex   justify-between items-center">
               <p
-                onClick={() => navigate("/aboutus")}
+                onClick={() => navigate("/privacypolicy")}
                 className="cursor-pointer"
               >
-                About
+                Privacy Policy
+              </p>
+              <p
+                onClick={() => navigate("/traveltips")}
+                className="cursor-pointer"
+              >
+                Travel Tips
               </p>
             </div>
 
-            <div className="w-[50%] h-full flex flex-col justify-between items-center">
-              <p className="cursor-pointer">Gallery</p>
-              <p
-                onClick={() => navigate("/destination")}
-                className="cursor-pointer"
-              >
-                Tours
+            <div className="w-full h-[50%] flex flex-col justify-between items-center">
+              <p onClick={() => navigate("/terms")} className="cursor-pointer">
+                Terms And Conditions
               </p>
             </div>
           </div>
@@ -218,7 +220,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 export default Footer;

@@ -5,6 +5,10 @@ import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { def } from "../assets";
 
+import { motion } from "framer-motion";
+import { textVariant } from "../utils/motion";
+import { SectionWrapper } from "../hoc";
+
 export interface BlogData {
   title: string;
   role: string;
@@ -61,11 +65,17 @@ const Blogs = () => {
     <div
       className={`flex w-full ${styles.padding} h-[480px] sm:h-[550px] flex flex-col`}
     >
-      <p className={`${styles.sectionHeadText} h-[7%]`}>Blogs</p>
+      <motion.p
+        variants={textVariant(0.3)}
+        className={`${styles.sectionHeadText} h-[7%]`}
+      >
+        Blogs
+      </motion.p>
       <div className="w-full h-[90%] flex justify-between items-center">
         {blogs?.map((item, index) => {
           return (
-            <div
+            <motion.div
+              variants={textVariant(0.2 * index)}
               key={index}
               onClick={() => navigate("/blog", { state: { blog: item } })}
               className="w-[45%] sm:w-[31%] cursor-pointer h-[85%] p-2 rounded-3xl justify-between flex flex-col"
@@ -91,7 +101,7 @@ const Blogs = () => {
               <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center line-clamp-1">
                 {item?.blogTitle}
               </p>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -106,4 +116,4 @@ const Blogs = () => {
     </div>
   );
 };
-export default Blogs;
+export default SectionWrapper(Blogs);

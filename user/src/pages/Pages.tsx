@@ -6,6 +6,9 @@ import ContactUs from "./ContactUs";
 import Destinations from "./Destinations";
 import AboutUs from "./AboutUs";
 import OurTeam from "./OurTeam";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TravelTips from "./TravelTips";
+import TermsAndCondition from "./TermsAndCondition";
 
 const Pages = () => {
   return (
@@ -19,6 +22,9 @@ const Pages = () => {
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/team" element={<OurTeam />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/traveltips" element={<TravelTips />} />
+        <Route path="/terms" element={<TermsAndCondition />} />
       </Routes>
     </BrowserRouter>
   );

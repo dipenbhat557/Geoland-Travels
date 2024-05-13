@@ -1,10 +1,11 @@
 import { styles } from "../styles";
-import { motion } from "framer-motion";
 import { fadeIn } from "../utils/motion";
 import { useEffect, useState } from "react";
 import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { def } from "../assets";
+
+import { motion } from "framer-motion";
 
 interface ImageData {
   title: string;

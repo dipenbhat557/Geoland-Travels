@@ -4,6 +4,9 @@ import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { def } from "../assets";
+import { motion } from "framer-motion";
+import { SectionWrapper } from "../hoc";
+import { fadeIn, textVariant } from "../utils/motion";
 
 const InboundTour = () => {
   const navigate = useNavigate();
@@ -20,11 +23,17 @@ const InboundTour = () => {
     <div
       className={`flex w-full ${styles.padding} h-auto sm:h-[550px] gap-4 sm:gap-0 flex flex-col`}
     >
-      <p className={`${styles.sectionHeadText} h-[10%]`}>Inbound Tour</p>
+      <motion.p
+        variants={textVariant(0.3)}
+        className={`${styles.sectionHeadText} h-[10%]`}
+      >
+        Inbound Tour
+      </motion.p>
       <div className="w-full h-[90%] flex  gap-6 sm:gap-0 flex-wrap justify-between items-center">
         {inboundItems?.map((item, index) => {
           return (
-            <div
+            <motion.div
+              variants={fadeIn("up", "spring", 0.2 * index, 0.2)}
               onClick={() => navigate("/details", { state: { tour: item } })}
               key={index}
               className="w-[45%] sm:w-[23%] cursor-pointer border border-slate-200 h-[280px] sm:h-[90%] p-1 sm:p-2 gap-1 rounded-3xl flex flex-col"
@@ -47,7 +56,7 @@ const InboundTour = () => {
                 <p className="w-[40%] ">{item?.date?.slice(0, 15)}</p>
                 <p className="w-[40%]">From &nbsp;NPR {item?.price}</p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -66,4 +75,4 @@ const InboundTour = () => {
     </div>
   );
 };
-export default InboundTour;
+export default SectionWrapper(InboundTour);

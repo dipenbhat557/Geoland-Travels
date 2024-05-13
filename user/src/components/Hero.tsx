@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "../utils/motion";
+import { SectionWrapper } from "../hoc";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -61,13 +64,41 @@ const Hero = () => {
       <div className="w-full h-full z-10 absolute  opacity-10" />
       <div className="w-full h-full absolute z-20 flex items-center justify-center flex-col ">
         <div className="w-full h-[90%] sm:h-[50%] flex items-center justify-center flex-col gap-14 sm:gap-3">
-          <p className="sm:w-[45%] text-center text-[30px] sm:text-[45px] text-white font-semibold">
-            Choose a Destination For Your Next Adventure?
-          </p>
-          <p className="text-[14px] font-light text-white tracking-wider">
+          <motion.p className="sm:w-[43%] text-center text-[30px] sm:text-[45px] text-white font-semibold">
+            {"Choose a Destination For Your ".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.05 * index, duration: 0 }}
+                style={{ display: "inline-block" }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+
+            {"Next Adventure?".split("").map((char, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.05 * index, duration: 0 }}
+                style={{ display: "inline-block" }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </motion.p>
+          <motion.p
+            variants={textVariant(0.9)}
+            className="text-[14px] font-light text-white tracking-wider"
+          >
             From local escapes to far-flung adventures
-          </p>
-          <div className="w-[80%] sm:w-[30%] items-center justify-around h-[10%] sm:h-[20%] rounded-full bg-white flex">
+          </motion.p>
+          <motion.div
+            variants={fadeIn("right", "spring", 0.3, 0.6)}
+            className="w-[80%] sm:w-[30%] items-center justify-around h-[10%] sm:h-[20%] rounded-full bg-white flex"
+          >
             <IoLocationOutline className="text-3xl" />
             <input
               type="text"
@@ -82,7 +113,7 @@ const Hero = () => {
             >
               <AiOutlineSearch className="text-white text-2xl" />
             </div>
-          </div>
+          </motion.div>
           {clicked &&
             (searchResult?.length > 0 ? (
               <div
@@ -121,7 +152,8 @@ const Hero = () => {
           {["Nature", "Adventure", "Culture", "Food", "City", "Cruise"].map(
             (e, i) => {
               return (
-                <button
+                <motion.button
+                  variants={fadeIn("up", "spring", 0.2 * i, 0.5)}
                   key={i}
                   onClick={() =>
                     navigate("/destination", {
@@ -131,7 +163,7 @@ const Hero = () => {
                   className="text-white bg-opacity-10 hover:bg-opacity-40 bg-slate-100 rounded-full w-[100px] py-2"
                 >
                   {e}
-                </button>
+                </motion.button>
               );
             }
           )}
@@ -140,4 +172,4 @@ const Hero = () => {
     </div>
   );
 };
-export default Hero;
+export default SectionWrapper(Hero);

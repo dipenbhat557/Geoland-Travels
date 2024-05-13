@@ -5,6 +5,9 @@ import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import { def } from "../assets";
+import { motion } from "framer-motion";
+import { fadeIn, textVariant } from "../utils/motion";
+import { SectionWrapper } from "../hoc";
 
 const TrendingDest = () => {
   const navigate = useNavigate();
@@ -22,12 +25,16 @@ const TrendingDest = () => {
       id="trending"
       className={`${styles.padding} w-full h-[400px] sm:h-[500px] justify-between flex flex-col `}
     >
-      <p className={`${styles.sectionHeadText} h-[10%]`}>
+      <motion.p
+        variants={textVariant(0.3)}
+        className={`${styles.sectionHeadText} h-[10%]`}
+      >
         Trending Destinations
-      </p>
+      </motion.p>
       <div className="w-full h-[88%] flex flex-row justify-between">
         <div className="h-full w-[35%] sm:w-[25%] flex flex-col justify-between ">
-          <div
+          <motion.div
+            variants={fadeIn("right", "spring", 0.4, 0.6)}
             onClick={() =>
               navigate("/details", { state: { tour: trendingDest?.[0] } })
             }
@@ -41,8 +48,9 @@ const TrendingDest = () => {
             <p className="absolute bottom-5 text-[12px] sm:text-[16px] left-5 text-white">
               {trendingDest?.[0]?.tourTitle}
             </p>
-          </div>
-          <div
+          </motion.div>
+          <motion.div
+            variants={fadeIn("right", "spring", 0.5, 0.6)}
             onClick={() =>
               navigate("/details", { state: { tour: trendingDest?.[1] } })
             }
@@ -56,10 +64,11 @@ const TrendingDest = () => {
             <p className="absolute text-[12px] sm:text-[16px] bottom-5 left-5 text-white">
               {trendingDest?.[1]?.tourTitle}
             </p>
-          </div>
+          </motion.div>
         </div>
         <div className="h-full w-[64%] sm:w-[40%] flex flex-col justify-between">
-          <div
+          <motion.div
+            variants={fadeIn("right", "spring", 0.6, 0.6)}
             onClick={() =>
               navigate("/details", { state: { tour: trendingDest?.[2] } })
             }
@@ -73,9 +82,10 @@ const TrendingDest = () => {
             <p className="absolute text-[12px] sm:text-[16px] bottom-5 left-5 text-white">
               {trendingDest?.[2]?.tourTitle}
             </p>
-          </div>
+          </motion.div>
           <div className="flex justify-between w-full h-[47%]">
-            <div
+            <motion.div
+              variants={fadeIn("right", "spring", 0.7, 0.6)}
               onClick={() =>
                 navigate("/details", { state: { tour: trendingDest?.[3] } })
               }
@@ -89,8 +99,9 @@ const TrendingDest = () => {
               <p className="absolute text-[12px] sm:text-[16px] bottom-5 left-5 text-white">
                 {trendingDest?.[3]?.tourTitle}
               </p>
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              variants={fadeIn("right", "spring", 0.7, 0.6)}
               onClick={() =>
                 navigate("/details", { state: { tour: trendingDest?.[4] } })
               }
@@ -104,10 +115,11 @@ const TrendingDest = () => {
               <p className="absolute text-[12px] sm:text-[16px] bottom-5 left-5 text-white">
                 {trendingDest?.[4]?.tourTitle}
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
-        <div
+        <motion.div
+          variants={fadeIn("right", "spring", 0.8, 0.6)}
           onClick={() =>
             navigate("/details", { state: { tour: trendingDest?.[5] } })
           }
@@ -121,9 +133,9 @@ const TrendingDest = () => {
           <p className="absolute text-[12px] sm:text-[16px] bottom-5 left-5 text-white">
             {trendingDest?.[5]?.tourTitle}
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
 };
-export default TrendingDest;
+export default SectionWrapper(TrendingDest);

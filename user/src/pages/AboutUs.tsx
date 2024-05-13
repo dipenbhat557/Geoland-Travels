@@ -6,8 +6,10 @@ import Navbar from "../components/Navbar";
 import { styles } from "../styles";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col sm:gap-5 h-auto">
       <Navbar isHome={true} />
@@ -48,7 +50,10 @@ const AboutUs = () => {
             TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
             PREPARED BEFORE SETTING OFF ON YOUR TRIP
           </p>
-          <button className="px-9 py-3 rounded-lg bg-primary text-white">
+          <button
+            onClick={() => navigate("/traveltips")}
+            className="px-9 py-3 rounded-lg bg-primary text-white"
+          >
             Click Here
           </button>
         </div>
@@ -87,7 +92,7 @@ const AboutUs = () => {
           className={`sm:${styles.padding} flex flex-col items-center gap-4`}
         >
           <p className="font-bold text-[25px] sm:text-[47px]">
-            We’re here for you{" "}
+            We're here for you{" "}
           </p>
           <p className="font-bold text-[30px] text-center sm:text-[47px] text-primary">
             no matter where you are
