@@ -52,7 +52,7 @@ const AboutUs = () => {
           </p>
           <button
             onClick={() => navigate("/traveltips")}
-            className="px-9 py-3 rounded-lg bg-primary text-white"
+            className="px-9 py-3 hover:bg-black rounded-lg bg-primary text-white"
           >
             Click Here
           </button>
