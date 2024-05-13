@@ -12,6 +12,7 @@ import OutboundTour from "../components/OutBoundTour";
 // import Reviews from "../components/Reviews";
 import TrendingDest from "../components/TrendingDest";
 import WhyTour from "../components/WhyTour";
+import Faq from "../components/Faq";
 
 // const Navbar = lazy(() => import("../components/Navbar"));
 // const Blogs = lazy(() => import("../components/Blogs"));
@@ -45,6 +46,7 @@ const HomePage = () => {
       <Message />
       <Gallery />
       {/* <ReachOut /> */}
+      <Faq />
 
       <Footer isContact={false} />
     </div>

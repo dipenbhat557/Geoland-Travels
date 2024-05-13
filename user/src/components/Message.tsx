@@ -39,10 +39,10 @@ const Message = () => {
   return (
     <div
       id="messagefrommd"
-      className={`${styles.padding} bg-[#F9F9F6] w-full h-[650px] flex justify-center items-center`}
+      className={`${styles.padding} bg-[#F9F9F6] w-full h-[800px] sm:h-[650px] flex justify-center items-center`}
     >
-      <div className="w-[95%] h-[95%] shadow-md shadow-slate-400 justify-between rounded-lg flex ">
-        <div className="w-[45%] h-full rounded-l-lg">
+      <div className="w-[95%] h-[95%] shadow-md shadow-slate-400  flex-col sm:flex-row justify-between rounded-lg flex ">
+        <div className="w-full sm:w-[45%] h-[50%] sm:h-full rounded-l-lg">
           <img
             src={message?.img || def}
             alt="founder"
@@ -50,27 +50,27 @@ const Message = () => {
           />
         </div>
         <div
-          className={`${styles.padding} w-[55%] h-full flex flex-col items-center justify-between`}
+          className={`${styles.padding} w-full sm:w-[55%] h-[50%] sm:h-full flex flex-col items-center justify-between`}
         >
           <p className={`${styles.sectionHeadText} text-center`}>
             Message From MD
           </p>
-          <p className="w-[95%] font-light text-[18px] overflow-y-scroll text-center tracking-wider leading-loose">
+          <p className="sm:w-[95%] font-light text-[12px] sm:text-[18px] overflow-y-scroll text-center sm:tracking-wider sm:leading-loose">
             {message?.message}
           </p>
           <p className="w-full text-right text-slate-600">-{message?.name}</p>
-          <div className="w-[60%] h-[15%] flex items-center justify-around">
+          <div className="w-[60%] h-[8%] sm:h-[15%] flex items-center justify-around">
             <FaFacebook
               onClick={() => window.open(message?.facebook, "_blank")}
-              className="cursor-pointer text-3xl text-blue-600"
+              className="cursor-pointer text-2xl sm:text-3xl text-blue-600"
             />
             <FaLinkedin
               onClick={() => window.open(message?.linkedin, "_blank")}
-              className="cursor-pointer text-3xl text-blue-600"
+              className="cursor-pointer  text-2xl sm:text-3xl text-blue-600"
             />
             <FaInstagram
               onClick={() => window.open(message?.instagram, "_blank")}
-              className="cursor-pointer text-3xl text-pink-500"
+              className="cursor-pointer  text-2xl sm:text-3xl text-pink-500"
             />
           </div>
         </div>

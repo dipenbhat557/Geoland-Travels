@@ -3,28 +3,30 @@ import { styles } from "../styles";
 
 const WhyTour = () => {
   return (
-    <div className={`${styles.padding} w-full h-[450px] flex flex-col`}>
-      <p className={`${styles.sectionHeadText} h-[12%] text-center`}>
-        Why Choose Tour?
+    <div
+      className={`${styles.padding} w-full h-auto sm:h-[450px] flex flex-col`}
+    >
+      <p className={`${styles.sectionHeadText} h-[5%] sm:h-[12%] text-center`}>
+        Why to Choose Us?
       </p>
-      <div className="w-full h-[87%] flex justify-between items-center">
+      <div className="w-full h-[87%] flex flex-wrap flex-row justify-between items-center">
         {whyTourItems?.map((item, index) => {
           return (
             <div
               key={index}
-              className="w-[23%] h-full p-2 rounded-3xl gap-2 flex flex-col"
+              className="w-[50%] sm:w-[23%] h-[240px] sm:h-full p-2 rounded-3xl gap-2 flex flex-col"
             >
-              <div className="w-full h-[45%] flex items-end justify-center">
+              <div className="w-full h-[30%] sm:h-[45%] flex items-end justify-center">
                 <img
                   src={item?.img}
                   alt="trending"
                   className="w-[20%] h-[50%] object-contain "
                 />
               </div>
-              <p className=" font-semibold text-center flex justify-center tracking-wider line-clamp-2">
+              <p className=" font-semibold text-[13px] sm:text-[16px] text-center flex justify-center tracking-wider line-clamp-2">
                 {item?.title}
               </p>
-              <div className=" text-[14px]  line-clamp-5 leading-loose tracking-wide overflow-y-hidden text-center  text-slate-600">
+              <div className=" text-[14px]  line-clamp-5 sm:leading-loose tracking-wide overflow-y-hidden text-center  text-slate-600">
                 <p>{item?.content}</p>
               </div>
             </div>

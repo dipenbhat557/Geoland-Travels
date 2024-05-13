@@ -39,10 +39,10 @@ const Explore = () => {
   }, []);
 
   return (
-    <div className={`${styles.padding} w-full h-[500px]`}>
-      <div className="relative w-full h-full flex justify-center gap-[10%] items-center">
+    <div className={`${styles.padding} w-full h-[600px] sm:h-[500px]`}>
+      <div className="relative w-full h-full flex flex-col sm:flex-row justify-center sm:gap-[10%] items-center">
         <div className="w-full h-full absolute bg-[#F6F6F6] -z-30" />
-        <div className="w-[30%]  flex flex-col gap-4">
+        <div className="w-[80%] sm:w-[30%] h-[40%] sm:h-auto flex flex-col gap-4">
           <p
             className={`${styles.sectionHeadText} tracking-wider  font-bold  `}
           >
@@ -54,12 +54,12 @@ const Explore = () => {
           </p>
           <button
             onClick={() => navigate("/destination")}
-            className={`${styles.primaryBgColor} w-[40%] rounded-lg text-[14px] py-2 text-white font-light `}
+            className={`${styles.primaryBgColor} w-[50%] sm:w-[40%] rounded-lg text-[14px] py-2 text-white font-light `}
           >
             Explore Our Tours
           </button>
         </div>
-        <div className="w-[35%] h-[80%] relative flex justify-around items-center">
+        <div className="w-full sm:w-[35%] h-[60%] sm:h-[80%] relative flex justify-around items-center">
           <div className="w-[45%] h-full flex flex-col justify-between items-center">
             <div className="w-full h-[45%] flex flex-col bg-white rounded-lg items-center justify-center gap-2">
               <div className="w-[20%] h-[20%]">

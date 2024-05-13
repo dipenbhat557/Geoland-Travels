@@ -52,18 +52,18 @@ const Destinations = () => {
     <div className="flex flex-col">
       <Navbar isHome={false} />
 
-      <div className={` ${styles.padding} ${styles.sectionHeadText} mt-14`}>
-        Explore all things to do in {value}
+      <div className={` ${styles.padding} ${styles.sectionHeadText} sm:mt-14`}>
+        Explore all things to do in {value || "all tours"}
       </div>
 
-      <div className="flex pl-4">
-        <div className=" w-[20%] h-[25%] border   rounded-t-lg mt-[8%]">
+      <div className="flex flex-col sm:flex-row sm:pl-4">
+        <div className="w-full sm:w-[20%] h-auto sm:h-[25%] border   rounded-t-lg mt-[8%]">
           <div className={`${styles.padding} w-full h-[80%] flex flex-col`}>
             <h6 className="py-5">Tour Type</h6>
-            <ul>
+            <ul className="flex gap-2 ">
               {tour_types.map((item, index) => (
                 <li key={index}>
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center gap-2 sm:mb-4">
                     <input
                       key={index}
                       id={`checkbox-${index}`}
@@ -75,7 +75,7 @@ const Destinations = () => {
                     />
                     <label
                       htmlFor={`checkbox-${index}`}
-                      className="ms-2 text-sm font-medium "
+                      className="text-[9px] sm:text-[16px]  font-medium "
                     >
                       {item?.title}
                     </label>
@@ -86,8 +86,8 @@ const Destinations = () => {
           </div>
         </div>
 
-        <div className="w-[70%] pl-8 pt-6 flex flex-col gap-3">
-          <div className="w-full flex items-center text-[10px] text-slate-700 h-[50px] justify-between">
+        <div className="h-[95%] sm:w-[70%] sm:pl-8 sm:pt-6 items-center flex flex-col gap-3">
+          <div className="w-[80%] sm:w-full flex items-center text-[10px] text-slate-700 h-[50px] justify-between">
             <p>{currentTours?.length} results</p>
             <p>Sort by: Featured</p>
           </div>

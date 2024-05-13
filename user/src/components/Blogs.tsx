@@ -39,7 +39,7 @@ const Blogs = () => {
 
         const b: BlogData = {
           title: doc?.data()?.title,
-          date: dateObject,
+          date: dateObject?.slice(0, 16),
           img: doc?.data()?.img,
           id: doc?.id,
           role: doc?.data()?.role,
@@ -50,6 +50,7 @@ const Blogs = () => {
         gotBlogs.push(b);
       });
       gotBlogs = gotBlogs?.length > 3 ? gotBlogs?.slice(0, 3) : gotBlogs;
+      gotBlogs = window.innerWidth < 640 ? gotBlogs?.slice(0, 2) : gotBlogs;
       setBlogs(gotBlogs);
     };
 
@@ -57,17 +58,19 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
-      <p className={`${styles.sectionHeadText} h-[10%]`}>Blogs</p>
+    <div
+      className={`flex w-full ${styles.padding} h-[480px] sm:h-[550px] flex flex-col`}
+    >
+      <p className={`${styles.sectionHeadText} h-[7%]`}>Blogs</p>
       <div className="w-full h-[90%] flex justify-between items-center">
         {blogs?.map((item, index) => {
           return (
             <div
               key={index}
               onClick={() => navigate("/blog", { state: { blog: item } })}
-              className="w-[31%] cursor-pointer h-[90%] p-2 rounded-3xl justify-between flex flex-col"
+              className="w-[45%] sm:w-[31%] cursor-pointer h-[85%] p-2 rounded-3xl justify-between flex flex-col"
             >
-              <div className="w-full relative h-[75%] rounded-3xl">
+              <div className="w-full relative h-[60%] sm:h-[75%] rounded-3xl">
                 <img
                   src={item?.img || def}
                   alt="trending"
@@ -77,20 +80,28 @@ const Blogs = () => {
                   Trips
                 </p>
               </div>
-              <div className="flex justify-between px-3">
-                <p className="  flex items-center font-light text-[13px] ml-3">
+              <div className="flex justify-between px-1 sm:px-3">
+                <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
                   {item?.date}
                 </p>
-                <p className=" flex items-center font-light text-[13px] ml-3">
+                <p className=" flex items-center font-light text-[10px] sm:text-[13px] ml-3">
                   By &nbsp; {item?.author}
                 </p>
               </div>
-              <p className="h-[15%]  font-semibold flex items-center line-clamp-1">
+              <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center line-clamp-1">
                 {item?.blogTitle}
               </p>
             </div>
           );
         })}
+      </div>
+      <div className="w-full flex justify-end h-[8%]">
+        <button
+          onClick={() => navigate("/blogs")}
+          className={`px-4 text-[13px] sm:text-[16px] py-1 sm:py-2 w-[30%] sm:w-[20%] rounded-3xl right-0 text-white font-semibold ${styles?.primaryBgColor}`}
+        >
+          More
+        </button>
       </div>
     </div>
   );

@@ -17,15 +17,17 @@ const OutboundTour = () => {
   }, []);
 
   return (
-    <div className={`flex w-full ${styles.padding} h-[550px] flex flex-col`}>
+    <div
+      className={`flex w-full ${styles.padding} h-auto sm:h-[550px] gap-4 sm:gap-0 flex flex-col`}
+    >
       <p className={`${styles.sectionHeadText} h-[10%]`}>Outbound Tour</p>
-      <div className="w-full h-[90%] flex justify-between items-center">
+      <div className="w-full h-[90%] flex  gap-6 sm:gap-0 flex-wrap justify-between items-center">
         {outboundItems?.map((item, index) => {
           return (
             <div
               onClick={() => navigate("/details", { state: { tour: item } })}
               key={index}
-              className="w-[23%] cursor-pointer border border-slate-200 h-[90%] p-2 justify-between rounded-3xl flex flex-col"
+              className="w-[45%] sm:w-[23%] cursor-pointer border border-slate-200 h-[280px] sm:h-[90%] p-1 sm:p-2 gap-1 rounded-3xl flex flex-col"
             >
               <div className="w-full h-[60%] rounded-3xl">
                 <img
@@ -34,16 +36,16 @@ const OutboundTour = () => {
                   className="w-full h-full object-cover rounded-3xl"
                 />
               </div>
-              <p className="h-[8%] text-slate-400 flex items-center font-light text-[13px] ml-3">
+              <p className="h-[8%] text-slate-400 flex items-center font-light text-[10px] sm:text-[13px] ml-3">
                 {item?.location}
               </p>
-              <p className="h-[15%]  font-semibold flex items-center line-clamp-2">
+              <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px] font-semibold flex items-center line-clamp-2">
                 {item?.tourTitle}
               </p>
 
-              <div className="w-[90%] text-[14px] h-[8%] justify-between  px-4 py-2 border-t border-slate-100 flex   items-center">
-                <p>{item?.date?.slice(0, 15)}</p>
-                <p>From &nbsp;NPR {item?.price}</p>
+              <div className="w-full sm:w-[90%] text-[8px] overflow-y-hidden sm:text-[14px] h-auto justify-between px-2 py-1  sm:px-4 sm:py-2 border-t border-slate-100 flex   items-center">
+                <p className="w-[40%] ">{item?.date?.slice(0, 15)}</p>
+                <p className="w-[40%]">From &nbsp;NPR {item?.price}</p>
               </div>
             </div>
           );
@@ -56,7 +58,7 @@ const OutboundTour = () => {
               state: { key: "type", val: "outbound" },
             })
           }
-          className={`px-4 py-2 w-[20%] rounded-3xl right-0 text-white font-semibold ${styles?.primaryBgColor}`}
+          className={`px-4 text-[13px] sm:text-[16px] py-1 sm:py-2 w-[30%] sm:w-[20%] rounded-3xl right-0 text-white font-semibold ${styles?.primaryBgColor}`}
         >
           More
         </button>

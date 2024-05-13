@@ -97,7 +97,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
     <div
       className={`${styles.padding} w-full h-[240px] sm:h-[350px] bg-[#37383C] flex justify-between`}
     >
-      <div className="w-[65%] h-[80%] flex flex-col justify-around">
+      <div className="w-[65%] h-[80%] flex  flex-col-reverse sm:flex-col justify-around">
         <div className="w-full h-[40%] gap-3 flex flex-col">
           <p className="text-[18px] sm:text-[22px] font-bold text-white">
             Let's go on adventure !!
@@ -106,13 +106,13 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
             <input
               value={searchQuery}
               onChange={handleSearchInputChange}
-              type="text "
+              type="text"
               placeholder="Search your destination"
-              className="placeholder:text-slate-300   focus:outline-none rounded-lg placeholder:text-[10px] px-3 w-[80%] py-1"
+              className="placeholder:text-slate-300   focus:outline-none rounded-lg placeholder:text-[10px] px-3 w-[80%] sm:py-1"
             />
             <button
               onClick={handleSearchButtonClick}
-              className={`${styles.primaryBgColor} text-white p-1 text-[10px] sm:text-[16px] w-[35%] sm:w-[15%] rounded-lg flex items-center justify-center h-[40%] sm:h-[80%]`}
+              className={`${styles.primaryBgColor} text-white sm:py-1 text-[8px] sm:text-[16px] w-[35%] sm:w-[15%] rounded-lg mr-1 flex items-center justify-center h-[70%] sm:h-[80%]`}
             >
               Search
             </button>
@@ -161,7 +161,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="hidden sm:flex w-[80%] text-white font-light text-[14px]">
+            <p className="hidden sm:flex overflow-y-visible w-[80%] text-white font-light text-[14px]">
               "Embark on Unforgettable Adventures with Our Expertise: Where
               Every Destination Becomes a Story."
             </p>

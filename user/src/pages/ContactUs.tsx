@@ -15,6 +15,7 @@ import { slideIn } from "../utils/motion";
 import { motion } from "framer-motion";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import Faq from "../components/Faq";
 
 interface SocialLinkData {
   facebookLink: string;
@@ -234,6 +235,7 @@ const ContactUs = () => {
       {/* <ReachOut /> */}
       {/* <Glimpse /> */}
       <WhyTour />
+      <Faq />
       <Footer isContact={true} />
     </div>
   );
