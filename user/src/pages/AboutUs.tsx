@@ -7,20 +7,47 @@ import { styles } from "../styles";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
+import { img1, img2, img3, img4, img5, img6, img7 } from "../assets";
+import { useEffect, useState } from "react";
+const heroElements = [img1, img2, img3, img4, img5, img6, img7];
 const AboutUs = () => {
+  const [currentElement, setCurrentElement] = useState(0);
   const navigate = useNavigate();
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentElement((currentElement + 1) % 5);
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, [currentElement]);
+
   return (
     <div className="flex flex-col sm:gap-5 h-auto">
       <Navbar isHome={true} />
       <div className="h-[500px] sm:h-[580px] flex justify-center items-end w-full relative sm:mt-14">
         <div className="w-full h-full absolute -z-10">
-          <img
-            src={aboutBg}
-            alt="about bg"
-            className="w-full h-full object-cover "
-          />
+          {[img1, img3, img4, img5, img6, img7]?.map((element, index) => (
+            <div
+              key={index}
+              className={`absolute w-full h-full  ${
+                index === currentElement ? "visible" : "hidden"
+              }`}
+            >
+              <img
+                src={element}
+                alt="Background Photo"
+                className={`photo-slide w-full h-full photo-element ${
+                  index === currentElement ? "photo-fade-in" : "photo-fade-out"
+                }`}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </div>
+          ))}
         </div>
+        <div className="w-full h-full bg-black opacity-50 absolute z-10" />
         <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
           <div
             className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[20px] sm:text-[25px]`}
