@@ -25,7 +25,7 @@ const AboutUs = () => {
       <Navbar isHome={true} />
       <div className="h-[500px] sm:h-[580px] flex justify-center items-end w-full relative sm:mt-14">
         <div className="w-full h-full absolute -z-10">
-          {[img1, img3, img4, img5, img6, img7]?.map((element, index) => (
+          {[img3, img1, img4, img6, img7]?.map((element, index) => (
             <div
               key={index}
               className={`absolute w-full h-full  ${
@@ -48,9 +48,9 @@ const AboutUs = () => {
           ))}
         </div>
         <div className="w-full h-full bg-black opacity-50 absolute z-10" />
-        <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
+        <div className="w-[70%] sm:w-[50%] h-[15%] z-30 flex flex-col">
           <div
-            className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[20px] sm:text-[25px]`}
+            className={`w-full flex items-center justify-center h-[70%] bg-primary  text-white font-semibold text-[20px] sm:text-[25px]`}
           >
             About Geoland Travels
           </div>
