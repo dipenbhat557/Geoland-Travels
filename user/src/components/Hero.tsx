@@ -55,7 +55,7 @@ const Hero = () => {
 
   return (
     <div
-      className="h-[600px] sm:h-[580px] w-full relative mt-0 sm:mt-14"
+      className="h-[500px] sm:h-[580px] w-full relative mt-0 sm:mt-14"
       style={{ backgroundImage: `url(${heroBg})` }}
     >
       <div className="w-full h-full z-10 absolute  opacity-10" />
@@ -125,7 +125,7 @@ const Hero = () => {
                   key={i}
                   onClick={() =>
                     navigate("/destination", {
-                      state: { key: "category", value: e },
+                      state: { key: "category", val: e },
                     })
                   }
                   className="text-white bg-opacity-10 hover:bg-opacity-40 bg-slate-100 rounded-full w-[100px] py-2"

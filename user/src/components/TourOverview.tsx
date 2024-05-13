@@ -11,8 +11,10 @@ const TourOverview = ({ tour }: { tour: TourData }) => {
   const navigate = useNavigate();
 
   return (
-    <div className={` ${styles.padding} w-full h-auto flex justify-between `}>
-      <div className="flex flex-col gap-3 w-[60%] h-auto border-b border-slate-200">
+    <div
+      className={` ${styles.padding} w-full h-auto flex flex-col sm:flex-row gap-4 sm:gap-0 justify-between `}
+    >
+      <div className="flex flex-col gap-3 w-[95%] sm:w-[60%] h-auto border-b border-slate-200">
         <p className={`${styles.sectionHeadText}`}>Tour Overview</p>
         <p className="text-[14px] font-light text-justify leading-loose">
           {tour?.overview}
@@ -29,7 +31,7 @@ const TourOverview = ({ tour }: { tour: TourData }) => {
         </ul>
       </div>
       <div
-        className={`w-[30%] h-[350px] shadow-md shadow-slate-500 rounded-lg ${styles.padding} flex flex-col justify-between`}
+        className={`w-[95%] sm:w-[30%] h-[350px] shadow-md shadow-slate-500 rounded-lg ${styles.padding} flex flex-col justify-between`}
       >
         <div className="flex">
           <p className="text-[13px] font-light">From </p>&nbsp;

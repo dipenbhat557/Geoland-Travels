@@ -59,7 +59,9 @@ const LeaveReply = () => {
   };
 
   return (
-    <div className={`${styles.padding} w-[70%] h-auto flex flex-col gap-3`}>
+    <div
+      className={`${styles.padding} w-full sm:w-[70%] h-auto flex flex-col gap-3`}
+    >
       <p className={`${styles.sectionSubText}`}>Leave a Reply</p>
       <p className="text-[12px] font-light">
         Your email address will not be published. Required fields are marked *
@@ -112,7 +114,7 @@ const LeaveReply = () => {
       </div>
       <button
         onClick={handleSubmit}
-        className={`${styles.primaryBgColor} text-white py-2 text-[14px] rounded-lg w-[20%]`}
+        className={`${styles.primaryBgColor} text-white py-2 text-[14px] rounded-lg w-[40%] sm:w-[20%]`}
       >
         {loading ? "Posting Comment..." : "Post Comment"}
       </button>

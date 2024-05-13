@@ -44,7 +44,9 @@ const ItineraryCard = ({
 
 const Itirenary = ({ tour }: { tour: TourData }) => {
   return (
-    <div className={`${styles.padding} w-[50%] h-auto flex flex-col gap-3`}>
+    <div
+      className={`${styles.padding} w-full sm:w-[50%] h-auto flex flex-col gap-3`}
+    >
       <p className={`${styles.sectionSubText}`}>Itinerary</p>
       <div className="mt-5 flex flex-col">
         <VerticalTimeline

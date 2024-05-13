@@ -325,7 +325,7 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                   Tours
                 </a>
               ) : link.title === "Most Sold Packages" ? (
-                <a className="w-full text-left" href="#trending">
+                <a className="w-full text-left" href="/#trending">
                   Most Sold Packages
                 </a>
               ) : link.title === "About Us" ? (
@@ -339,6 +339,16 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
               )}
             </li>
           ))}
+          <li
+            className={`font-poppins text-[17px] w-full   font-medium cursor-pointer hover:bg-[#D9D9D9] hover:p-1 hover:text-[15px] hover:rounded-md`}
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+          >
+            <a href="/contactus" className="w-full text-left">
+              Contact Us
+            </a>
+          </li>
         </ul>
       </div>
     </>

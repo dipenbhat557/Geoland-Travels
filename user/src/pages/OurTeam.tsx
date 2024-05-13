@@ -10,13 +10,13 @@ const OurTeam = () => {
   const [teamIndex, setTeamIndex] = useState(0);
 
   return (
-    <div className="flex flex-col gap-5 h-auto">
+    <div className="flex flex-col sm:gap-5 h-auto">
       <Navbar isHome={true} />
       <div
-        className="h-[580px] flex justify-center items-end w-full relative mt-14"
+        className="h-[580px] flex justify-center items-end w-full relative sm:mt-14"
         style={{ backgroundImage: `url(${heroBg})` }}
       >
-        <div className="w-[50%] h-[15%] flex flex-col">
+        <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
           <div
             className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[25px]`}
           >
@@ -61,10 +61,10 @@ const OurTeam = () => {
               return (
                 <div
                   key={index}
-                  className="w-[40%] sm:w-[33%] md:[28%] h-auto flex flex-col justify-around m-3 shadow-xl hover:bg-primary hover:text-white "
+                  className="w-[40%] sm:w-[33%] md:w-[28%] h-auto flex flex-col justify-around m-3 shadow-xl hover:bg-primary hover:text-white "
                 >
                   <img
-                    className="w-full h-[250px] object-cover"
+                    className="w-full h-[150px] sm:h-[250px] object-cover"
                     src={member?.img || def}
                     alt={`faculty-${index}`}
                   />
@@ -83,17 +83,20 @@ const OurTeam = () => {
           </div>
         </div>
       </div>
-      <div className={`${styles.padding} flex flex-col items-center gap-4`}>
-        <p className="font-bold text-[47px]">We’re here for you </p>
-        <p className="font-bold text-[47px] text-primary">
+      <div className={`sm:${styles.padding} flex flex-col items-center gap-4`}>
+        <p className="font-bold text-[25px] sm:text-[47px]">
+          We’re here for you{" "}
+        </p>
+        <p className="font-bold text-[30px] text-center sm:text-[47px] text-primary">
           no matter where you are
         </p>
-        <div className=" w-[40%] border-b-4 border-slate-200" />
+        <div className="w-[70%] sm:w-[40%] border-b-4 border-slate-200" />
       </div>
 
-      <div className="w-full h-[450px]">
+      <div className="w-full h-[250px] sm:h-[450px]">
         <img src={map} className="w-full h-full object-contain" alt="map" />
       </div>
+
       <div className="flex w-full h-[150px] justify-between items-center">
         <div className="w-[20%] h-full">
           <img

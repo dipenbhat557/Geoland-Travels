@@ -116,7 +116,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5 h-auto">
+    <div className="flex flex-col sm:gap-5 h-auto">
       <Navbar isHome={true} />
       <div className="h-[480px] w-full relative ">
         <img src={heroBg} alt="bg" className="w-full h-full object-cover" />
@@ -127,11 +127,11 @@ const ContactUs = () => {
         </p>
       </div>
 
-      <div className=" flex justify-between p-8 w-[70%] mx-auto">
+      <div className=" flex flex-col sm:flex-row gap-2 justify-between p-8 w-[90%] sm:w-[70%] mx-auto">
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="w-[60%] mt-12 flex flex-col gap-3"
+          className="w-full sm:w-[60%] mt-12 flex flex-col gap-3"
         >
           <div className="flex gap-3">
             <label className="flex flex-col">
@@ -203,15 +203,15 @@ const ContactUs = () => {
             {loading ? "Sending..." : "Send"}
           </button>
         </form>
-        <div className="w-[30%] h-[300px]  my-auto p-4 flex flex-col relative  rounded-3xl justify-end  ">
+        <div className="w-[80%] sm:w-[30%] h-[150px] sm:h-[300px]  my-auto p-4 flex flex-col relative  rounded-3xl sm:justify-end  ">
           {/* EarthCanvas section */}
           <motion.div
             variants={slideIn("right", "tween", 0.2, 1)}
-            className=" flex items-center justify-center absolute -top-[30%]  w-full h-full"
+            className="hidden  sm:flex items-center justify-center absolute -top-[30%]  w-full h-full"
           >
             <EarthCanvas />
           </motion.div>
-          <div className="w-full h-[40%]  justify-between items-center  gap-3 flex flex-col">
+          <div className="w-full h-full sm:h-[40%]  justify-between items-center  gap-3 flex flex-col">
             <p className="tet-[13px]">Follow us on</p>
             <div className="flex w-full h-[50%] justify-center gap-6">
               <FaWhatsapp

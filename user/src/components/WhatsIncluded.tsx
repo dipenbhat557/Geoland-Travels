@@ -7,7 +7,7 @@ const WhatsIncluded = ({ tour }: { tour: TourData }) => {
       className={`${styles.padding} w-full border-b border-slate-200 h-auto flex gap-10`}
     >
       <div className="flex flex-col gap-3">
-        <p className={`${styles.sectionSubText}`}>What's Included</p>
+        <p className={`${styles.sectionHeadText}`}>What's Included</p>
         <ul className="list-disc flex flex-col gap-3">
           {tour?.inclusion?.map((tour, i) => {
             return (
@@ -19,7 +19,7 @@ const WhatsIncluded = ({ tour }: { tour: TourData }) => {
         </ul>
       </div>
       <div className="flex flex-col gap-3">
-        <p className={`${styles.sectionSubText}`}>What's Not Included</p>
+        <p className={`${styles.sectionHeadText}`}>What's Not Included</p>
         <ul className="list-disc flex flex-col gap-3">
           {tour?.exclusion?.map((tour, i) => {
             return (

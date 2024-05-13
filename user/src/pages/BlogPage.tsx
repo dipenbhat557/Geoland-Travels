@@ -68,7 +68,7 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
     <div className="flex flex-col gap-3">
       <Navbar isHome={true} />
       <div
-        className={`flex gap-4  h-[650px] w-full flex-col  mt-24 rounded-3xl ${styles.paddingX} `}
+        className={`flex gap-4 h-[500px] sm:h-[650px] w-full flex-col sm:mt-24 rounded-3xl ${styles.paddingX} `}
       >
         {!isFromNavbar ? (
           <div className="w-full h-[80%]">
@@ -89,21 +89,19 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
         )}
         <button
           onClick={() => navigate("/destination")}
-          className={` ${styles.primaryBgColor} w-[7%] py-2 text-white rounded-3xl`}
+          className={` ${styles.primaryBgColor} w-[28%] sm:w-[7%] h-[7%] sm:h-auto sm:py-2 text-white rounded-3xl`}
         >
           Trips
         </button>
         {!isFromNavbar && (
-          <>
+          <div className="w-full">
             <div className="flex gap-3 h-auto font-light text-[12px] ">
-              <p>{blog?.author}</p>
-              <div className="border-l border-slate-500" />
-              <p>{blog?.role}</p>
+              <p>By {blog?.author}</p>
               <div className="border-l border-slate-500" />
               <p>5 min read</p>
             </div>
             <p className="font-light text-[12px]">{blog?.date}</p>
-          </>
+          </div>
         )}
       </div>
       {!isFromNavbar && (
@@ -114,7 +112,8 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
             className={`${styles.paddingY} w-full flex items-center justify-center`}
           >
             <button
-              className={`${styles.primaryBgColor} text-white w-[15%] py-2 rounded-lg mx-auto`}
+              onClick={() => navigate("/")}
+              className={`${styles.primaryBgColor} text-white w-[50%] sm:w-[15%] py-2 rounded-lg mx-auto`}
             >
               Back to Home Page
             </button>
@@ -125,33 +124,33 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
         <p className={`${styles.sectionHeadText}`}>
           {isFromNavbar ? "Blogs" : "More like this"}
         </p>
-        <div className="w-full h-auto flex-wrap flex justify-between items-center">
+        <div className="w-full h-auto flex-wrap flex justify-between  gap-4 sm:gap-0 items-center">
           {blogItems?.map((item, index) => {
             return (
               <div
                 key={index}
                 onClick={() => navigate("/blog", { state: { blog: item } })}
-                className="w-[31%] cursor-pointer h-[500px] p-2 rounded-3xl justify-between flex flex-col"
+                className="w-[45%] sm:w-[31%] cursor-pointer h-auto sm:h-[85%] p-2 rounded-3xl justify-between flex flex-col"
               >
-                <div className="w-full relative h-[75%] rounded-3xl">
+                <div className="w-full relative h-[200px] sm:h-[75%] rounded-3xl">
                   <img
                     src={item?.img || def}
                     alt="trending"
                     className="w-full h-full object-cover rounded-3xl"
                   />
-                  <p className="bg-white px-2 py-1 absolute top-5 left-5 rounded-lg">
+                  <p className="bg-white px-2 sm:py-1 absolute top-5 left-5 rounded-lg">
                     Trips
                   </p>
                 </div>
-                <div className="flex gap-4 ">
-                  <p className="  flex items-center font-light text-[13px] ml-3">
+                <div className="flex justify-between px-1 sm:px-3">
+                  <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
                     {item?.date}
                   </p>
-                  <p className="  flex items-center font-light text-[13px] ml-3">
+                  <p className=" flex items-center font-light text-[10px] sm:text-[13px] ml-3">
                     By &nbsp; {item?.author}
                   </p>
                 </div>
-                <p className="h-[15%]  font-semibold flex items-center line-clamp-2">
+                <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center truncate">
                   {item?.blogTitle}
                 </p>
               </div>

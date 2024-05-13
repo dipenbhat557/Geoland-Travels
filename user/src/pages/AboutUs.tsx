@@ -9,15 +9,19 @@ import { MdOutlineQuestionMark } from "react-icons/md";
 
 const AboutUs = () => {
   return (
-    <div className="flex flex-col gap-5 h-auto">
+    <div className="flex flex-col sm:gap-5 h-auto">
       <Navbar isHome={true} />
-      <div
-        className="h-[580px] flex justify-center items-end w-full relative mt-14"
-        style={{ backgroundImage: `url(${aboutBg})` }}
-      >
-        <div className="w-[50%] h-[15%] flex flex-col">
+      <div className="h-[500px] sm:h-[580px] flex justify-center items-end w-full relative sm:mt-14">
+        <div className="w-full h-full absolute -z-10">
+          <img
+            src={aboutBg}
+            alt="about bg"
+            className="w-full h-full object-cover "
+          />
+        </div>
+        <div className="w-[70%] sm:w-[50%] h-[15%] flex flex-col">
           <div
-            className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[25px]`}
+            className={`w-full flex items-center justify-center h-[70%] bg-primary text-white font-semibold text-[20px] sm:text-[25px]`}
           >
             About Geoland Travels
           </div>
@@ -25,7 +29,7 @@ const AboutUs = () => {
         </div>
       </div>
       <div className={`${styles.padding} flex flex-col gap-9 h-auto w-full`}>
-        <div className="border border-black rounded-lg p-5 leading-loose tracking-wide">
+        <div className="border border-black rounded-lg p-5 sm:leading-loose sm:tracking-wide">
           Geoland Travels and Tours, a registered Private Limited company in
           Nepal, boasts 10 years of experience backed by seasoned professionals
           with over 20 years in tourism. With 24 skilled staff, we specialize in
@@ -39,8 +43,8 @@ const AboutUs = () => {
           promoting Nepal's diverse attractions. We prioritize teamwork, Turn
           Around Time (TAT), and collaboration with travel partners worldwide.
         </div>
-        <div className="flex flex-col items-center gap-5 p-4">
-          <p className="text-[27px] w-[70%] text-center font-semibold">
+        <div className="flex flex-col items-center gap-5 p-2 sm:p-4">
+          <p className=" text-[20px] sm:text-[27px] w-full sm:w-[70%] text-center font-semibold">
             TRAVEL TIPS : HERE YOU'LL FIND LOADS OF USEFUL INFO TO HELP GET YOU
             PREPARED BEFORE SETTING OFF ON YOUR TRIP
           </p>
@@ -79,26 +83,32 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className={`${styles.padding} flex flex-col items-center gap-4`}>
-          <p className="font-bold text-[47px]">We’re here for you </p>
-          <p className="font-bold text-[47px] text-primary">
+        <div
+          className={`sm:${styles.padding} flex flex-col items-center gap-4`}
+        >
+          <p className="font-bold text-[25px] sm:text-[47px]">
+            We’re here for you{" "}
+          </p>
+          <p className="font-bold text-[30px] text-center sm:text-[47px] text-primary">
             no matter where you are
           </p>
-          <div className=" w-[40%] border-b-4 border-slate-200" />
+          <div className="w-[70%] sm:w-[40%] border-b-4 border-slate-200" />
         </div>
 
-        <div className="w-full h-[450px]">
+        <div className="w-full h-[250px] sm:h-[450px]">
           <img src={map} className="w-full h-full object-contain" alt="map" />
         </div>
 
         <div className="flex flex-col gap-2">
           <div className="flex gap-5">
-            <p className="font-bold text-[45px]">Our</p>
-            <p className="font-bold text-[45px] text-primary">Mission</p>
+            <p className="font-bold text-[30px] sm:text-[45px]">Our</p>
+            <p className="font-bold text-[30px] sm:text-[45px] text-primary">
+              Mission
+            </p>
           </div>
           <div className="border-b-4 border-slate-200 w-[40%]" />
-          <p className="font-medium text-[20px] py-4">
-            To establish as one of the most promonent and professional travel
+          <p className="font-medium sm:text-[20px] py-4">
+            To establish as one of the most promonent and professional travel
             agency with aim to global expansion and networking.
           </p>
 
@@ -117,48 +127,92 @@ const AboutUs = () => {
             <li>Doing business ethically and apply moral principles.</li>
           </ul>
         </div>
-        <div className="w-full py-4 flex flex-col items-center justify-between">
+        <div className="w-full py-4 flex flex-col gap-3 items-center justify-between">
           <div className="w-full h-auto flex items-center justify-center">
-            <div className="h-full w-[30%] flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
+            <div className="h-full w-[60%] sm:w-[30%] flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
               <FaHandshake className="text-primary text-[50px]" />
-              <p className="text-[22px] font-semibold">Our Commitment</p>
+              <p className="text-[18px] sm:text-[22px] font-semibold">
+                Our Commitment
+              </p>
               <ul className="list-disc flex flex-col gap-3">
-                <li>Respect for our Customers</li>
-                <li>Trust and Integrity</li>
-                <li>Open Mindedness and Consistency</li>
-                <li>Corporate Incentive Deals</li>
-                <li> Safety and Security</li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Respect for our Customers
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Trust and Integrity
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Open Mindedness and Consistency
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Corporate Incentive Deals
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Safety and Security
+                </li>
               </ul>
             </div>
           </div>
 
           <div className="w-full h-auto flex justify-between items-center">
-            <div className="w-[30%] h-full flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
+            <div className="w-[48%] sm:w-[30%] h-full flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
               <MdOutlineMiscellaneousServices className="text-primary text-[50px]" />
-              <p className="text-[22px] font-semibold">Our Services</p>
+              <p className="text-[18px] sm:text-[22px] font-semibold">
+                Our Services
+              </p>
               <ul className="list-disc flex flex-col gap-3">
-                <li>Ticketing</li>
-                <li>UAE Tourist Visa</li>
-                <li>Global Visa Consulation Service </li>
-                <li>Corporate Incentive Deals</li>
-                <li>International Tour Packages</li>
-                <li>Exclusive Education Tour Package</li> <li>MICE</li>
-                <li>Trekking and Hiking</li> <li>Hotel Booking</li>{" "}
+                <li className="text-[14px] sm:text-[16px]">Ticketing</li>
+                <li className="text-[14px] sm:text-[16px]">UAE Tourist Visa</li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Global Visa Consulation Service{" "}
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Corporate Incentive Deals
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  International Tour Packages
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Exclusive Education Tour Package
+                </li>{" "}
+                <li className="text-[14px] sm:text-[16px]">MICE</li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Trekking and Hiking
+                </li>{" "}
+                <li className="text-[14px] sm:text-[16px]">Hotel Booking</li>{" "}
                 <li>Religious Tour</li>
               </ul>
             </div>
-            <div className="w-[30%] h-full flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
+            <div className="w-[48%] sm:w-[30%] h-full flex flex-col gap-3 items-center border rounded-2xl border-primary p-3">
               <MdOutlineQuestionMark className="text-primary text-[50px]" />
-              <p className="text-[22px] font-semibold">Why Choose Us?</p>
+              <p className="text-[17px] sm:text-[22px] font-semibold">
+                Why Choose Us?
+              </p>
               <ul className="list-disc flex flex-col gap-3">
-                <li>Expertise and Experience</li>
-                <li>Wide Range of Destinations</li>
-                <li>Exclusive Deals and Discounts </li>
-                <li>Corporate Incentive Deals</li>
-                <li>Customer Support and Assistance</li>
-                <li>Convenience and Time Savings</li>
-                <li>Trust and Reliability</li>
-                <li>Ease of Booking and Payment Options</li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Expertise and Experience
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Wide Range of Destinations
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Exclusive Deals and Discounts{" "}
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Corporate Incentive Deals
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Customer Support and Assistance
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Convenience and Time Savings
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Trust and Reliability
+                </li>
+                <li className="text-[14px] sm:text-[16px]">
+                  Ease of Booking and Payment Options
+                </li>
               </ul>
             </div>
           </div>

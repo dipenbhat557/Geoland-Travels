@@ -53,14 +53,14 @@ const Destinations = () => {
       <Navbar isHome={false} />
 
       <div className={` ${styles.padding} ${styles.sectionHeadText} sm:mt-14`}>
-        Explore all things to do in {value || "all tours"}
+        Explore all things to do in {value ? value : "all tours"}
       </div>
 
       <div className="flex flex-col sm:flex-row sm:pl-4">
         <div className="w-full sm:w-[20%] h-auto sm:h-[25%] border   rounded-t-lg mt-[8%]">
           <div className={`${styles.padding} w-full h-[80%] flex flex-col`}>
             <h6 className="py-5">Tour Type</h6>
-            <ul className="flex gap-2 ">
+            <ul className="flex gap-2 sm:flex-col">
               {tour_types.map((item, index) => (
                 <li key={index}>
                   <div className="flex items-center gap-2 sm:mb-4">

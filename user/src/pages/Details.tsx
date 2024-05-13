@@ -25,7 +25,7 @@ const Details = () => {
   return (
     <div className="flex flex-col gap-3">
       <Navbar isHome={false} />
-      <div className={`flex gap-4 items-center mt-16 ${styles.paddingX} `}>
+      <div className={`flex gap-4 items-center sm:mt-16 ${styles.paddingX} `}>
         <button
           className={`bg-green-200  ${styles.primaryTextColor} rounded-lg px-3 py-2 `}
         >
@@ -42,13 +42,13 @@ const Details = () => {
           {tour?.tourTitle}
         </p>
         <div className="flex w-full justify-between">
-          <div className="w-[30%] flex gap-8 items-center justify-center">
+          <div className="w-[50%] sm:w-[30%] px-3 flex gap-8 items-center justify-center">
             <p className=" text-[12px]">{tour?.location}</p>
             <p className=" text-[12px]">50+ booked</p>
           </div>
         </div>
         <div
-          className={`${styles.padding} relative w-full h-[500px] rounded-lg `}
+          className={`${styles.padding} relative w-full h-[400px] sm:h-[500px] rounded-lg `}
         >
           <div className="w-full  h-full rounded-lg flex justify-between">
             <div className="w-[59.5%] h-full rounded-l-lg">
@@ -82,7 +82,7 @@ const Details = () => {
             </div>
           </div>
           <div
-            className={`w-[95%] mx-auto h-full ${
+            className={`w-[90%] sm:w-[95%] mx-auto h-full ${
               clicked ? "absolute top-4" : "hidden"
             } z-20`}
           >
@@ -93,7 +93,7 @@ const Details = () => {
             />
             <IoMdClose
               onClick={() => setClicked(false)}
-              className="text-[65px] cursor-pointer text-red-500 absolute top-[10%] z-40 right-[5%]"
+              className="text-[50px] sm:text-[65px] cursor-pointer text-red-500 absolute top-[10%] z-40 right-[5%]"
             />
             <MdKeyboardArrowRight
               onClick={() => {
@@ -114,7 +114,9 @@ const Details = () => {
             />
           </div>
         </div>
-        <div className={`${styles.padding} h-auto items-center flex gap-14`}>
+        <div
+          className={`${styles.padding} h-auto items-start sm:items-center flex flex-col sm:flex-row gap-3  sm:gap-14`}
+        >
           <div className="flex gap-2">
             <div className="w-[40px] h-[40px] border border-slate-200 rounded-lg" />
             <div className="flex flex-col gap-1">
