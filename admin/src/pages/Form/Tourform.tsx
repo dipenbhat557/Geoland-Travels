@@ -57,9 +57,6 @@ const TourForm = () => {
   const [noOfItineraryInputs, setNoOfItineraryInputs] = useState<number>(
     tour?.itinerary?.length || 1
   );
-  const [noOfImageInputs, setNoOfImageInputs] = useState<number>(
-    tour?.img?.length || 1
-  );
 
   const [highlightInputFields, setHighlightInputFields] = useState<string[]>(
     tour?.highlights || [""]

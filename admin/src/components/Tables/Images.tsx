@@ -1,9 +1,8 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import {
-  Timestamp,
   addDoc,
   collection,
   deleteDoc,
@@ -36,8 +35,6 @@ const Images = () => {
       const querySnapshot = await getDocs(collection(db, "gallery"));
 
       querySnapshot.forEach((doc) => {
-        const data = doc.data();
-
         const f: ImageData = {
           img: doc?.data()?.img,
           id: doc?.id,
@@ -86,7 +83,6 @@ const Images = () => {
               navigate("/forms/image-form", { state: { category: category } })
             }
           >
-            {" "}
             Add New Image
           </div>
         </button>

@@ -1,24 +1,11 @@
 import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
-
-interface FolderData {
-  title: string;
-  category: string;
-  date: string;
-  id: string;
-}
 
 const GalleryForm = () => {
   const navigate = useNavigate();
@@ -59,6 +46,7 @@ const GalleryForm = () => {
       item: "Image Folder",
       user: currentUser?.name,
     });
+    navigate("/gallery");
   };
 
   return (
@@ -112,7 +100,7 @@ const GalleryForm = () => {
                   onChange={(e) =>
                     setFormData((prevState) => ({
                       ...prevState,
-                      query: e.target.value,
+                      category: e.target.value,
                     }))
                   }
                   type="text"

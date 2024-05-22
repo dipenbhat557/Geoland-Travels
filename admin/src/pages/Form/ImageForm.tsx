@@ -1,15 +1,9 @@
 import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db, storage } from "../../firebaseConfig";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
@@ -17,7 +11,6 @@ import { currUser } from "../store";
 const ImageForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const image = location?.state?.image;
   const [formData, setFormData] = useState({
     title: "",
     img: [],
@@ -30,36 +23,30 @@ const ImageForm = () => {
   const handleSubmit = async () => {
     console.log("Submission started");
     if (img.length > 0) {
-      try {
-        const uploadTasks = img.map(async (file) => {
-          const storageRef = ref(storage, "some-child/" + file.name);
-          await uploadBytes(storageRef, file);
-          return getDownloadURL(storageRef);
-        });
+      img.forEach(async (image) => {
+        try {
+          const storageRef = ref(storage, "some-child/" + image.name);
 
-        const downloadURLs = await Promise.all(uploadTasks);
+          await uploadBytes(storageRef, image);
 
-        const galleryRef = collection(db, "gallery");
+          const downloadURL = await getDownloadURL(storageRef);
 
-        const docRef = await addDoc(galleryRef, {
-          title: formData?.title,
-          img: downloadURLs,
-          date: serverTimestamp(),
-          category: formData?.category,
-        });
-        console.log(docRef.id);
-        setFormData({
-          title: "",
-          img: [],
-          category: formData?.category,
-        });
+          const galleryRef = collection(db, "gallery");
 
-        setDataSaved(true);
+          await addDoc(galleryRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+            category: formData?.category,
+          });
+        } catch (error: any) {
+          console.error("Error uploading file:", error);
+        }
+      });
 
-        setTimeout(() => setDataSaved(false), 3000);
-      } catch (error: any) {
-        console.error("Error uploading file:", error);
-      }
+      setDataSaved(true);
+
+      setTimeout(() => setDataSaved(false), 3000);
     } else {
       console.error("No file selected");
     }
@@ -72,7 +59,7 @@ const ImageForm = () => {
       item: "Image",
       user: currentUser?.name,
     });
-    navigate("/images");
+    navigate("/images", { state: { category: formData?.category } });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +73,7 @@ const ImageForm = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="FAQ's" />
+      <Breadcrumb pageName="Image Form" />
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
           <div
