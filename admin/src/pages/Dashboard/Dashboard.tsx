@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
         if (dateObject) {
           const h: HistoryData = {
             title: data?.title,
-            date: "", // Placeholder for now
+            date: "",
             role: data?.role,
             user: data?.user,
             item: data?.item,
@@ -53,10 +53,8 @@ const Dashboard: React.FC = () => {
         }
       });
 
-      // Sort history by date
       gotHistory.sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
 
-      // Convert dates back to string format and prepare final history array
       const sortedHistory: HistoryData[] = gotHistory.map((entry) => {
         return {
           ...entry.data,
@@ -81,7 +79,6 @@ const Dashboard: React.FC = () => {
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                   Title
-                  {/*This is Field name from sidebar options*/}
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Item
