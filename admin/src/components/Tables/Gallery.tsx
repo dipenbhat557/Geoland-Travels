@@ -130,7 +130,7 @@ const Gallery = () => {
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate("/forms/image-form", {
+                        navigate("/images", {
                           state: { category: folder?.category },
                         })
                       }
