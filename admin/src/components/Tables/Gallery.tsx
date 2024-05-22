@@ -136,7 +136,7 @@ const Gallery = () => {
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     >
-                      Edit
+                      Add images
                     </button>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
