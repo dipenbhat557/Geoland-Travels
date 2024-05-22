@@ -25,32 +25,46 @@ const Dashboard: React.FC = () => {
     if (currentUser?.role !== "admin") {
       navigate("/signin");
     }
-    const gotHistory: HistoryData[] = [];
+
     const fetchDocuments = async () => {
       const querySnapshot = await getDocs(collection(db, "history"));
+      const gotHistory: { data: HistoryData; dateObj: Date }[] = [];
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = "";
+        let dateObject: Date | null = null;
 
         if (date instanceof Timestamp) {
-          dateObject = date.toDate().toString().slice(0, 21);
-          console.log("Date:", dateObject);
+          dateObject = date.toDate();
         } else {
           console.error("Invalid or missing date field:", date);
         }
 
-        const h: HistoryData = {
-          title: doc?.data()?.title,
-          date: dateObject,
-          role: doc?.data()?.role,
-          user: doc?.data()?.user,
-          item: doc?.data()?.item,
-        };
-        gotHistory.push(h);
+        if (dateObject) {
+          const h: HistoryData = {
+            title: data?.title,
+            date: "", // Placeholder for now
+            role: data?.role,
+            user: data?.user,
+            item: data?.item,
+          };
+          gotHistory.push({ data: h, dateObj: dateObject });
+        }
       });
-      setHistory(gotHistory);
+
+      // Sort history by date
+      gotHistory.sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
+
+      // Convert dates back to string format and prepare final history array
+      const sortedHistory: HistoryData[] = gotHistory.map((entry) => {
+        return {
+          ...entry.data,
+          date: entry.dateObj.toString().slice(0, 21),
+        };
+      });
+
+      setHistory(sortedHistory);
     };
 
     fetchDocuments();
