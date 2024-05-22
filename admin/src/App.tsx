@@ -8,7 +8,7 @@ import Hero from "./pages/Dashboard/Hero";
 
 import FaqForm from "./pages/Form/FaqForm";
 import OurInfo from "./components/Tables/OurInfo";
-// import CoustomerReview from './components/Tables/CustomerReview';
+import CoustomerReview from "./components/Tables/CustomerReview";
 import Message from "./components/Tables/Message";
 import Faq from "./components/Tables/Faq";
 import SignIn from "./pages/Auth/Signin";
@@ -24,6 +24,7 @@ import SocialLinks from "./components/Tables/SocialLinks";
 import User from "./components/Tables/User";
 import UserForm from "./pages/Form/UserForm";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import CustomerReviewForm from "./pages/Form/CustomerReviewForm";
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -73,7 +74,7 @@ function App() {
           path="/forms/tour-form"
           element={
             <>
-              <PageTitle title="Form Elements" />
+              <PageTitle title="Tour Form" />
               <TourForm />
             </>
           }
@@ -83,7 +84,7 @@ function App() {
           path="/forms/faq-form"
           element={
             <>
-              <PageTitle title="Form Elements" />
+              <PageTitle title="FAQ Form" />
               <FaqForm />
             </>
           }
@@ -193,6 +194,24 @@ function App() {
             <>
               <PageTitle title="Social Links" />
               <SocialLinks />
+            </>
+          }
+        />
+        <Route
+          path="/reviews"
+          element={
+            <>
+              <PageTitle title="Reviews" />
+              <CoustomerReview />
+            </>
+          }
+        />
+        <Route
+          path="/forms/reviews-form"
+          element={
+            <>
+              <PageTitle title="Reviews Form" />
+              <CustomerReviewForm />
             </>
           }
         />

@@ -50,7 +50,7 @@ const BlogForm = () => {
           navigate("/blogs");
         } else {
           const blogRef = collection(db, "blogs");
-          const docRef = await addDoc(blogRef, {
+          await addDoc(blogRef, {
             title: formData?.title,
             img: downloadURL,
             date: serverTimestamp(),

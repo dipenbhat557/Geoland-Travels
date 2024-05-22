@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
 import { currUser } from "../../pages/store";
-import { MdInfo, MdSpaceDashboard, MdTour } from "react-icons/md";
+import { MdInfo, MdReviews, MdSpaceDashboard, MdTour } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
 import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from "react-icons/fa";
 import { RiGalleryFill } from "react-icons/ri";
@@ -248,6 +248,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <PiLinkSimple className="text-2xl" />
                   Social Links
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/reviews"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("reviews") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <MdReviews className="text-2xl" />
+                  Customer Reviews
                 </NavLink>
               </li>
               {currentUser?.role === "admin" && (

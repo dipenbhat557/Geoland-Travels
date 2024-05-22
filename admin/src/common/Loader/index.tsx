@@ -1,7 +1,13 @@
+import { iconLogo } from "../../assets";
+
 const Loader = () => {
   return (
-    <div className="flex h-screen items-center justify-center bg-white">
-      <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+    <div className="h-[717px] w-full flex flex-col items-center justify-center">
+      <img
+        src={iconLogo}
+        alt="Logo"
+        className="h-[30%] animate-spin w-[30%] object-contain"
+      />
     </div>
   );
 };
