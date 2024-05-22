@@ -20,7 +20,7 @@ const Glimpse = () => {
   useEffect(() => {
     const gotImages: ImageData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, "gallery"));
+      const querySnapshot = await getDocs(collection(db, "glimpses"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();

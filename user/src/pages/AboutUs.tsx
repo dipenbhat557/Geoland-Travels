@@ -7,9 +7,10 @@ import { styles } from "../styles";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { img1, img2, img3, img4, img5, img6, img7 } from "../assets";
-import { useEffect, useState } from "react";
-const heroElements = [img1, img2, img3, img4, img5, img6, img7];
+import { img1, img3, img4, img5, img6, img7 } from "../assets";
+import { Suspense, useEffect, useState } from "react";
+import Loading from "../components/Loading";
+
 const AboutUs = () => {
   const [currentElement, setCurrentElement] = useState(0);
   const navigate = useNavigate();

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { reviewItems } from "../constants";
 import { styles } from "../styles";
-import { useNavigate } from "react-router-dom";
 import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";

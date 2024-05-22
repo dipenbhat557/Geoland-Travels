@@ -16,8 +16,12 @@ import { useRecoilValue } from "recoil";
 import { isLoggedIn } from "./pages/store";
 import TourForm from "./pages/Form/Tourform";
 import TourTable from "./components/Tables/Tour";
+import Glimpses from "./components/Tables/Glimpses";
+import GlimpsesForm from "./pages/Form/GlimpsesForm";
 import Gallery from "./components/Tables/Gallery";
 import GalleryForm from "./pages/Form/GalleryForm";
+import Images from "./components/Tables/Images";
+import ImageForm from "./pages/Form/ImageForm";
 import Blog from "./components/Tables/Blog";
 import BlogForm from "./pages/Form/BlogForm";
 import SocialLinks from "./components/Tables/SocialLinks";
@@ -108,6 +112,24 @@ function App() {
           }
         />
         <Route
+          path="/glimpses"
+          element={
+            <>
+              <PageTitle title="Glimpses" />
+              <Glimpses />
+            </>
+          }
+        />
+        <Route
+          path="/forms/glimpse-form"
+          element={
+            <>
+              <PageTitle title="Glimpses Form" />
+              <GlimpsesForm />
+            </>
+          }
+        />
+        <Route
           path="/gallery"
           element={
             <>
@@ -122,6 +144,24 @@ function App() {
             <>
               <PageTitle title="Gallery Form" />
               <GalleryForm />
+            </>
+          }
+        />
+        <Route
+          path="/images"
+          element={
+            <>
+              <PageTitle title="Images" />
+              <Images />
+            </>
+          }
+        />
+        <Route
+          path="/forms/image-form"
+          element={
+            <>
+              <PageTitle title="Image Form" />
+              <ImageForm />
             </>
           }
         />

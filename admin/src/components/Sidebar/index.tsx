@@ -5,7 +5,13 @@ import { useRecoilState } from "recoil";
 import { currUser } from "../../pages/store";
 import { MdInfo, MdReviews, MdSpaceDashboard, MdTour } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
-import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBlog,
+  FaHouseUser,
+  FaImages,
+  FaQuora,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { RiGalleryFill } from "react-icons/ri";
 import { PiLinkSimple } from "react-icons/pi";
 import { logo } from "../../assets";
@@ -226,6 +232,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <RiGalleryFill className="text-2xl" />
                   Gallery
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/glimpses"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("glimpses") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <FaImages className="text-2xl" />
+                  Glimpses
                 </NavLink>
               </li>
               <li>
