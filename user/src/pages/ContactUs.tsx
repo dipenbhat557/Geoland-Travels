@@ -214,7 +214,7 @@ const ContactUs = () => {
             {/* EarthCanvas section */}
             <motion.div
               variants={slideIn("right", "tween", 0.2, 1)}
-              className="hidden  sm:flex items-center justify-center absolute -top-[30%]  w-full h-full"
+              className="hidden  sm:flex items-center justify-center  absolute -top-[30%]  w-full h-full"
             >
               <EarthCanvas />
             </motion.div>
