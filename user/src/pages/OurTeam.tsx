@@ -1,7 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { a1, a2, a3, a4, def, heroBg, map } from "../assets";
 import Navbar from "../components/Navbar";
-import { team } from "../constants";
 import { styles } from "../styles";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
@@ -67,6 +66,7 @@ const OurTeam = () => {
     setNewTeam(gotNewTeam);
     console.log(newTeam);
   }, [teams, teamIndex]);
+
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col sm:gap-5 h-auto">

@@ -1,13 +1,7 @@
-import { AiOutlineSearch } from "react-icons/ai";
 import { heroBg } from "../assets";
-import { styles } from "../styles";
-import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import { TourData, heroIndex, toursData } from "../store";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { motion } from "framer-motion";
-import { fadeIn, textVariant } from "../utils/motion";
+import { heroIndex } from "../store";
+import { useRecoilState } from "recoil";
 import { SectionWrapper } from "../hoc";
 import { FaChevronLeft } from "react-icons/fa6";
 
