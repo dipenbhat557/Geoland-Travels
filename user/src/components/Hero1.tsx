@@ -66,7 +66,7 @@ const Hero1 = () => {
       <div className="w-full h-full z-10 absolute  opacity-10" />
       <div className="w-full h-full absolute z-20 flex items-center justify-center flex-col ">
         <div className="w-full h-[90%] sm:h-[50%] flex items-center justify-center flex-col gap-14 sm:gap-3">
-          <motion.p className="sm:w-[43%] text-center text-[30px] sm:text-[45px] text-white font-semibold">
+          <motion.p className="sm:w-[43%] text-center text-[25px] sm:text-[30px] sm:text-[45px] text-white font-semibold">
             {"Choose a Destination For Your ".split("").map((char, index) => (
               <motion.span
                 key={index}
@@ -78,6 +78,7 @@ const Hero1 = () => {
                 {char === " " ? "\u00A0" : char}
               </motion.span>
             ))}
+            <br />
 
             {"Next Adventure?".split("").map((char, index) => (
               <motion.span
@@ -173,7 +174,7 @@ const Hero1 = () => {
       </div>
       <FaChevronRight
         onClick={() => setHero((hero + 1) % 2)}
-        className="absolute z-50 right-[5%] top-[40%] text-[65px] cursor-pointer text-white"
+        className="absolute z-50 right-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
       />
     </div>
   );

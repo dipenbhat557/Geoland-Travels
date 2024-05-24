@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { a1, a2, a3, a4, def, heroBg, map } from "../assets";
 import Navbar from "../components/Navbar";
 import { team } from "../constants";
@@ -6,10 +6,67 @@ import { styles } from "../styles";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import { Timestamp, collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
+interface TeamData {
+  title: string;
+  name: string;
+  designation: string;
+  date: string;
+  img: string;
+  id: string;
+  category: string;
+}
 
 const OurTeam = () => {
   const [teamIndex, setTeamIndex] = useState(0);
+  const [teams, setTeams] = useState<TeamData[]>([]);
+  const [newTeam, setNewTeam] = useState<TeamData[]>([]);
+  const teamCategory: String[] = ["Board", "Staff"];
 
+  useEffect(() => {
+    const gotTeams: TeamData[] = [];
+    const fetchDocuments = async () => {
+      const querySnapshot = await getDocs(collection(db, "team"));
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const date = data.date;
+        let dateObject = "";
+
+        if (date instanceof Timestamp) {
+          dateObject = date.toDate().toString().slice(0, 21);
+        } else {
+          console.error("Invalid or missing date field:", date);
+        }
+
+        const t: TeamData = {
+          title: doc?.data()?.title,
+          date: dateObject,
+          img: doc?.data()?.img,
+          id: doc?.id,
+          designation: doc?.data()?.designation,
+          category: doc?.data()?.category,
+          name: doc?.data()?.name,
+        };
+        gotTeams.push(t);
+      });
+      setTeams(gotTeams);
+    };
+
+    fetchDocuments();
+  }, []);
+
+  useEffect(() => {
+    const gotNewTeam = teams?.filter(
+      (team) =>
+        team?.category?.toLowerCase() ===
+        teamCategory?.[teamIndex]?.toLowerCase()
+    );
+    setNewTeam(gotNewTeam);
+    console.log(newTeam);
+  }, [teams, teamIndex]);
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col sm:gap-5 h-auto">
@@ -59,7 +116,7 @@ const OurTeam = () => {
             </p>
 
             <div className="w-full h-auto  flex flex-wrap gap-5 items-center justify-between">
-              {team?.[teamIndex].map((member, index) => {
+              {newTeam?.map((member, index) => {
                 return (
                   <div
                     key={index}
@@ -68,14 +125,14 @@ const OurTeam = () => {
                     <img
                       className="w-full h-[150px] sm:h-[250px] object-cover"
                       src={member?.img || def}
-                      alt={`faculty-${index}`}
+                      alt={`member-${index}`}
                     />
                     <p className="text-[16px] sm:text-[18px] font-semibold h-[18%] p-3">
                       {member?.name}
                     </p>
                     <p
                       dangerouslySetInnerHTML={{
-                        __html: member?.role,
+                        __html: member?.designation,
                       }}
                       className="text-[14px] sm:text-[16px] h-[18%] text-slate-400 hover:text-slate-200 p-3"
                     ></p>
