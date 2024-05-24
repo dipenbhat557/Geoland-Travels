@@ -29,6 +29,8 @@ import User from "./components/Tables/User";
 import UserForm from "./pages/Form/UserForm";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import CustomerReviewForm from "./pages/Form/CustomerReviewForm";
+import TeamForm from "./pages/Form/TeamForm";
+import Team from "./components/Tables/Team";
 
 function App() {
   const isLogIn = useRecoilValue(isLoggedIn);
@@ -252,6 +254,24 @@ function App() {
             <>
               <PageTitle title="Reviews Form" />
               <CustomerReviewForm />
+            </>
+          }
+        />
+        <Route
+          path="/forms/team-form"
+          element={
+            <>
+              <PageTitle title="Team Form" />
+              <TeamForm />
+            </>
+          }
+        />
+        <Route
+          path="/team"
+          element={
+            <>
+              <PageTitle title="Team" />
+              <Team />
             </>
           }
         />

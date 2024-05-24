@@ -13,26 +13,26 @@ import {
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
-// interface FormData {
-//   title: string;
-//   name: string;
-//   reviewTitle: string;
-//   content: string;
-//   designation: string;
-//   img: File | null;
-// }
-const CustomerReviewForm = () => {
+
+interface TeamData {
+  title: string;
+  name: string;
+  designation: string;
+  img: string;
+  category: string;
+}
+
+const TeamForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const review = location?.state?.review;
+  const team = location?.state?.team;
 
-  const [formData, setFormData] = useState({
-    title: review?.title || "",
-    name: review?.name || "",
-    reviewTitle: review?.reviewTitle || "",
-    content: review?.content || "",
-    designation: review?.designation || "",
-    img: review?.img || "",
+  const [formData, setFormData] = useState<TeamData>({
+    title: team?.title || "",
+    name: team?.name || "",
+    designation: team?.designation || "",
+    img: team?.img || "",
+    category: team?.category || "",
   });
   const [img, setImg] = useState(null as File | null);
   const [dataSaved, setDataSaved] = useState(false);
@@ -48,36 +48,33 @@ const CustomerReviewForm = () => {
 
         console.log("Download URL:", downloadURL);
 
-        if (review?.id) {
-          const reviewRef = doc(db, "reviews", review?.id);
-          await setDoc(reviewRef, {
+        if (team?.id) {
+          const teamRef = doc(db, "team", team?.id);
+          await setDoc(teamRef, {
             title: formData?.title,
             name: formData?.name,
             img: downloadURL,
             date: serverTimestamp(),
-            reviewTitle: formData?.reviewTitle,
-            content: formData?.content,
+            category: formData?.category,
             designation: formData?.designation,
           });
-          navigate("/reviews");
+          navigate("/team");
         } else {
-          const reviewRef = collection(db, "reviews");
-          await addDoc(reviewRef, {
+          const teamRef = collection(db, "team");
+          await addDoc(teamRef, {
             title: formData?.title,
             name: formData?.name,
-            date: serverTimestamp(),
-            reviewTitle: formData?.reviewTitle,
-            content: formData?.content,
-            designation: formData?.designation,
             img: downloadURL,
+            date: serverTimestamp(),
+            category: formData?.category,
+            designation: formData?.designation,
           });
           setFormData({
             title: "",
             name: "",
-            reviewTitle: "",
-            content: "",
             designation: "",
             img: "",
+            category: "",
           });
         }
         setDataSaved(true);
@@ -89,7 +86,7 @@ const CustomerReviewForm = () => {
           title: formData?.title,
           role: currentUser?.role,
           date: serverTimestamp(),
-          item: "Review",
+          item: "Team",
           user: currentUser?.name,
         });
         window.scrollTo(0, 0);
@@ -102,7 +99,6 @@ const CustomerReviewForm = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("came here");
     const file = e.target.files?.[0];
     if (file) {
       setImg(file);
@@ -112,10 +108,10 @@ const CustomerReviewForm = () => {
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Customers Reviews " />
+      <Breadcrumb pageName="Our Team Form " />
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/reviews"> Go to Reviews</NavLink>
+          <NavLink to="/team"> Go to Team</NavLink>
         </button>
       </div>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -153,7 +149,7 @@ const CustomerReviewForm = () => {
 
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Name of Reviewer
+                  Name of Employee
                 </label>
                 <input
                   type="text"
@@ -168,6 +164,28 @@ const CustomerReviewForm = () => {
                   placeholder="Your name "
                   className="w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input  dark:focus:border-primary dark:text-white"
                 />
+              </div>
+              <div>
+                <label className="flex flex-col">
+                  <label className="mb-3 block text-black dark:text-white">
+                    Select Category
+                  </label>
+                  <select
+                    className="w-full rounded-lg border-[1.5px]  border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      setFormData((prevState) => ({
+                        ...prevState,
+                        category: e.target.value,
+                      }))
+                    }
+                    value={formData?.category}
+                    name="category"
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Board">Board</option>
+                    <option value="Staff">Staff</option>
+                  </select>
+                </label>
               </div>
               <div>
                 <label className="mb-3 block text-black dark:text-white">
@@ -198,44 +216,6 @@ const CustomerReviewForm = () => {
                   className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                 />
               </div>
-
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Title for Review
-                </label>
-                <input
-                  type="text"
-                  value={formData?.reviewTitle}
-                  name="reviewTitle"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      reviewTitle: e.target.value,
-                    }))
-                  }
-                  placeholder="Review Title"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-black dark:text-white">
-                  Review Content
-                </label>
-                <textarea
-                  value={formData?.content}
-                  name="content"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      content: e.target.value,
-                    }))
-                  }
-                  rows={3}
-                  placeholder="Review content"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                ></textarea>
-              </div>
             </div>
           </div>
         </div>
@@ -259,4 +239,4 @@ const CustomerReviewForm = () => {
   );
 };
 
-export default CustomerReviewForm;
+export default TeamForm;

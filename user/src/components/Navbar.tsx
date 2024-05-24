@@ -134,7 +134,7 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
                   >
                     <p
                       onClick={() =>
-                        navigate("/destination", { state: { tour: s } })
+                        navigate("/details", { state: { tour: s } })
                       }
                     >
                       {s?.tourTitle}
@@ -211,18 +211,15 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
               {tourDropdown?.map((service, index) => {
                 return (
                   <li
+                    onClick={() =>
+                      navigate("/destination", {
+                        state: { key: "type", val: service?.val },
+                      })
+                    }
                     key={index}
                     className="hover:bg-[#80b38930] px-2 py-1 rounded-sm text-[14px] cursor-pointer "
                   >
-                    <p
-                      onClick={() =>
-                        navigate("/destination", {
-                          state: { key: "type", val: service?.val },
-                        })
-                      }
-                    >
-                      {service?.title}
-                    </p>
+                    <p>{service?.title}</p>
                   </li>
                 );
               })}
@@ -239,18 +236,15 @@ const Navbar = ({ isHome }: { isHome: boolean }) => {
               {packages?.map((service, index) => {
                 return (
                   <li
+                    onClick={() =>
+                      navigate("/details", {
+                        state: { tour: service },
+                      })
+                    }
                     key={index}
                     className="hover:bg-[#80b38930]  px-2 py-1 rounded-sm text-[14px] cursor-pointer "
                   >
-                    <p
-                      onClick={() =>
-                        navigate("/details", {
-                          state: { tour: service },
-                        })
-                      }
-                    >
-                      {service?.tourTitle}
-                    </p>
+                    <p>{service?.tourTitle}</p>
                   </li>
                 );
               })}
