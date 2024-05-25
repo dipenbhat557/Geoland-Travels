@@ -174,7 +174,7 @@ const Hero1 = () => {
       </div>
       <FaChevronRight
         onClick={() => setHero((hero + 1) % 2)}
-        className="absolute z-50 right-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
+        className="absolute  bg-primary rounded-full p-4 z-50 right-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
       />
     </div>
   );

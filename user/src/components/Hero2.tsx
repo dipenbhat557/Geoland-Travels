@@ -18,15 +18,14 @@ const Hero2 = () => {
       <div className=" absolute z-20 items-center justify-center top-[70%]  flex w-full">
         <button
           onClick={() => navigate("/contactus", { state: { fromHero: true } })}
-          className="w-[70%] sm:w-[30%] py-2 font-semibold bg-[#06905E] text-white text-[22px] rounded-2xl"
+          className="w-[70%] sm:w-[30%] animate-bounce py-2 font-semibold bg-[#06905E] text-white text-[22px] rounded-2xl"
         >
-          {" "}
           Start your trip today
         </button>
       </div>
       <FaChevronLeft
         onClick={() => setHero((hero - 1) % 2)}
-        className="absolute z-50 left-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
+        className="absolute bg-primary rounded-full p-4 z-50 left-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
       />
     </div>
   );
