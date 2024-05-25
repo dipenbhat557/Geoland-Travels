@@ -44,7 +44,7 @@ export const navLinks = [
   },
   {
     title: "Gallery",
-    link: "#",
+    link: "/gallery",
   },
   {
     title: "Blogs",
