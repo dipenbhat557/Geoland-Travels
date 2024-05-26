@@ -134,7 +134,142 @@ const TermsAndConditions = () => {
             alternative arrangement of comparable monetary value without
             compensation and accepts no liability for loss.
           </p>
-          {/* More sections yet to be added */}
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Inclusions and Exclusions
+            </h2>
+            <p>
+              The price of any standard package includes only the items
+              specified. It does not include items of a personal nature like
+              personal insurance, transportation services beyond those mentioned
+              in the itinerary, refreshments, telephone calls, laundry, tips,
+              meals and beverages unless specified, optional excursions, visa
+              fees, gratuities, or taxes. Usage of any above-mentioned
+              exclusions must be borne by the passenger from his expenses. The
+              passengers must read all the inclusions and exclusions mentioned
+              in the itinerary carefully at the time of booking.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Travel Insurance</h2>
+            <p>
+              Travel insurance must be done to travel to most countries to cover
+              at least emergency medical and repatriation expenses. The policy
+              applies to all passengers aged less than 65 years at the date of
+              policy was issued. Geoland Travel does not hold any responsibility
+              for any injuries and damage caused to the passenger from the time
+              of booking for the full duration of the tour. If a passenger
+              wishes to add their additional insurance, then they will be
+              responsible for an additional cost.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Liability</h2>
+            <p>
+              Geoland Travel doesn’t hold liability for loss, damage, delay,
+              accident, injury, or any other irregularity arising at the time of
+              the tour. Geoland Travel only acts as The Tour Operator on behalf
+              of the supplier and the airlines. Geoland Travel does not have
+              direct control over the service and facilities provided by the
+              suppliers thus Geoland Travel will not be held responsible for
+              errors or omission made by the supplier. Geoland Travel will not
+              take responsibility for the additional charges levied for delay,
+              accident, or disruption of the products beyond control.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Delay</h2>
+            <p>
+              Geoland Travel will not take any responsibility for any delays
+              before departure or during travel occurred due to airline
+              technical issues, weather conditions, strikes, or any other
+              circumstances out of control. Expenses related to these extensions
+              will be bear by the passenger himself.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Travel Documentation</h2>
+            <p>
+              It is the responsibility of the passenger to obtain all the
+              necessary documents, passports, visa permits, vaccination, and
+              medicines certificates that may be needed to travel. It is the
+              duty of the passenger to check all the details provided on the
+              travel documents are correct upon receipt. Please contact Geoland
+              Travel immediately in case of any mistakes. The passenger will be
+              held responsible for ensuring they have provided correct and
+              necessary documentation before the departure date.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Health and Conduct</h2>
+            <p>
+              All the passengers must make sure that they are fit and in
+              condition to travel before departure. Any kind of pre-existing
+              medical conditions or illness must be informed at the time of
+              booking and make arrangements for any medication or other kind of
+              treatment which may be required during the tour. In the case of a
+              passenger, ill health Geoland Travel may make arrangements as
+              required and recover the cost from the passenger. Failure to
+              inform Geoland Travel at the time of booking will constitute a
+              breach of these booking conditions and relieve Geoland Travel from
+              any obligation and liability.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Local Law and Client Exclusion
+            </h2>
+            <p>
+              All the passengers must accept the law and order of the authority
+              and decisions of Geoland Travel and its suppliers and
+              representative on tour. Geoland Travel shall not be responsible
+              for any passenger who commits an illegal or unlawful act while on
+              the tour.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Force Majeure and Extraordinary Events
+            </h2>
+            <p>
+              Geoland Travel has full right to cancel the booking in case of
+              unusual circumstances like war, the threat of war, civil strike,
+              riot, terrorist activity, industrial dispute, nuclear disaster,
+              fire, pandemic, epidemic, weather conditions, flight cancellation,
+              or any other extra circumstances beyond the control of Geoland
+              Travel. If after the announcement of any above-mentioned event, it
+              will take a maximum of 12 months to process the refund. If the
+              flights get canceled after booking has been confirmed due to the
+              above-mentioned reasons, then passengers will get refunded up to
+              60% of the unused service only after confirmation from the
+              airlines, hotels, and other service providers. The cancellation
+              process will take up to 12 months. The refund will be given to the
+              passengers only after Geoland Travel receives the amount from the
+              suppliers. However, the passenger can request to transfer the
+              existing booking to be rescheduled for the future.
+            </p>
+          </section>
+
+          <section className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">Complaints</h2>
+            <p>
+              If you have any complaints regarding the service provided by
+              Geoland Travel, a complaint must be done immediately. Geoland
+              Travel will try every effort to resolve the problem to meet
+              passenger satisfaction. If the passenger fails to complain
+              immediately Geoland Travel will not be held responsible or at
+              least reduce liability to pay the compensation. Also, Geoland
+              Travel will not be able to rectify any problem if it is unaware
+              of.
+            </p>
+          </section>
         </div>
         <Footer isContact={false} />
       </div>
