@@ -1,10 +1,13 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { styles } from "../styles";
 
 const TravelTips = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col gap-4">
