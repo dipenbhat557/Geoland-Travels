@@ -14,6 +14,7 @@ import { Suspense, lazy, useEffect } from "react";
 // import WhyTour from "../components/WhyTour";
 import Faq from "../components/Faq";
 import Loading from "../components/Loading";
+import Review from "../components/Reviews";
 
 const Navbar = lazy(() => import("../components/Navbar"));
 const Blogs = lazy(() => import("../components/Blogs"));
@@ -49,7 +50,7 @@ const HomePage = () => {
         <Gallery />
         {/* <ReachOut /> */}
         <Faq />
-
+        <Review />
         <Footer isContact={false} />
       </div>
     </Suspense>
