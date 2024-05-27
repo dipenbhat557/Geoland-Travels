@@ -262,11 +262,38 @@ const TourForm = () => {
 
         setTimeout(() => setDataSaved(false), 3000);
         window.scrollTo(0, 0);
+        navigate("/tour");
       } catch (error: any) {
         console.error("Error uploading file:", error);
       }
     } else {
-      console.error("No file selected");
+      if (tour?.id) {
+        const tourRef = doc(db, "tours", tour?.id);
+        await setDoc(tourRef, {
+          title: formData?.title,
+          img: formData?.img,
+          date: serverTimestamp(),
+          tourTitle: formData?.tourTitle,
+          location: formData?.location,
+          overview: formData?.overview,
+          highlights: formData?.highlights,
+          inclusion: formData?.inclusion,
+          exclusion: formData?.exclusion,
+          itinerary: formData?.itinerary,
+          price: formData?.price,
+          type: formData?.type,
+          trending: formData?.trending,
+          category: formData?.category,
+          duration: formData?.duration,
+          groupSize: formData?.groupSize,
+          ages: formData?.ages,
+          languages: formData?.languages,
+        });
+        console.log("updated successfully");
+        navigate("/tour");
+      } else {
+        console.error("No file selected");
+      }
     }
 
     const historyRef = collection(db, "history");
