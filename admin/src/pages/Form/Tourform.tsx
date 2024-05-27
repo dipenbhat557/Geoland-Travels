@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
-import InputFieldList from "./InputFields";
+import InputFieldList, { IteraneryFieldList } from "./InputFields";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../firebaseConfig";
@@ -25,7 +25,7 @@ interface TourData {
   highlights: string[];
   inclusion: string[];
   exclusion: string[];
-  itinerary: string[];
+  itinerary: { title: string; description: string }[];
   price: number;
   type: string;
   trending: boolean;
@@ -67,9 +67,9 @@ const TourForm = () => {
   const [exclusionInputFields, setExclusionInputFields] = useState<string[]>(
     tour?.exclusion || [""]
   );
-  const [itineraryInputFields, setItineraryInputFields] = useState<string[]>(
-    tour?.itinerary || [""]
-  );
+  const [itineraryInputFields, setItineraryInputFields] = useState<
+    { title: string; description: string }[]
+  >(tour?.itinerary || [{ title: "", description: "" }]);
 
   const [formData, setFormData] = useState<TourData>({
     title: tour?.title || "",
@@ -80,7 +80,7 @@ const TourForm = () => {
     highlights: tour?.highlights || [],
     inclusion: tour?.inclusion || [],
     exclusion: tour?.exclusion || [],
-    itinerary: tour?.itinerary || [],
+    itinerary: tour?.itinerary || [{ title: "", description: "" }],
     price: tour?.price || 0,
     type: tour?.type || "inbound",
     trending: tour?.trending || false,
@@ -149,17 +149,25 @@ const TourForm = () => {
     }));
   };
 
-  const handleItineraryValueChange = (index: any, event: any) => {
-    const values = [...itineraryInputFields];
-    values[index] = event.target.value;
-    setItineraryInputFields(values);
+  const handleItineraryValueChange = (
+    index: number,
+    field: "title" | "description",
+    value: string
+  ) => {
+    // Update itineraryInputFields
+    const updatedFields = [...itineraryInputFields];
+    updatedFields[index] = {
+      ...updatedFields[index],
+      [field]: value,
+    };
+    setItineraryInputFields(updatedFields);
 
     // Update formData separately
     setFormData((prevFormData) => ({
       ...prevFormData,
       itinerary: [
         ...prevFormData.itinerary.slice(0, index),
-        event.target.value,
+        updatedFields?.[index],
         ...prevFormData.itinerary.slice(index + 1),
       ],
     }));
@@ -246,7 +254,7 @@ const TourForm = () => {
             highlights: [""],
             inclusion: [""],
             exclusion: [""],
-            itinerary: [""],
+            itinerary: [{ title: "", description: "" }],
             price: 0,
             type: "",
             trending: false,
@@ -503,7 +511,7 @@ const TourForm = () => {
                   Itinerary
                 </label>
 
-                <InputFieldList
+                <IteraneryFieldList
                   noOfInputs={noOfItineraryInputs}
                   setNoOfInputs={setNoOfItineraryInputs}
                   handleValueChange={handleItineraryValueChange}
