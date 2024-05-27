@@ -174,9 +174,15 @@ const ContactUs = () => {
               >
                 <option value="">Select branch</option>
                 <option value="Nepal">Nepal</option>
-                <option value="UAE">UAE</option>
-                <option value="USA">USA</option>
-                <option value="Canada">Canada</option>
+                <option value="Riyadh, Saudi Arabia">
+                  Riyadh, Saudi Arabia
+                </option>
+                <option value="Dammam, Saudi Arabia">
+                  Dammam, Saudi Arabia
+                </option>
+                <option value="Dubai, U.A.E.">Dubai, U.A.E.</option>
+                <option value="California, USA">California, USA</option>
+                <option value="Ontario, Canada">Ontario, Canada</option>
               </select>
             </label>
             <label className="flex flex-col">
