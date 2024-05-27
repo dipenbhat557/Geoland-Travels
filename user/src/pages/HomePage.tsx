@@ -1,34 +1,26 @@
 import { Suspense, lazy, useEffect } from "react";
-// import Blogs from "../components/Blogs";
-// import Explore from "../components/Explore";
-// import Footer from "../components/Footer";
-// import Gallery from "../components/Glimpse";
-// import Hero from "../components/Hero";
-// import InboundTour from "../components/InboundTour";
-// import Message from "../components/Message";
-// import Navbar from "../components/Navbar";
-// import OutboundTour from "../components/OutBoundTour";
-// import ReachOut from "../components/ReachOut";
-// import Reviews from "../components/Reviews";
-// import TrendingDest from "../components/TrendingDest";
-// import WhyTour from "../components/WhyTour";
 import Faq from "../components/Faq";
 import Loading from "../components/Loading";
 import Review from "../components/Reviews";
+import { useRecoilValue } from "recoil";
+import { heroIndex } from "../store";
 
 const Navbar = lazy(() => import("../components/Navbar"));
 const Blogs = lazy(() => import("../components/Blogs"));
 const Explore = lazy(() => import("../components/Explore"));
 const Footer = lazy(() => import("../components/Footer"));
 const Gallery = lazy(() => import("../components/Glimpse"));
-const Hero = lazy(() => import("../components/Hero"));
+const Hero1 = lazy(() => import("../components/Hero1"));
+const Hero2 = lazy(() => import("../components/Hero2"));
 const InboundTour = lazy(() => import("../components/InboundTour"));
 const Message = lazy(() => import("../components/Message"));
 const OutboundTour = lazy(() => import("../components/OutBoundTour"));
 const TrendingDest = lazy(() => import("../components/TrendingDest"));
 const WhyTour = lazy(() => import("../components/WhyTour"));
+const Reviews = lazy(() => import("../components/Reviews"));
 
 const HomePage = () => {
+  const hero = useRecoilValue(heroIndex);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -36,15 +28,14 @@ const HomePage = () => {
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col">
         <Navbar isHome={true} />
-        <Hero />
+        {hero === 0 ? <Hero1 /> : <Hero2 />}
 
         <TrendingDest />
         <WhyTour />
         <InboundTour />
         <Explore />
         <OutboundTour />
-        {/* <Reviews /> */}
-
+        <Reviews />
         <Blogs />
         <Message />
         <Gallery />

@@ -1,60 +1,97 @@
 import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
-import { NavLink, useNavigate } from "react-router-dom";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
+import { db, storage } from "../../firebaseConfig";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
 
-const GalleryForm = () => {
+const GlimpsesForm = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const image = location?.state?.image;
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    date: "",
-    id: "",
+    title: image?.title || "",
+    img: image?.img || "",
   });
+  const [img, setImg] = useState(null as File | null);
   const [dataSaved, setDataSaved] = useState(false);
   const currentUser = useRecoilValue(currUser);
 
   const handleSubmit = async () => {
-    const imageRef = collection(db, "imageFolders");
+    console.log("Submission started");
+    if (img) {
+      const storageRef = ref(storage, "some-child/" + img.name);
+      try {
+        await uploadBytes(storageRef, img);
 
-    const docRef = await addDoc(imageRef, {
-      title: formData?.title,
-      category: formData?.category,
-      date: serverTimestamp(),
-    });
-    console.log(docRef.id);
-    setFormData({
-      title: "",
-      category: "",
-      date: "",
-      id: "",
-    });
+        const downloadURL = await getDownloadURL(storageRef);
 
-    setDataSaved(true);
+        if (image?.id) {
+          const glimpseRef = doc(db, "glimpses", image?.id);
+          await setDoc(glimpseRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+          });
+          console.log("updated successfully");
+          navigate("/glimpses");
+        } else {
+          const galleryRef = collection(db, "glimpses");
 
-    setTimeout(() => setDataSaved(false), 3000);
+          const docRef = await addDoc(galleryRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+          });
+          console.log(docRef.id);
+          setFormData({
+            title: "",
+            img: "",
+          });
+        }
+        setDataSaved(true);
+
+        setTimeout(() => setDataSaved(false), 3000);
+      } catch (error: any) {
+        console.error("Error uploading file:", error);
+      }
+    } else {
+      console.error("No file selected");
+    }
 
     const historyRef = collection(db, "history");
     await addDoc(historyRef, {
       title: formData?.title,
       role: currentUser?.role,
       date: serverTimestamp(),
-      item: "Image Folder",
+      item: "Glimpse",
       user: currentUser?.name,
     });
-    navigate("/gallery");
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImg(file);
+    }
+    console.log("file is selected");
   };
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Gallery Form" />
+      <Breadcrumb pageName="FAQ's" />
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/gallery"> Go to Gallery</NavLink>
+          <NavLink to="/glimpses"> Go to Glimpses</NavLink>
         </button>
       </div>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -92,20 +129,13 @@ const GalleryForm = () => {
 
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Category
+                  Attach Image
                 </label>
+
                 <input
-                  value={formData?.category}
-                  name="category"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      category: e.target.value,
-                    }))
-                  }
-                  type="text"
-                  placeholder="Category "
-                  className="w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input  dark:focus:border-primary dark:text-white"
+                  onChange={handleFileChange}
+                  type="file"
+                  className={` w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                 />
               </div>
             </div>
@@ -131,4 +161,4 @@ const GalleryForm = () => {
   );
 };
 
-export default GalleryForm;
+export default GlimpsesForm;

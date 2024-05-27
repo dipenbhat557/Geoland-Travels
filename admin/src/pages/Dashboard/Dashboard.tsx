@@ -25,32 +25,44 @@ const Dashboard: React.FC = () => {
     if (currentUser?.role !== "admin") {
       navigate("/signin");
     }
-    const gotHistory: HistoryData[] = [];
+
     const fetchDocuments = async () => {
       const querySnapshot = await getDocs(collection(db, "history"));
+      const gotHistory: { data: HistoryData; dateObj: Date }[] = [];
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = "";
+        let dateObject: Date | null = null;
 
         if (date instanceof Timestamp) {
-          dateObject = date.toDate().toString().slice(0, 21);
-          console.log("Date:", dateObject);
+          dateObject = date.toDate();
         } else {
           console.error("Invalid or missing date field:", date);
         }
 
-        const h: HistoryData = {
-          title: doc?.data()?.title,
-          date: dateObject,
-          role: doc?.data()?.role,
-          user: doc?.data()?.user,
-          item: doc?.data()?.item,
-        };
-        gotHistory.push(h);
+        if (dateObject) {
+          const h: HistoryData = {
+            title: data?.title,
+            date: "",
+            role: data?.role,
+            user: data?.user,
+            item: data?.item,
+          };
+          gotHistory.push({ data: h, dateObj: dateObject });
+        }
       });
-      setHistory(gotHistory);
+
+      gotHistory.sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
+
+      const sortedHistory: HistoryData[] = gotHistory.map((entry) => {
+        return {
+          ...entry.data,
+          date: entry.dateObj.toString().slice(0, 21),
+        };
+      });
+
+      setHistory(sortedHistory);
     };
 
     fetchDocuments();
@@ -67,7 +79,6 @@ const Dashboard: React.FC = () => {
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                   Title
-                  {/*This is Field name from sidebar options*/}
                 </th>
                 <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                   Item

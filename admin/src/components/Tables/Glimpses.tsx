@@ -16,23 +16,23 @@ import { MdDelete } from "react-icons/md";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../../pages/store";
 
-interface FolderData {
+interface ImageData {
   title: string;
-  category: string;
   date: string;
+  img: string;
   id: string;
 }
 
-const Gallery = () => {
+const Glimpses = () => {
+  const [images, setImages] = useState<ImageData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
   const currentUser = useRecoilValue(currUser);
-  const [folders, setFolders] = useState<FolderData[]>([]);
 
   useEffect(() => {
-    const gotFolders: FolderData[] = [];
+    const gotImages: ImageData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, "imageFolders"));
+      const querySnapshot = await getDocs(collection(db, "glimpses"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
@@ -46,49 +46,47 @@ const Gallery = () => {
           console.error("Invalid or missing date field:", date);
         }
 
-        const f: FolderData = {
+        const f: ImageData = {
           title: doc?.data()?.title,
-          category: doc?.data()?.category,
           date: dateObject,
+          img: doc?.data()?.img,
           id: doc?.id,
         };
-        gotFolders.push(f);
+        gotImages.push(f);
       });
-      setFolders(gotFolders);
+      setImages(gotImages);
     };
 
     fetchDocuments();
   }, []);
 
   const handleClick = async (id: string) => {
-    const foldersRef = doc(db, "imageFolders", id);
+    const glimpsesRef = doc(db, "glimpses", id);
 
-    await deleteDoc(foldersRef);
+    await deleteDoc(glimpsesRef);
     console.log("Deleted successfully");
-    setFolders((prevFolders) =>
-      prevFolders.filter((folder) => folder.id !== id)
-    );
+    setImages((prevImages) => prevImages.filter((img) => img.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
     const historyRef = collection(db, "history");
     await addDoc(historyRef, {
-      title: "Image folder deleted",
+      title: "Glimpse image deleted",
       role: currentUser?.role,
       date: serverTimestamp(),
-      item: "Image Folder",
+      item: "Glimpse",
       user: currentUser?.name,
     });
   };
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Gallery" />
+      <Breadcrumb pageName="Glimpses" />
 
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/forms/gallery-form"> Add New Folder</NavLink>
+          <NavLink to="/forms/gallery-form"> Add New Image</NavLink>
         </button>
       </div>
 
@@ -117,33 +115,33 @@ const Gallery = () => {
               </tr>
             </thead>
             <tbody>
-              {folders?.map((folder, key) => (
+              {images.map((image, key) => (
                 <tr key={key}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      {folder?.title}
+                      {image?.title}
                     </h5>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{folder?.date}</p>
+                    <p className="text-black dark:text-white">{image?.date}</p>
                   </td>
                   <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate("/images", {
-                          state: { category: folder?.category },
+                        navigate("/forms/gallery-form", {
+                          state: { image: image },
                         })
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     >
-                      Add images
+                      Edit
                     </button>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex justify-center items-center space-x-3.5">
                       <MdDelete
                         className="text-2xl text-red-400 cursor-pointer"
-                        onClick={() => handleClick(folder?.id)}
+                        onClick={() => handleClick(image?.id)}
                       />
                     </div>
                   </td>
@@ -156,4 +154,5 @@ const Gallery = () => {
     </DefaultLayout>
   );
 };
-export default Gallery;
+
+export default Glimpses;

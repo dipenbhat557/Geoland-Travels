@@ -17,6 +17,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import Faq from "../components/Faq";
 import Loading from "../components/Loading";
+import { useLocation } from "react-router-dom";
 
 interface SocialLinkData {
   facebookLink: string;
@@ -35,6 +36,8 @@ const ContactUs = () => {
   });
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState<SocialLinkData>();
+  const location = useLocation();
+  const fromHero: Boolean = location?.state?.fromHero || false;
 
   useEffect(() => {
     const docRef = doc(db, "socialLinks", "cXM2ywx01R2BDRwHXFov");
@@ -120,14 +123,16 @@ const ContactUs = () => {
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col sm:gap-5 h-auto">
         <Navbar isHome={true} />
-        <div className="h-[480px] w-full relative ">
-          <img src={heroBg} alt="bg" className="w-full h-full object-cover" />
-          <p
-            className={`${styles.primaryBgColor} px-3 py-2 text-white absolute bottom-0 left-5 rounded-t-lg`}
-          >
-            Connect with us
-          </p>
-        </div>
+        {!fromHero && (
+          <div className="h-[480px] w-full relative ">
+            <img src={heroBg} alt="bg" className="w-full h-full object-cover" />
+            <p
+              className={`${styles.primaryBgColor} px-3 py-2 text-white absolute bottom-0 left-5 rounded-t-lg`}
+            >
+              Connect with us
+            </p>
+          </div>
+        )}
 
         <div className=" flex flex-col sm:flex-row gap-2 justify-between p-8 w-[90%] sm:w-[70%] mx-auto">
           <form
@@ -169,9 +174,15 @@ const ContactUs = () => {
               >
                 <option value="">Select branch</option>
                 <option value="Nepal">Nepal</option>
-                <option value="UAE">UAE</option>
-                <option value="USA">USA</option>
-                <option value="Canada">Canada</option>
+                <option value="Riyadh, Saudi Arabia">
+                  Riyadh, Saudi Arabia
+                </option>
+                <option value="Dammam, Saudi Arabia">
+                  Dammam, Saudi Arabia
+                </option>
+                <option value="Dubai, U.A.E.">Dubai, U.A.E.</option>
+                <option value="California, USA">California, USA</option>
+                <option value="Ontario, Canada">Ontario, Canada</option>
               </select>
             </label>
             <label className="flex flex-col">
@@ -209,7 +220,7 @@ const ContactUs = () => {
             {/* EarthCanvas section */}
             <motion.div
               variants={slideIn("right", "tween", 0.2, 1)}
-              className="hidden  sm:flex items-center justify-center absolute -top-[30%]  w-full h-full"
+              className="hidden  sm:flex items-center justify-center  absolute -top-[30%]  w-full h-full"
             >
               <EarthCanvas />
             </motion.div>

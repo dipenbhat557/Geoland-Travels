@@ -1,5 +1,5 @@
 import { FaHandshake } from "react-icons/fa6";
-import { a1, a2, a3, a4, aboutBg, map } from "../assets";
+import { a1, a2, a3, a4, map } from "../assets";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -7,10 +7,10 @@ import { styles } from "../styles";
 import { MdOutlineMiscellaneousServices } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { img1, img2, img3, img4, img5, img6, img7 } from "../assets";
+import { img1, img3, img4, img5, img6, img7 } from "../assets";
 import { Suspense, useEffect, useState } from "react";
 import Loading from "../components/Loading";
-const heroElements = [img1, img2, img3, img4, img5, img6, img7];
+
 const AboutUs = () => {
   const [currentElement, setCurrentElement] = useState(0);
   const navigate = useNavigate();

@@ -4,19 +4,21 @@ import { styles } from "../styles";
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { TourData, toursData } from "../store";
-import { useRecoilValue } from "recoil";
+import { TourData, heroIndex, toursData } from "../store";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { motion } from "framer-motion";
 import { fadeIn, textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
+import { FaChevronRight } from "react-icons/fa6";
 
-const Hero = () => {
+const Hero1 = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [clicked, setClicked] = useState(false);
   const [searchResult, setSearchResult] = useState<TourData[]>([]);
   const tours = useRecoilValue(toursData);
   const boxRef = useRef<HTMLDivElement>(null);
+  const [hero, setHero] = useRecoilState(heroIndex);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -64,7 +66,7 @@ const Hero = () => {
       <div className="w-full h-full z-10 absolute  opacity-10" />
       <div className="w-full h-full absolute z-20 flex items-center justify-center flex-col ">
         <div className="w-full h-[90%] sm:h-[50%] flex items-center justify-center flex-col gap-14 sm:gap-3">
-          <motion.p className="sm:w-[43%] text-center text-[30px] sm:text-[45px] text-white font-semibold">
+          <motion.p className="sm:w-[43%] text-center text-[25px]  sm:text-[45px] text-white font-semibold">
             {"Choose a Destination For Your ".split("").map((char, index) => (
               <motion.span
                 key={index}
@@ -76,6 +78,7 @@ const Hero = () => {
                 {char === " " ? "\u00A0" : char}
               </motion.span>
             ))}
+            <br />
 
             {"Next Adventure?".split("").map((char, index) => (
               <motion.span
@@ -118,7 +121,7 @@ const Hero = () => {
             (searchResult?.length > 0 ? (
               <div
                 ref={boxRef}
-                className="w-[70%] sm:w-[30%] rounded-b-md absolute z-50 left-[15%] sm:right-[35%] top-[57%] sm:top-[61%] h-auto"
+                className="w-[70%] sm:w-[30%] rounded-b-md absolute z-50 left-[15%] sm:left-[35%] top-[57%] sm:top-[61%] h-auto"
               >
                 {searchResult?.map((s, i) => {
                   return (
@@ -142,7 +145,7 @@ const Hero = () => {
             ) : (
               <div
                 ref={boxRef}
-                className="w-[70%] sm:w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] left-[15%] sm:right-[35%] top-[57%] sm:top-[61%] -b-lg"
+                className="w-[70%] sm:w-[30%] bg-slate-200 absolute z-50  flex items-center justify-center  h-[50px] left-[15%] sm:left-[35%] top-[57%] sm:top-[61%] -b-lg"
               >
                 "No results found"
               </div>
@@ -169,7 +172,11 @@ const Hero = () => {
           )}
         </div>
       </div>
+      <FaChevronRight
+        onClick={() => setHero((hero + 1) % 2)}
+        className="absolute  bg-primary rounded-full p-4 z-50 right-[5%] top-[40%] animate-pulse text-[45px] sm:text-[65px] cursor-pointer text-white"
+      />
     </div>
   );
 };
-export default SectionWrapper(Hero);
+export default SectionWrapper(Hero1);

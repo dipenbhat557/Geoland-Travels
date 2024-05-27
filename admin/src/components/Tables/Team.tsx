@@ -2,6 +2,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { currUser } from "../../pages/store";
 import {
   Timestamp,
   addDoc,
@@ -13,26 +15,27 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { MdDelete } from "react-icons/md";
-import { useRecoilValue } from "recoil";
-import { currUser } from "../../pages/store";
 
-interface FolderData {
+interface TeamData {
   title: string;
-  category: string;
+  name: string;
+  designation: string;
   date: string;
+  img: string;
   id: string;
+  category: string;
 }
 
-const Gallery = () => {
+const Team = () => {
+  const [teams, setTeams] = useState<TeamData[]>([]);
   const navigate = useNavigate();
   const [dataDeleted, setDataDeleted] = useState(false);
   const currentUser = useRecoilValue(currUser);
-  const [folders, setFolders] = useState<FolderData[]>([]);
 
   useEffect(() => {
-    const gotFolders: FolderData[] = [];
+    const gotTeams: TeamData[] = [];
     const fetchDocuments = async () => {
-      const querySnapshot = await getDocs(collection(db, "imageFolders"));
+      const querySnapshot = await getDocs(collection(db, "team"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
@@ -46,49 +49,51 @@ const Gallery = () => {
           console.error("Invalid or missing date field:", date);
         }
 
-        const f: FolderData = {
+        const t: TeamData = {
           title: doc?.data()?.title,
-          category: doc?.data()?.category,
           date: dateObject,
+          img: doc?.data()?.img,
           id: doc?.id,
+          designation: doc?.data()?.designation,
+          category: doc?.data()?.category,
+          name: doc?.data()?.name,
         };
-        gotFolders.push(f);
+        gotTeams.push(t);
       });
-      setFolders(gotFolders);
+      setTeams(gotTeams);
     };
 
     fetchDocuments();
   }, []);
 
   const handleClick = async (id: string) => {
-    const foldersRef = doc(db, "imageFolders", id);
+    const reviewRef = doc(db, "team", id);
 
-    await deleteDoc(foldersRef);
+    await deleteDoc(reviewRef);
     console.log("Deleted successfully");
-    setFolders((prevFolders) =>
-      prevFolders.filter((folder) => folder.id !== id)
-    );
+    setTeams((prevTeams) => prevTeams.filter((team) => team.id !== id));
     setDataDeleted(true);
     setTimeout(() => {
       setDataDeleted(false);
     }, 3000);
+
     const historyRef = collection(db, "history");
     await addDoc(historyRef, {
-      title: "Image folder deleted",
+      title: "Team Member deleted",
       role: currentUser?.role,
       date: serverTimestamp(),
-      item: "Image Folder",
+      item: "Team",
       user: currentUser?.name,
     });
   };
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Gallery" />
+      <Breadcrumb pageName="Our Team" />
 
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/forms/gallery-form"> Add New Folder</NavLink>
+          <NavLink to="/forms/team-form"> Add New Member</NavLink>
         </button>
       </div>
 
@@ -111,39 +116,39 @@ const Gallery = () => {
                 <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                   Update
                 </th>
-                <th className="py-4 px-4 font-medium text-center text-black dark:text-white">
+                <th className="py-4 px-4 font-medium text-black dark:text-white">
                   Delete
                 </th>
               </tr>
             </thead>
             <tbody>
-              {folders?.map((folder, key) => (
+              {teams?.map((team: TeamData, key: number) => (
                 <tr key={key}>
                   <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
                     <h5 className="font-medium text-black dark:text-white">
-                      {folder?.title}
+                      {team?.title}
                     </h5>
                   </td>
-                  <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
-                    <p className="text-black dark:text-white">{folder?.date}</p>
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                    <p className="text-black dark:text-white">{team?.date}</p>
                   </td>
-                  <td className="border-b  border-[#eee] py-5 px-4 dark:border-strokedark">
+                  <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <button
                       onClick={() =>
-                        navigate("/images", {
-                          state: { category: folder?.category },
+                        navigate("/forms/team-form", {
+                          state: { team: team },
                         })
                       }
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     >
-                      Add images
+                      Edit
                     </button>
                   </td>
                   <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                     <div className="flex justify-center items-center space-x-3.5">
                       <MdDelete
                         className="text-2xl text-red-400 cursor-pointer"
-                        onClick={() => handleClick(folder?.id)}
+                        onClick={() => handleClick(team?.id)}
                       />
                     </div>
                   </td>
@@ -156,4 +161,5 @@ const Gallery = () => {
     </DefaultLayout>
   );
 };
-export default Gallery;
+
+export default Team;

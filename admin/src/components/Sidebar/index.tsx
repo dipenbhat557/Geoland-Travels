@@ -3,10 +3,16 @@ import { NavLink, useLocation } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
 import { currUser } from "../../pages/store";
-import { MdInfo, MdSpaceDashboard, MdTour } from "react-icons/md";
+import { MdInfo, MdReviews, MdSpaceDashboard, MdTour } from "react-icons/md";
 import { AiFillMessage } from "react-icons/ai";
-import { FaBlog, FaHouseUser, FaQuora, FaSignOutAlt } from "react-icons/fa";
-import { RiGalleryFill } from "react-icons/ri";
+import {
+  FaBlog,
+  FaHouseUser,
+  FaImages,
+  FaQuora,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import { RiGalleryFill, RiTeamFill } from "react-icons/ri";
 import { PiLinkSimple } from "react-icons/pi";
 import { logo } from "../../assets";
 
@@ -230,6 +236,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
+                  to="/glimpses"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("glimpses") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <FaImages className="text-2xl" />
+                  Glimpses
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="/blogs"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes("blogs") && "bg-graydark dark:bg-meta-4"
@@ -248,6 +266,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <PiLinkSimple className="text-2xl" />
                   Social Links
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/reviews"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("reviews") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <MdReviews className="text-2xl" />
+                  Customer Reviews
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/team"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("team") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <RiTeamFill className="text-2xl" />
+                  Our Team
                 </NavLink>
               </li>
               {currentUser?.role === "admin" && (

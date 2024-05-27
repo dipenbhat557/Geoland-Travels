@@ -2,59 +2,87 @@ import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
-import { NavLink, useNavigate } from "react-router-dom";
+import { db, storage } from "../../firebaseConfig";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
 
-const GalleryForm = () => {
+const ImageForm = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
-    date: "",
-    id: "",
+    img: [],
+    category: location?.state?.category,
   });
+  const [img, setImg] = useState([] as File[]);
   const [dataSaved, setDataSaved] = useState(false);
   const currentUser = useRecoilValue(currUser);
 
   const handleSubmit = async () => {
-    const imageRef = collection(db, "imageFolders");
+    console.log("Submission started");
+    if (img.length > 0) {
+      img.forEach(async (image) => {
+        try {
+          const storageRef = ref(storage, "some-child/" + image.name);
 
-    const docRef = await addDoc(imageRef, {
-      title: formData?.title,
-      category: formData?.category,
-      date: serverTimestamp(),
-    });
-    console.log(docRef.id);
-    setFormData({
-      title: "",
-      category: "",
-      date: "",
-      id: "",
-    });
+          await uploadBytes(storageRef, image);
 
-    setDataSaved(true);
+          const downloadURL = await getDownloadURL(storageRef);
 
-    setTimeout(() => setDataSaved(false), 3000);
+          const galleryRef = collection(db, "gallery");
+
+          await addDoc(galleryRef, {
+            title: formData?.title,
+            img: downloadURL,
+            date: serverTimestamp(),
+            category: formData?.category,
+          });
+        } catch (error: any) {
+          console.error("Error uploading file:", error);
+        }
+      });
+
+      setDataSaved(true);
+
+      setTimeout(() => setDataSaved(false), 3000);
+    } else {
+      console.error("No file selected");
+    }
 
     const historyRef = collection(db, "history");
     await addDoc(historyRef, {
       title: formData?.title,
       role: currentUser?.role,
       date: serverTimestamp(),
-      item: "Image Folder",
+      item: "Image",
       user: currentUser?.name,
     });
-    navigate("/gallery");
+    navigate("/images", { state: { category: formData?.category } });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      setImg(fileArray);
+    }
+    console.log("files are selected");
   };
 
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Gallery Form" />
+      <Breadcrumb pageName="Image Form" />
       <div className="flex justify-end py-2 ">
         <button className="bg-gray-300 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-          <NavLink to="/gallery"> Go to Gallery</NavLink>
+          <div
+            onClick={() =>
+              navigate("/images", { state: { category: formData?.category } })
+            }
+          >
+            Go to Images
+          </div>
         </button>
       </div>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
@@ -92,20 +120,14 @@ const GalleryForm = () => {
 
               <div>
                 <label className="mb-3 block text-black dark:text-white">
-                  Category
+                  Attach Image
                 </label>
+
                 <input
-                  value={formData?.category}
-                  name="category"
-                  onChange={(e) =>
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      category: e.target.value,
-                    }))
-                  }
-                  type="text"
-                  placeholder="Category "
-                  className="w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input  dark:focus:border-primary dark:text-white"
+                  type="file"
+                  multiple
+                  onChange={(e) => handleFileChange(e)}
+                  className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                 />
               </div>
             </div>
@@ -131,4 +153,4 @@ const GalleryForm = () => {
   );
 };
 
-export default GalleryForm;
+export default ImageForm;

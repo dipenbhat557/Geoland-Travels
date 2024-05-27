@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../../pages/store";
+import { def } from "../../assets";
 
 const DropdownUser = () => {
   const currentUser = useRecoilValue(currUser);
@@ -17,7 +18,7 @@ const DropdownUser = () => {
 
         <span className="h-12 w-12 rounded-full">
           <img
-            src={currentUser?.profile || ""}
+            src={currentUser?.profile || def}
             className="rounded-full"
             alt="User"
           />

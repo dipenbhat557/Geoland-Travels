@@ -1,0 +1,3 @@
+./admin/.env
+./user/.env
+.DS_Store

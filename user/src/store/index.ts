@@ -1,4 +1,4 @@
-import { selector } from "recoil";
+import { atom, selector } from "recoil";
 import { db } from "../firebaseConfig"; // Import your Firebase configuration
 import { getDocs, collection, Timestamp } from "firebase/firestore"; // Import necessary Firestore functions
 
@@ -11,7 +11,7 @@ export interface TourData {
   highlights: string[];
   inclusion: string[];
   exclusion: string[];
-  itinerary: string[];
+  itinerary: { title: string; description: string }[];
   price: number;
   date: string;
   type: string;
@@ -22,6 +22,8 @@ export interface TourData {
   ages: string;
   languages: string;
 }
+
+export const heroIndex = atom({ key: "heroIndex", default: 0 });
 
 export const toursData = selector({
   key: "toursData",
