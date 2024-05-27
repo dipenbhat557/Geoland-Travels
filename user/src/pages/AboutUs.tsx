@@ -1,5 +1,5 @@
 import { FaHandshake } from "react-icons/fa6";
-import { a1, a2, a3, a4, aboutBg, map } from "../assets";
+import { a1, a2, a3, a4, map } from "../assets";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";

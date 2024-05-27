@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// import { destItems } from "../constants";
 import { styles } from "../styles";
 import { TourData, toursData } from "../store";
 import { useRecoilValue } from "recoil";
