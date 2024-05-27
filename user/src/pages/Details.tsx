@@ -12,6 +12,7 @@ import Footer from "../components/Footer";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import Loading from "../components/Loading";
+import DetailReviews from "../components/DetailReviews";
 
 const Details = () => {
   const location = useLocation();
@@ -152,6 +153,7 @@ const Details = () => {
           <WhatsIncluded tour={tour} />
           <Itinerary tour={tour} />
           {/* <DetailReviews tour={tour} /> */}
+          <DetailReviews/>
           <LeaveReply />
           <Footer isContact={false} />
         </div>
