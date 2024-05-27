@@ -1,4 +1,4 @@
-import { heroBg } from "../assets";
+import { branchImg, heroBg } from "../assets";
 import Navbar from "../components/Navbar";
 import { styles } from "../styles";
 import { useState, useRef, useEffect, Suspense } from "react";
@@ -243,6 +243,14 @@ const ContactUs = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="w-full sm:flex hidden h-[500px]">
+          <img
+            alt="branch img"
+            src={branchImg}
+            className="w-full h-full object-contain"
+          />
         </div>
 
         {/* <ReachOut /> */}
