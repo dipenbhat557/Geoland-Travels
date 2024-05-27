@@ -11,7 +11,7 @@ export interface TourData {
   highlights: string[];
   inclusion: string[];
   exclusion: string[];
-  itinerary: string[];
+  itinerary: { title: string; description: string }[];
   price: number;
   date: string;
   type: string;
