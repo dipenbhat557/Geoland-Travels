@@ -51,17 +51,17 @@ const Details = () => {
             </div>
           </div>
           <div
-            className={`${styles.padding} relative w-full h-[400px] sm:h-[500px] rounded-lg `}
+            className={`${styles.padding} relative w-full h-[400px] sm:h-[600px] rounded-lg `}
           >
             <div className="w-full  h-full rounded-lg flex justify-between">
-              <div className="w-[59.5%] h-full rounded-l-lg">
+              <div className="w-[50.5%] h-full rounded-l-lg">
                 <img
                   src={tour?.img?.[0]}
                   alt="img"
                   className="w-full h-full object-cover rounded-l-lg"
                 />
               </div>
-              <div className="flex flex-col justify-between w-[40%] h-full rounded-r-lg">
+              <div className="flex flex-col justify-between w-[49%] h-full rounded-r-lg">
                 <div className="w-full h-[49.5%] rounded-tr-lg">
                   <img
                     src={tour?.img?.[1]}
@@ -85,14 +85,14 @@ const Details = () => {
               </div>
             </div>
             <div
-              className={`w-[90%] sm:w-[95%] mx-auto h-full ${
+              className={`w-[90%] sm:w-[95%]  mx-auto h-full ${
                 clicked ? "absolute top-4" : "hidden"
               } z-20`}
             >
               <img
                 src={tour?.img?.[currentIndex]}
                 alt="img"
-                className="w-full h-full object-cover"
+                className="w-full h-full z-30 absolute object-contain"
               />
               <IoMdClose
                 onClick={() => setClicked(false)}
@@ -107,7 +107,7 @@ const Details = () => {
                 }}
                 className="text-[65px] cursor-pointer text-white absolute top-[48%] z-40 right-[5%]"
               />
-              <div className="w-full h-full bg-black opacity-20 absolute z-30 top-0 right-0" />
+              <div className="w-full h-full bg-black opacity-80 absolute z-10 top-0 right-0" />
               <MdKeyboardArrowLeft
                 onClick={() => {
                   console.log(currentIndex);
@@ -153,7 +153,7 @@ const Details = () => {
           <WhatsIncluded tour={tour} />
           <Itinerary tour={tour} />
           {/* <DetailReviews tour={tour} /> */}
-          <DetailReviews/>
+          <DetailReviews />
           <LeaveReply />
           <Footer isContact={false} />
         </div>

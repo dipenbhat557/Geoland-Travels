@@ -133,7 +133,7 @@ const Hero1 = () => {
                     >
                       <p
                         onClick={() =>
-                          navigate("/destination", { state: { tour: s } })
+                          navigate("/details", { state: { tour: s } })
                         }
                       >
                         {s?.tourTitle}
