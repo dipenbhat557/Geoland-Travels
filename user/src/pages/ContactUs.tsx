@@ -68,7 +68,6 @@ const ContactUs = () => {
     console.log("DAta is ", form);
     e.preventDefault();
     setLoading(true);
-
     emailjs
       .send(
         "service_p84msgo",
@@ -78,7 +77,7 @@ const ContactUs = () => {
           to_name: "Geoland Travels",
           from_email: form.email,
           to_email: "bhattadipen557@gmail.com",
-          message: `To ${form.branch} branch of Geoland Travels. ${form.message} Please reach me at ${form.contact}`,
+          message: `Branch: ${form.branch}\nSubject: ${form.subject}\nMessage: ${form.message}\nPlease reach me at\nContact number: ${form.contact}\nEmail: ${form.email}`,
         },
         "ZYkHf84J4hdD8bh0"
       )
