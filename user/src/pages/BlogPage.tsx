@@ -28,7 +28,7 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [blog]);
 
   useEffect(() => {
     const gotBlogs: BlogData[] = [];
@@ -127,37 +127,46 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
             {isFromNavbar ? "Blogs" : "More like this"}
           </p>
           <div className="w-full h-auto flex-wrap flex justify-between  gap-4 sm:gap-0 items-center">
-            {blogItems?.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  onClick={() => navigate("/blog", { state: { blog: item } })}
-                  className="w-[45%] sm:w-[31%] cursor-pointer h-auto sm:h-[85%] p-2 rounded-3xl justify-between flex flex-col"
-                >
-                  <div className="w-full relative h-[200px] sm:h-[75%] rounded-3xl">
-                    <img
-                      src={item?.img || def}
-                      alt="trending"
-                      className="w-full h-full object-cover rounded-3xl"
-                    />
-                    <p className="bg-white px-2 sm:py-1 absolute top-5 left-5 rounded-lg">
-                      Trips
+            {blogItems?.length > 0 ? (
+              blogItems?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    onClick={() => navigate("/blog", { state: { blog: item } })}
+                    className="w-[45%] sm:w-[31%] cursor-pointer h-full p-2 rounded-3xl gap-3 flex flex-col"
+                  >
+                    <div className="w-full relative h-[200px] sm:h-[300px] rounded-3xl">
+                      <img
+                        src={item?.img || def}
+                        alt="trending"
+                        className="w-full h-full object-cover rounded-3xl"
+                      />
+                      <p className="bg-white px-2 sm:py-1 absolute top-5 left-5 rounded-lg">
+                        Trips
+                      </p>
+                    </div>
+                    <div className="flex justify-between px-1 sm:px-3">
+                      <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
+                        {item?.date}
+                      </p>
+                    </div>
+                    <p className="text-[12px] sm:text-[16px]  font-semibold flex items-center truncate">
+                      {item?.blogTitle}
+                    </p>
+                    <p className="text-[10px] sm:h-[150px] overflow-y-scroll sm:text-[14px] flex items-center line-clamp-2">
+                      {item?.content}
                     </p>
                   </div>
-                  <div className="flex justify-between px-1 sm:px-3">
-                    <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                      {item?.date}
-                    </p>
-                    <p className=" flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                      By &nbsp; {item?.author}
-                    </p>
-                  </div>
-                  <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center truncate">
-                    {item?.blogTitle}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <>
+                <p className="w-full text-center font-semibold text-[22px]">
+                  Please wait while fetching data....{" "}
+                </p>
+                <Loading />
+              </>
+            )}
           </div>
         </div>
         <Gallery />

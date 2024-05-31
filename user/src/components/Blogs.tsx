@@ -78,28 +78,26 @@ const Blogs = () => {
               variants={textVariant(0.2 * index)}
               key={index}
               onClick={() => navigate("/blog", { state: { blog: item } })}
-              className="w-[45%] sm:w-[31%] cursor-pointer h-[85%] p-2 rounded-3xl justify-between flex flex-col"
+              className="w-[45%] sm:w-[31%] cursor-pointer h-full p-2 rounded-3xl gap-3 flex flex-col"
             >
-              <div className="w-full relative h-[60%] sm:h-[75%] rounded-3xl">
+              <div className="w-full relative h-[45%] sm:h-[55%] rounded-3xl">
                 <img
                   src={item?.img || def}
-                  alt="trending"
+                  alt="blog image"
                   className="w-full h-full object-cover rounded-3xl"
                 />
                 <p className="bg-white px-2 py-1 absolute top-5 left-5 rounded-lg">
                   Trips
                 </p>
               </div>
-              <div className="flex justify-between px-1 sm:px-3">
-                <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                  {item?.date}
-                </p>
-                <p className=" flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                  By &nbsp; {item?.author}
-                </p>
-              </div>
-              <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center line-clamp-1">
+              <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
+                {item?.date}
+              </p>
+              <p className=" text-[12px] sm:text-[16px]  font-semibold flex items-center line-clamp-1">
                 {item?.blogTitle}
+              </p>
+              <p className=" text-[10px] sm:h-[150px] overflow-y-scroll sm:text-[14px]  flex items-center line-clamp-1">
+                {item?.content}
               </p>
             </motion.div>
           );
