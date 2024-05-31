@@ -29,31 +29,42 @@ const FAQs = () => {
   };
 
   useEffect(() => {
-    const gotFaqs: FaqData[] = [];
+    const gotFaqs: { data: FaqData; dateObj: Date }[] = [];
     const fetchDocuments = async () => {
       const querySnapshot = await getDocs(collection(db, "faqs"));
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const date = data.date;
-        let dateObject = "";
+        let dateObject: Date | null = null;
 
         if (date instanceof Timestamp) {
-          dateObject = date.toDate().toString().slice(0, 21);
+          dateObject = date.toDate();
         } else {
           console.error("Invalid or missing date field:", date);
         }
 
-        const f: FaqData = {
-          title: doc?.data()?.title,
-          date: dateObject,
-          query: doc?.data()?.query,
-          answer: doc?.data()?.answer,
-          id: doc?.id,
-        };
-        gotFaqs.push(f);
+        if (dateObject) {
+          const f: FaqData = {
+            title: doc?.data()?.title,
+            date: "",
+            query: doc?.data()?.query,
+            answer: doc?.data()?.answer,
+            id: doc?.id,
+          };
+          gotFaqs.push({ data: f, dateObj: dateObject });
+        }
       });
-      setFaqs(gotFaqs);
+
+      gotFaqs?.sort((a, b) => b.dateObj.getTime() - a.dateObj.getTime());
+
+      const sortedFaqs: FaqData[] = gotFaqs?.map((entry) => {
+        return {
+          ...entry.data,
+          date: entry.dateObj.toString().slice(0, 21),
+        };
+      });
+      setFaqs(sortedFaqs);
     };
 
     fetchDocuments();

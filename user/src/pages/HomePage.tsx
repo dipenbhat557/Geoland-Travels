@@ -1,7 +1,6 @@
 import { Suspense, lazy, useEffect } from "react";
 import Faq from "../components/Faq";
 import Loading from "../components/Loading";
-import Review from "../components/Reviews";
 import { useRecoilValue } from "recoil";
 import { heroIndex } from "../store";
 
@@ -41,7 +40,7 @@ const HomePage = () => {
         <Gallery />
         {/* <ReachOut /> */}
         <Faq />
-        <Review />
+        {/* <Review /> */}
         <Footer isContact={false} />
       </div>
     </Suspense>

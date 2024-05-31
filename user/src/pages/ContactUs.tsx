@@ -6,8 +6,6 @@ import { useState, useRef, useEffect, Suspense } from "react";
 import { SectionWrapper } from "../hoc";
 import * as emailjs from "emailjs-com";
 
-// import ReachOut from "../components/ReachOut";
-import WhyTour from "../components/WhyTour";
 import Footer from "../components/Footer";
 import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 import EarthCanvas from "../components/canvas/Earth";
@@ -33,6 +31,7 @@ const ContactUs = () => {
     message: "",
     subject: "",
     branch: "",
+    contact: "",
   });
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState<SocialLinkData>();
@@ -72,16 +71,16 @@ const ContactUs = () => {
 
     emailjs
       .send(
-        "service_htp2klw",
-        "template_a9c3yzv",
+        "service_p84msgo",
+        "template_gfe9a1g",
         {
           from_name: form.name,
           to_name: "Geoland Travels",
           from_email: form.email,
           to_email: "bhattadipen557@gmail.com",
-          message: `This is to ${form.branch} branch of Geoland Travels. ${form.message}`,
+          message: `To ${form.branch} branch of Geoland Travels. ${form.message} Please reach me at ${form.contact}`,
         },
-        "70gtdMrv58XYFp0DP"
+        "ZYkHf84J4hdD8bh0"
       )
 
       .then(
@@ -95,6 +94,7 @@ const ContactUs = () => {
             message: "",
             subject: "",
             branch: "",
+            contact: "",
           });
         },
         (error: any) => {
@@ -142,24 +142,24 @@ const ContactUs = () => {
           >
             <div className="flex gap-3">
               <label className="flex flex-col">
-                <span className=" font-medium mb-4">Your Name</span>
+                <span className=" font-medium mb-4">Full Name</span>
                 <input
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  placeholder="What's your good name?"
+                  placeholder="Full Name"
                   className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
                 />
               </label>
               <label className="flex flex-col">
-                <span className=" font-medium mb-4">Your email</span>
+                <span className=" font-medium mb-4">Email Address</span>
                 <input
                   type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  placeholder="What's your web address?"
+                  placeholder="Email address "
                   className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
                 />
               </label>
@@ -186,24 +186,35 @@ const ContactUs = () => {
               </select>
             </label>
             <label className="flex flex-col">
-              <span className=" font-medium mb-4">Your subject</span>
+              <span className=" font-medium mb-4">Contact Number</span>
+              <input
+                type="text"
+                name="contact"
+                value={form.contact}
+                onChange={handleChange}
+                placeholder="Contact Number"
+                className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
+              />
+            </label>
+            <label className="flex flex-col">
+              <span className=" font-medium mb-4">Subject</span>
               <input
                 type="subject"
                 name="subject"
                 value={form.subject}
                 onChange={handleChange}
-                placeholder="What's your subject?"
+                placeholder="Subject"
                 className="bg-tertiary py-4 px-6 placeholder:text-secondary border border-slate-200   rounded-lg outline-none  font-medium"
               />
             </label>
             <label className="flex flex-col">
-              <span className=" font-medium mb-4">Your Message</span>
+              <span className=" font-medium mb-4">Message</span>
               <textarea
                 rows={7}
                 name="message"
                 value={form.message}
                 onChange={handleChange}
-                placeholder="What you want to say?"
+                placeholder="Leave your Message"
                 className="py-4 px-6 placeholder:text-secondary  rounded-lg outline-none border border-slate-200 font-medium"
               />
             </label>
@@ -255,7 +266,7 @@ const ContactUs = () => {
 
         {/* <ReachOut /> */}
         {/* <Glimpse /> */}
-        <WhyTour />
+        {/* <WhyTour /> */}
         <Faq />
         <Footer isContact={true} />
       </div>

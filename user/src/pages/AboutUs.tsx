@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { img1, img3, img4, img5, img6, img7 } from "../assets";
 import { Suspense, useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import WhyTour from "../components/WhyTour";
 
 const AboutUs = () => {
   const [currentElement, setCurrentElement] = useState(0);
@@ -257,6 +258,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
+        <WhyTour />
         <Faq />
         <Footer isContact={false} />
       </div>
