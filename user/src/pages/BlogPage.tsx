@@ -153,7 +153,7 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
                     <p className="text-[12px] sm:text-[16px]  font-semibold flex items-center truncate">
                       {item?.blogTitle}
                     </p>
-                    <p className="text-[10px] sm:h-[150px] overflow-y-scroll sm:text-[14px] flex items-center line-clamp-2">
+                    <p className="text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px] flex items-center line-clamp-2">
                       {item?.content}
                     </p>
                   </div>
