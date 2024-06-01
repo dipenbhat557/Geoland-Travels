@@ -109,7 +109,10 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
         {!isFromNavbar && (
           <div className={`${styles.padding} flex flex-col gap-2`}>
             <p className={`${styles.sectionSubText}`}>{blog?.blogTitle}</p>
-            <p className="text-[14px] text-slate-700">{blog?.content}</p>
+            <div
+              className="text-[14px] text-slate-700"
+              dangerouslySetInnerHTML={{ __html: blog?.content }}
+            ></div>
             <div
               className={`${styles.paddingY} w-full flex items-center justify-center`}
             >
@@ -153,9 +156,10 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
                     <p className="text-[12px] sm:text-[16px]  font-semibold flex items-center truncate">
                       {item?.blogTitle}
                     </p>
-                    <p className="text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px] flex items-center line-clamp-2">
-                      {item?.content}
-                    </p>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: item?.content }}
+                      className="text-[10px] h-[150px] sm:h-[150px]  overflow-y-scroll sm:text-[14px] flex items-center line-clamp-2"
+                    ></p>
                   </div>
                 );
               })

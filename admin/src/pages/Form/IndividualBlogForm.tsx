@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../../layout/DefaultLayout";
 import {
@@ -13,10 +13,8 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useRecoilValue } from "recoil";
 import { currUser } from "../store";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 
-const BlogForm = () => {
+const IndividualBlogForm = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const blog = location?.state?.blog;
@@ -26,9 +24,8 @@ const BlogForm = () => {
     blogTitle: blog?.blogTitle || "",
     author: blog?.author || "",
     content: blog?.content || "",
-    description: blog?.description || "",
   });
-  const [img, setImg] = useState<File | null>(null);
+  const [img, setImg] = useState(null as File | null);
   const [dataSaved, setDataSaved] = useState(false);
   const currentUser = useRecoilValue(currUser);
 
@@ -49,7 +46,6 @@ const BlogForm = () => {
             blogTitle: formData?.blogTitle,
             author: formData?.author,
             content: formData?.content,
-            description: formData?.description,
           });
           navigate("/blogs");
         } else {
@@ -61,7 +57,6 @@ const BlogForm = () => {
             blogTitle: formData?.blogTitle,
             author: formData?.author,
             content: formData?.content,
-            description: formData?.description,
           });
 
           setFormData({
@@ -70,7 +65,6 @@ const BlogForm = () => {
             blogTitle: "",
             author: "",
             content: "",
-            description: formData?.description,
           });
         }
         setDataSaved(true);
@@ -101,24 +95,6 @@ const BlogForm = () => {
     console.log("file is selected");
   };
 
-  const handleChange = (value: string) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      content: value,
-    }));
-  };
-
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ align: [] }],
-      ["link", "image"],
-      ["clean"],
-    ],
-  };
-
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Blogs" />
@@ -130,7 +106,7 @@ const BlogForm = () => {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           {dataSaved && (
-            <div className="w-full h-[60px] bg-[#06905E] mb-2 flex items-center justify-center rounded-lg">
+            <div className="w-full h-[60px] bg-[#06905E]  mb-2 flex items-center justify-center rounded-lg">
               Data Uploaded Successfully !!
             </div>
           )}
@@ -199,33 +175,43 @@ const BlogForm = () => {
                 <label className="mb-3 block text-black dark:text-white">
                   Content
                 </label>
-                <ReactQuill
-                  value={formData.content}
-                  onChange={handleChange}
-                  modules={modules}
-                  theme="snow"
+                <input
+                  value={formData?.content}
+                  name="content"
+                  onChange={(e) =>
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      content: e.target.value,
+                    }))
+                  }
+                  type="text"
+                  placeholder="Content"
+                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
               </div>
+
               <div>
                 <label className="mb-3 block text-black dark:text-white">
                   Attach Image
                 </label>
+
                 <input
                   onChange={handleFileChange}
                   type="file"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white"
+                  className={` w-full rounded-lg border-[1.5px]    border-stroke bg-transparent py-3 px-5 text-black outline-none transition  disabled:cursor-default disabled:bg-whiter  dark:border-form-strokedark  dark:bg-form-input   dark:text-white`}
                 />
               </div>
             </div>
           </div>
         </div>
+
         <div className="flex flex-col gap-9 sm:fixed right-16">
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="flex flex-col gap-5.5 p-40 items-center justify-evenly">
+            <div className="flex flex-col gap-5.5 p-40  items-center justify-evenly">
               <div>
                 <button
                   onClick={handleSubmit}
-                  className="bg-blue-500 tracking-wide text-white font-bold py-2 px-9 rounded opacity-80 shadow-1"
+                  className="bg-blue-500 tracking-wide text-white font-bold py-2 px-9 rounded opacity-80  shadow-1"
                 >
                   <span className="tracking-wider px-3">Post</span>
                 </button>
@@ -238,4 +224,4 @@ const BlogForm = () => {
   );
 };
 
-export default BlogForm;
+export default IndividualBlogForm;
