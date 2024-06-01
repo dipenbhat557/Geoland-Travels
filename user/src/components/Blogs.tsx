@@ -18,6 +18,7 @@ export interface BlogData {
   date: string;
   img: string;
   id: string;
+  description: string;
 }
 
 const Blogs = () => {
@@ -50,6 +51,7 @@ const Blogs = () => {
           blogTitle: doc?.data()?.blogTitle,
           content: doc?.data()?.content,
           author: doc?.data()?.author,
+          description: doc?.data()?.description,
         };
         gotBlogs.push(b);
       });
@@ -63,15 +65,15 @@ const Blogs = () => {
 
   return (
     <div
-      className={`flex w-full ${styles.padding} h-[480px] sm:h-[550px] flex flex-col`}
+      className={`flex w-full ${styles.padding} h-[480px] sm:h-[650px] gap-2 flex flex-col`}
     >
       <motion.p
         variants={textVariant(0.3)}
-        className={`${styles.sectionHeadText} h-[7%]`}
+        className={`${styles.sectionHeadText} h-[5%]`}
       >
         Blogs
       </motion.p>
-      <div className="w-full h-[90%] flex justify-between items-center">
+      <div className="w-full h-[87%] flex justify-between items-center">
         {blogs?.map((item, index) => {
           return (
             <motion.div
@@ -97,13 +99,13 @@ const Blogs = () => {
                 {item?.blogTitle}
               </p>
               <p className=" text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px]  flex items-center ">
-                {item?.content}
+                {item?.description}
               </p>
             </motion.div>
           );
         })}
       </div>
-      <div className="w-full flex justify-end h-[8%]">
+      <div className="w-full flex justify-end h-[6%]">
         <button
           onClick={() => navigate("/blogs")}
           className={`px-4 text-[13px] sm:text-[16px] py-1 sm:py-2 w-[30%] sm:w-[20%] rounded-3xl right-0 text-white font-semibold ${styles?.primaryBgColor}`}
