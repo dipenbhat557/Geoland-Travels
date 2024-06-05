@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { styles } from "../styles";
 import TourOverview from "../components/TourOverview";
@@ -12,17 +12,21 @@ import Footer from "../components/Footer";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import Loading from "../components/Loading";
-import DetailReviews from "../components/DetailReviews";
+// import DetailReviews from "../components/DetailReviews";
 
 const Details = () => {
   const location = useLocation();
   const tour: TourData = location?.state?.tour;
   const [clicked, setClicked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (tour == null || tour == undefined) {
+      window.location.href = "/";
+    }
     window.scrollTo(0, 0);
-  }, []);
+  }, [tour, navigate]);
 
   return (
     <Suspense fallback={<Loading />}>
@@ -153,7 +157,7 @@ const Details = () => {
           <WhatsIncluded tour={tour} />
           <Itinerary tour={tour} />
           {/* <DetailReviews tour={tour} /> */}
-          <DetailReviews />
+          {/* <DetailReviews /> */}
           <LeaveReply />
           <Footer isContact={false} />
         </div>
