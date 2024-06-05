@@ -98,9 +98,10 @@ const Blogs = () => {
               <p className=" text-[12px] sm:text-[16px]  font-semibold flex items-center ">
                 {item?.blogTitle}
               </p>
-              <p className=" text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px]  flex items-center ">
-                {item?.description}
-              </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: item?.description }}
+                className=" text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px]  flex items-center "
+              ></p>
             </motion.div>
           );
         })}

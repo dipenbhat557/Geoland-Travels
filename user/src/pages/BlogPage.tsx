@@ -98,9 +98,15 @@ const BlogPage = ({ isFromNavbar }: { isFromNavbar: boolean }) => {
     doc.querySelectorAll("u").forEach((el) => el.classList.add("underline"));
 
     // Adjust image styling
-    doc.querySelectorAll("img").forEach((el) => {
-      el.classList.add("w-full", "h-[300px]", "my-4");
-    });
+    if (window.innerWidth < 640) {
+      doc.querySelectorAll("img").forEach((el) => {
+        el.classList.add("w-full", "h-[300px]", "my-4");
+      });
+    } else {
+      doc.querySelectorAll("img").forEach((el) => {
+        el.classList.add("w-full", "h-[450px]", "my-4");
+      });
+    }
 
     return doc.body.innerHTML;
   };
