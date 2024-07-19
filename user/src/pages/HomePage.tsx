@@ -20,9 +20,9 @@ const Reviews = lazy(() => import("../components/Reviews"));
 
 const HomePage = () => {
   const hero = useRecoilValue(heroIndex);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col">
