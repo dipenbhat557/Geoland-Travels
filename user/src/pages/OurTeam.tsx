@@ -142,6 +142,13 @@ const OurTeam = () => {
             </div>
           </div>
         </div>
+        <div className="w-full h-[400px] hidden md:flex">
+          <img
+            className="w-full h-full object-contain"
+            src="../assets/teamchart.png"
+            alt=""
+          />
+        </div>
         <div
           className={`sm:${styles.padding} flex flex-col items-center gap-4`}
         >
