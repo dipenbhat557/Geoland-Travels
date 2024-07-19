@@ -47,7 +47,7 @@ const ItineraryCard = ({
         height: isFirst || isLast ? "30px" : "20px",
         marginLeft: isFirst || isLast ? "0px" : "10px",
       }}
-      className="h-auto p-0 m-0 text-[2px]"
+      className="h-auto p-0 m-0 sm:text-[2px]"
     >
       <div
         key={index}

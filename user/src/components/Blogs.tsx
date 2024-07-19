@@ -18,6 +18,7 @@ export interface BlogData {
   date: string;
   img: string;
   id: string;
+  description: string;
 }
 
 const Blogs = () => {
@@ -50,6 +51,7 @@ const Blogs = () => {
           blogTitle: doc?.data()?.blogTitle,
           content: doc?.data()?.content,
           author: doc?.data()?.author,
+          description: doc?.data()?.description,
         };
         gotBlogs.push(b);
       });
@@ -63,49 +65,48 @@ const Blogs = () => {
 
   return (
     <div
-      className={`flex w-full ${styles.padding} h-[480px] sm:h-[550px] flex flex-col`}
+      className={`flex w-full ${styles.padding} h-[480px] sm:h-[650px] gap-2 flex flex-col`}
     >
       <motion.p
         variants={textVariant(0.3)}
-        className={`${styles.sectionHeadText} h-[7%]`}
+        className={`${styles.sectionHeadText} h-[5%]`}
       >
         Blogs
       </motion.p>
-      <div className="w-full h-[90%] flex justify-between items-center">
+      <div className="w-full h-[87%] flex justify-between items-center">
         {blogs?.map((item, index) => {
           return (
             <motion.div
               variants={textVariant(0.2 * index)}
               key={index}
               onClick={() => navigate("/blog", { state: { blog: item } })}
-              className="w-[45%] sm:w-[31%] cursor-pointer h-[85%] p-2 rounded-3xl justify-between flex flex-col"
+              className="w-[45%] sm:w-[31%] cursor-pointer h-full p-2 rounded-3xl gap-3 flex flex-col"
             >
-              <div className="w-full relative h-[60%] sm:h-[75%] rounded-3xl">
+              <div className="w-full relative h-[45%] sm:h-[55%] rounded-3xl">
                 <img
                   src={item?.img || def}
-                  alt="trending"
+                  alt="blog image"
                   className="w-full h-full object-cover rounded-3xl"
                 />
                 <p className="bg-white px-2 py-1 absolute top-5 left-5 rounded-lg">
                   Trips
                 </p>
               </div>
-              <div className="flex justify-between px-1 sm:px-3">
-                <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                  {item?.date}
-                </p>
-                <p className=" flex items-center font-light text-[10px] sm:text-[13px] ml-3">
-                  By &nbsp; {item?.author}
-                </p>
-              </div>
-              <p className="h-auto sm:h-[15%] text-[12px] sm:text-[16px]  font-semibold flex items-center line-clamp-1">
+              <p className="  flex items-center font-light text-[10px] sm:text-[13px] ml-3">
+                {item?.date}
+              </p>
+              <p className=" text-[12px] sm:text-[16px]  font-semibold flex items-center ">
                 {item?.blogTitle}
               </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: item?.description }}
+                className=" text-[10px] h-[150px] sm:h-[150px] overflow-y-scroll sm:text-[14px]  flex items-center "
+              ></p>
             </motion.div>
           );
         })}
       </div>
-      <div className="w-full flex justify-end h-[8%]">
+      <div className="w-full flex justify-end h-[6%]">
         <button
           onClick={() => navigate("/blogs")}
           className={`px-4 text-[13px] sm:text-[16px] py-1 sm:py-2 w-[30%] sm:w-[20%] rounded-3xl right-0 text-white font-semibold ${styles?.primaryBgColor}`}

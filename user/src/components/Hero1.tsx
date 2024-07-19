@@ -66,7 +66,7 @@ const Hero1 = () => {
       <div className="w-full h-full z-10 absolute  opacity-10" />
       <div className="w-full h-full absolute z-20 flex items-center justify-center flex-col ">
         <div className="w-full h-[90%] sm:h-[50%] flex items-center justify-center flex-col gap-14 sm:gap-3">
-          <motion.p className="sm:w-[43%] text-center text-[25px]  sm:text-[45px] text-white font-semibold">
+          <motion.p className="sm:w-[43%] text-center text-[25px]  sm:text-[40px] text-white font-semibold">
             {"Choose a Destination For Your ".split("").map((char, index) => (
               <motion.span
                 key={index}
@@ -133,7 +133,7 @@ const Hero1 = () => {
                     >
                       <p
                         onClick={() =>
-                          navigate("/destination", { state: { tour: s } })
+                          navigate("/details", { state: { tour: s } })
                         }
                       >
                         {s?.tourTitle}

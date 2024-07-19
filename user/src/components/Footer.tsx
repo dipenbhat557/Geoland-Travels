@@ -135,7 +135,7 @@ const Footer = ({ isContact }: { isContact: boolean }) => {
                   >
                     <p
                       onClick={() =>
-                        navigate("/destination", { state: { tour: s } })
+                        navigate("/details", { state: { tour: s } })
                       }
                     >
                       {s?.tourTitle}

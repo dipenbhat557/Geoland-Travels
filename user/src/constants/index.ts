@@ -1,4 +1,4 @@
-import { canada, nepal, s1, s2, s3, s4, uae, usa } from "../assets";
+import { s1, s2, s3, s4 } from "../assets";
 
 export const navLinks = [
   {
@@ -64,41 +64,6 @@ export const whyTourItems = [
     title: "Customer Support and Assistance",
     content:
       "Rely on our dedicated customer support team for help and advice, whenever you need it.",
-  },
-];
-
-export const locationItems = [
-  {
-    flag: uae,
-    title: "CONTACT UAE",
-    iconBg: "#E6DEDD",
-    address: "Bur Dubai, UAE",
-    mail: "+971 56 894 3316",
-    phone: "salesdxb@geolandtravels.com",
-  },
-  {
-    flag: nepal,
-    title: "CONTACT NEPAL",
-    iconBg: "#E6DEDD",
-    address: "Baluwatar, Kathmandu, Nep",
-    mail: "+977-1-4422657",
-    phone: "sales@geolandtravels.com",
-  },
-  {
-    flag: usa,
-    title: "CONTACT USA",
-    iconBg: "#E6DEDD",
-    address: "Redland, California, U.S.A",
-    mail: "+1 (510) 982 2256",
-    phone: "salesusa@geolandtravels.com",
-  },
-  {
-    flag: canada,
-    title: "CONATCT CANADA",
-    iconBg: "#E6DEDD",
-    address: "Ontario, Canada",
-    mail: "+1 (416) 317 27357",
-    phone: "sales@geolandtravels.com",
   },
 ];
 

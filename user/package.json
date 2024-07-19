@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^9.85.0",
     "@react-three/fiber": "^8.14.3",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "emailjs": "^4.0.3",

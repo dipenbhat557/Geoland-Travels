@@ -19,17 +19,30 @@ const Destinations = () => {
   const [currentTours, setCurrentTours] = useState<TourData[]>([]);
 
   useEffect(() => {
+    console.log("key is ", key, " value is ", value);
     window.scrollTo(0, 0);
-    let res: TourData[] = [];
-    if (key === "type") {
-      res = tours?.filter((t: TourData) => t?.type === value);
-    } else if (key === "category") {
-      res = tours?.filter((t: TourData) => t?.category.includes(value));
-    } else {
-      res = tours;
+    filterTours();
+  }, [key, value, tours]);
+
+  useEffect(() => {
+    filterTours();
+  }, [selectedTypes]);
+
+  const filterTours = () => {
+    let res: TourData[] = tours;
+    if (key?.trim() === "type") {
+      res = res.filter((t: TourData) => t?.type === value);
+    } else if (key?.trim() === "category") {
+      res = res.filter((t: TourData) => t?.category.includes(value));
+    }
+    if (selectedTypes.length > 0) {
+      res = res.filter((tour) =>
+        selectedTypes.every((type) => tour.category.includes(type))
+      );
     }
     setCurrentTours(res);
-  }, []);
+    console.log("response is ", res);
+  };
 
   const handleSortType = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checkedType = e.target.value;
@@ -41,14 +54,6 @@ const Destinations = () => {
       );
     }
   };
-
-  useEffect(() => {
-    const updatedTours = tours.filter((tour) =>
-      selectedTypes.every((type) => tour.category.includes(type))
-    );
-    setCurrentTours(updatedTours);
-  }, [selectedTypes]);
-
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col">
@@ -95,7 +100,7 @@ const Destinations = () => {
               <p>{currentTours?.length} results</p>
               <p>Sort by: Featured</p>
             </div>
-            {currentTours.map((item, index) => (
+            {currentTours?.map((item, index) => (
               <TravelDate
                 key={index}
                 img={item.img?.[0] || def}
