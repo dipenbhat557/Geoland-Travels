@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import { Timestamp, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-
+import teamChart from "../assets/teamchart.jpg";
 interface TeamData {
   title: string;
   name: string;
@@ -142,10 +142,10 @@ const OurTeam = () => {
             </div>
           </div>
         </div>
-        <div className="w-full h-[400px] hidden md:flex">
+        <div className=" mt-5 w-full h-[900px] hidden md:flex">
           <img
             className="w-full h-full object-contain"
-            src="../assets/teamchart.png"
+            src={teamChart}
             alt=""
           />
         </div>
